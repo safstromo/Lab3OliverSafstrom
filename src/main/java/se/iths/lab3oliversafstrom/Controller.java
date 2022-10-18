@@ -6,7 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
 public class Controller {
-
+//TODO initialize method()
+private Model model = new Model();
 
     public void connectServer(ActionEvent actionEvent) {
         System.out.println("Connecting to server......");
@@ -31,5 +32,13 @@ public class Controller {
 
     public void resize(ActionEvent actionEvent) {
         System.out.println("Resize");
+    }
+
+    public void drawRectangleButton(ActionEvent actionEvent) {
+
+    }
+
+    public void drawCircleButton(ActionEvent actionEvent) {
+
     }
 }

@@ -25,6 +25,8 @@ public class MainApplication extends Application {
 
         Image icon = new Image(new FileInputStream("src/icon.png"));
 
+
+
         stage.setTitle("Banana Paint");
         stage.getIcons().add(icon);
         stage.setScene(scene);

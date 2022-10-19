@@ -1,29 +1,26 @@
 package se.iths.lab3oliversafstrom.shapes;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
 import java.util.Objects;
 
-public class Rectangle extends Shape {
-    int size;
+public class Rectangle extends javafx.scene.shape.Rectangle {
+
     double xPosition;
     double yPosition;
 
     public Rectangle(int size, double xPosition, double yPosition, Color color) {
-        this.size = size;
+        super.setHeight(size);
+        super.setWidth(size);
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        this.color = color;
+        super.setFill(color);
     }
-
-    Color color = Color.BLACK;
 
     @Override
     public String toString() {
         return "Rectangle{" +
-                "size=" + size +
-                ", xPosition=" + xPosition +
+                "xPosition=" + xPosition +
                 ", yPosition=" + yPosition +
                 ", color=" + color +
                 '}';
@@ -33,27 +30,15 @@ public class Rectangle extends Shape {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Rectangle rectangle)) return false;
-        return size == rectangle.size && Double.compare(rectangle.xPosition, xPosition) == 0 && Double.compare(rectangle.yPosition, yPosition) == 0 && Objects.equals(color, rectangle.color);
+        return Double.compare(rectangle.xPosition, xPosition) == 0 && Double.compare(rectangle.yPosition, yPosition) == 0 && Objects.equals(color, rectangle.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(size, xPosition, yPosition, color);
+        return Objects.hash(xPosition, yPosition, color);
     }
 
-    public Rectangle(int size, double xPosition, double yPosition) {
-        this.size = size;
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
+    Color color = Color.BLACK;
 
     public double getxPosition() {
         return xPosition;

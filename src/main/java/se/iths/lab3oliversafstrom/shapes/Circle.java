@@ -1,58 +1,43 @@
 package se.iths.lab3oliversafstrom.shapes;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
 import java.util.Objects;
 
-public class Circle extends Shape {
-    int radius;
+public class Circle extends javafx.scene.shape.Circle {
+
     double xPosition;
     double yPosition;
     Color color = Color.BLACK;
 
-    public Circle(int radius, double xPosition, double yPosition, Color color) {
-        this.radius = radius;
+    public Circle(double radius, double xPosition, double yPosition, Color color) {
+        super.setRadius(radius);
         this.yPosition = yPosition;
         this.xPosition = xPosition;
-        this.color = color;
-    }
-
-    @Override
-    public String toString() {
-        return "Circle{" +
-                "radius=" + radius +
-                ", xPosition=" + xPosition +
-                ", yPosition=" + yPosition +
-                ", color=" + color +
-                '}';
+        super.setFill(color);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Circle circle)) return false;
-        return radius == circle.radius && Double.compare(circle.xPosition, xPosition) == 0 && Double.compare(circle.yPosition, yPosition) == 0 && Objects.equals(color, circle.color);
+        return Double.compare(circle.xPosition, xPosition) == 0 && Double.compare(circle.yPosition, yPosition) == 0 && Objects.equals(color, circle.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(radius, xPosition, yPosition, color);
+        return Objects.hash(xPosition, yPosition, color);
     }
 
-    public Circle(int radius, double xPosition, double yPosition) {
-        this.radius = radius;
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+    @Override
+    public String toString() {
+        return "Circle{" +
+                "xPosition=" + xPosition +
+                ", yPosition=" + yPosition +
+                ", color=" + color +
+                '}';
     }
 
-    public int getRadius() {
-        return radius;
-    }
-
-    public void setRadius(int radius) {
-        this.radius = radius;
-    }
 
     public double getxPosition() {
         return xPosition;

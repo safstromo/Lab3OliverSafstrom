@@ -1,8 +1,6 @@
 package se.iths.lab3oliversafstrom;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -20,7 +18,7 @@ public class Controller {
     @FXML
     private TextField chatBoxInput;
     @FXML
-    private ListView chatWindow;
+    private ListView<String> chatWindow;
     @FXML
     private Button selectShape;
     @FXML
@@ -38,8 +36,8 @@ public class Controller {
         model = new Model();
         colorPicker = new ColorPicker();
         model.chatWindowString = FXCollections.observableArrayList();
-
         chatWindow.setItems(model.chatWindowString);
+
 
 
     }

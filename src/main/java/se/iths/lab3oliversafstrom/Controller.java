@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
@@ -37,7 +38,9 @@ public class Controller {
         colorPicker = new ColorPicker();
         model.chatWindowString = FXCollections.observableArrayList();
         chatWindow.setItems(model.chatWindowString);
+        GraphicsContext context = canvas.getGraphicsContext2D();
 
+        context.fillRect(200,200,200,200);
 
 
     }
@@ -88,12 +91,12 @@ public class Controller {
         }
     }
 
-    private void createNewRectangle() {
-        Rectangle rectangle = new Rectangle(10, model.getMouseX(), model.getMouseY(), model.getColorPicker().getValue());
+    private Rectangle createNewRectangle() {
+        return new Rectangle(10, model.getMouseX(), model.getMouseY(), model.getColorPicker().getValue());
     }
 
-    private void createNewCircle() {
-        Circle circle = new Circle(10, model.getMouseX(), model.getMouseY(), model.getColorPicker().getValue());
+    private Circle createNewCircle() {
+        return new Circle(10, model.getMouseX(), model.getMouseY(), model.getColorPicker().getValue());
     }
 
     public void sendMessage() {

@@ -1,6 +1,7 @@
 package se.iths.lab3oliversafstrom;
 
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
 
@@ -9,7 +10,7 @@ public class Model {
     private double mouseY;
     private ColorPicker colorPicker;
     private String chatBoxInput;
-    private ListView chatWindow;
+
 
     public String getChatBoxInput() {
         return chatBoxInput;
@@ -19,14 +20,8 @@ public class Model {
         this.chatBoxInput = chatBoxInput;
     }
 
-    public ListView getChatWindow() {
-        return chatWindow;
-    }
 
-    public void setChatWindow(ListView chatWindow) {
-        this.chatWindow = chatWindow;
-    }
-
+    public ObservableList<String> chatWindowString;
     public double getMouseX() {
         return mouseX;
     }

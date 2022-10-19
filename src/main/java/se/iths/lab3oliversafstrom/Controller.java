@@ -1,5 +1,8 @@
 package se.iths.lab3oliversafstrom;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -34,6 +37,10 @@ public class Controller {
     public void initialize() {
         model = new Model();
         colorPicker = new ColorPicker();
+        model.chatWindowString = FXCollections.observableArrayList();
+
+        chatWindow.setItems(model.chatWindowString);
+
 
     }
 
@@ -93,13 +100,13 @@ public class Controller {
 
     public void sendMessage() {
         model.setChatBoxInput(chatBoxInput.getText());
-        System.out.println(model.getChatBoxInput());
+        model.chatWindowString.add("LocalUser: " + model.getChatBoxInput());
         chatBoxInput.setText("");
     }
 
     public void onEnter() {
         model.setChatBoxInput(chatBoxInput.getText());
-        System.out.println(model.getChatBoxInput());
+        model.chatWindowString.add("LocalUser: " + model.getChatBoxInput());
         chatBoxInput.setText("");
     }
 }

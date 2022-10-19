@@ -3,7 +3,7 @@ package se.iths.lab3oliversafstrom;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ListView;
+
 
 public class Model {
     private double mouseX;

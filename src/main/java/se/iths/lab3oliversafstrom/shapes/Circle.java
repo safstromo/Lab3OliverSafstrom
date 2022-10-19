@@ -1,10 +1,13 @@
 package se.iths.lab3oliversafstrom.shapes;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import se.iths.lab3oliversafstrom.Controller;
+import se.iths.lab3oliversafstrom.Model;
 
 import java.util.Objects;
 
-public class Circle extends javafx.scene.shape.Circle {
+public class Circle extends javafx.scene.shape.Circle implements Shape {
 
     double xPosition;
     double yPosition;
@@ -61,6 +64,14 @@ public class Circle extends javafx.scene.shape.Circle {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    @Override
+    public void draw(GraphicsContext context, Model model) {
+        System.out.println("testar Circle");
+        Circle c = new Circle(10, model.getMouseX(), model.getMouseY(), Color.BLACK);
+        context.fillOval(model.getMouseX(),model.getMouseY(),c.getRadius(),c.getRadius());
+
     }
 }
 

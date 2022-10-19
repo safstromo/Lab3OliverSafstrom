@@ -10,6 +10,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
 
@@ -38,11 +39,18 @@ public class Controller {
         colorPicker = new ColorPicker();
         model.chatWindowString = FXCollections.observableArrayList();
         chatWindow.setItems(model.chatWindowString);
+canvas.pressedProperty().addListener(observable -> draw());
+
+
+    }
+
+    private void draw() {
         GraphicsContext context = canvas.getGraphicsContext2D();
-
-        context.fillRect(200,200,200,200);
-
-
+        if (drawCircleButton()){
+            Circle c = createNewCircle();
+            context.fillOval(model.getMouseX(),model.getMouseY(),c.getRadius(),c.getRadius());
+           // c.draw(context,model);
+        }
     }
 
     private Model model = new Model();
@@ -84,11 +92,8 @@ public class Controller {
         model.setMouseY(mouseEvent.getSceneY());
         System.out.println(model.getMouseX());
         System.out.println(model.getMouseY());
-        if (drawCircleButton()) {
-            createNewCircle();
-        } else if (drawRectangleButton()) {
-            createNewRectangle();
-        }
+
+
     }
 
     private Rectangle createNewRectangle() {
@@ -96,7 +101,7 @@ public class Controller {
     }
 
     private Circle createNewCircle() {
-        return new Circle(10, model.getMouseX(), model.getMouseY(), model.getColorPicker().getValue());
+        return new Circle(50, model.getMouseX(), model.getMouseY(), Color.BLACK);
     }
 
     public void sendMessage() {

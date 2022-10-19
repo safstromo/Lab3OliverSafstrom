@@ -1,10 +1,12 @@
 package se.iths.lab3oliversafstrom.shapes;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import se.iths.lab3oliversafstrom.Model;
 
 import java.util.Objects;
 
-public class Rectangle extends javafx.scene.shape.Rectangle {
+public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
 
     double xPosition;
     double yPosition;
@@ -62,5 +64,10 @@ public class Rectangle extends javafx.scene.shape.Rectangle {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    @Override
+    public void draw(GraphicsContext context, Model model) {
+        System.out.println("testar rectangle");
     }
 }

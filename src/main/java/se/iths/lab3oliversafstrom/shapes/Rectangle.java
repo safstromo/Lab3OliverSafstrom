@@ -9,6 +9,14 @@ public class Rectangle extends Shape {
     int size;
     double xPosition;
     double yPosition;
+
+    public Rectangle(int size, double xPosition, double yPosition, Color color) {
+        this.size = size;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+        this.color = color;
+    }
+
     Color color = Color.BLACK;
 
     @Override

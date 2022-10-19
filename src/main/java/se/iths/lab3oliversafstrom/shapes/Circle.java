@@ -11,6 +11,13 @@ public class Circle extends Shape {
     double yPosition;
     Color color = Color.BLACK;
 
+    public Circle(int radius, double xPosition, double yPosition, Color color) {
+        this.radius = radius;
+        this.yPosition = yPosition;
+        this.xPosition = xPosition;
+        this.color = color;
+    }
+
     @Override
     public String toString() {
         return "Circle{" +

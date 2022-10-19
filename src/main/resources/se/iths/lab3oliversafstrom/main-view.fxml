@@ -15,7 +15,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: PAPAYAWHIP;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.lab3oliversafstrom.Controller">
    <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <MenuBar>
               <menus>
@@ -47,17 +47,17 @@
    <bottom>
       <SplitPane dividerPositions="0.5, 0.5" nodeOrientation="RIGHT_TO_LEFT" style="-fx-background-color: PAPAYAWHIP;" BorderPane.alignment="CENTER">
          <items>
-            <ColorPicker>
+            <ColorPicker fx:id="colorPicker">
                <effect>
                   <InnerShadow />
                </effect>
             </ColorPicker>
-            <Button fx:id="RectangleButton" mnemonicParsing="false" onAction="#drawRectangleButton" text="Draw Rectangle">
+            <Button id="drawRectangleButton" fx:id="RectangleButton" mnemonicParsing="false" onAction="#drawRectangleButton" text="Draw Rectangle">
                <effect>
                   <InnerShadow />
                </effect>
             </Button>
-            <Button fx:id="circleButton" mnemonicParsing="false" onAction="#drawCircleButton" text="Draw Circle">
+            <Button id="drawCircleButton" fx:id="circleButton" mnemonicParsing="false" onAction="#drawCircleButton" text="Draw Circle">
                <effect>
                   <InnerShadow />
                </effect>
@@ -66,6 +66,6 @@
       </SplitPane>
    </bottom>
    <center>
-      <Canvas height="200.0" width="200.0" BorderPane.alignment="CENTER" />
+      <Canvas fx:id="canvas" height="334.0" onMouseClicked="#canvasClicked" width="595.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

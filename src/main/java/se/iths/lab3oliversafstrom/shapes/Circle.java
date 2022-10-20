@@ -41,10 +41,15 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
                 '}';
     }
 
-public boolean findPosition(double mouseX,double mouseY, Color color){
-    return mouseX == centerX() && mouseY == centerY() && color == this.color;
+    public boolean findPosition(double mouseX, double mouseY) {
+        return isWithinShape(mouseX, mouseY);
 
     }
+
+    private boolean isWithinShape(double mouseX, double mouseY) {
+        return mouseX >= centerX() * 2 && mouseX <= centerX() * 2 && mouseY >= centerY() * 2 && mouseY <= centerY() * 2;
+    }
+
     @Override
     public void draw(GraphicsContext context) {
         context.setFill(color);

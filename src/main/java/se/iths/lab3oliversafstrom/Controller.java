@@ -88,8 +88,9 @@ public class Controller {
 
         model.setMouseX(mouseEvent.getX());
         model.setMouseY(mouseEvent.getY());
-        checkShapeAndDraw(context);
 
+
+        checkShapeAndDraw(context);
 
     }
 
@@ -101,6 +102,11 @@ public class Controller {
         } else if (checkRectangleButton()) {
             model.shapeList.add(createNewRectangle());
             drawShapes(context);
+        } else if (true) {
+            for(var shape : model.shapeList){
+                if (shape.findPosition(model.getMouseX(), model.getMouseY() ))
+                    System.out.println(shape);
+            }
         }
     }
 
@@ -136,5 +142,9 @@ public class Controller {
         model.setChatBoxInput(chatBoxInput.getText());
         model.chatWindowString.add("LocalUser: " + model.getChatBoxInput());
         chatBoxInput.setText("");
+    }
+
+    public boolean selectClicked(ActionEvent actionEvent) {
+        return actionEvent.isConsumed();
     }
 }

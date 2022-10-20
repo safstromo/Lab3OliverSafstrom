@@ -10,6 +10,8 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
     double xPosition;
     double yPosition;
 
+    Color color;
+
     public Rectangle(int size, double xPosition, double yPosition, Color color) {
         super.setHeight(size);
         super.setWidth(size);
@@ -39,37 +41,11 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
         return Objects.hash(xPosition, yPosition, color);
     }
 
-    Color color = Color.BLACK;
-
-    public double getxPosition() {
-        return xPosition;
-    }
-
-    public void setxPosition(double xPosition) {
-        this.xPosition = xPosition;
-    }
-
-    public double getyPosition() {
-        return yPosition;
-    }
-
-    public void setyPosition(double yPosition) {
-        this.yPosition = yPosition;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
 
     @Override
     public void draw(GraphicsContext context) {
-        System.out.println("testar draw rectangle");
         context.setFill(color);
-        context.fillOval(centerX(), centerY(), getHeight(), getWidth());
+        context.fillRect(centerX(), centerY(), getHeight(), getWidth());
 
 
     }

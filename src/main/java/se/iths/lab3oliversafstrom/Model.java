@@ -21,8 +21,9 @@ public class Model {
         this.chatBoxInput = chatBoxInput;
     }
 
-public ObservableList<Shape> shapeObservableList;
+    public ObservableList<Shape> shapeList;
     public ObservableList<String> chatWindowString;
+
     public double getMouseX() {
         return mouseX;
     }
@@ -39,18 +40,11 @@ public ObservableList<Shape> shapeObservableList;
         this.mouseY = mouseY;
     }
 
-    public ColorPicker getColorPicker() {
-        return colorPicker;
-    }
 
-    public void setColorPicker(ColorPicker colorPicker) {
-        this.colorPicker = colorPicker;
-    }
-
-    public Model(double mouseX, double mouseY, ColorPicker colorPicker) {
+    public Model(double mouseX, double mouseY) {
         this.mouseX = mouseX;
         this.mouseY = mouseY;
-        this.colorPicker = colorPicker;
+
     }
 
     public Model() {

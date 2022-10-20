@@ -1,6 +1,5 @@
 package se.iths.lab3oliversafstrom;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,10 +7,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
-import se.iths.lab3oliversafstrom.shapes.ShapeFactory;
 
 public class Controller {
     @FXML
@@ -33,10 +30,12 @@ public class Controller {
     @FXML
     private String chatBoxMessage;
 
+    private Model model = new Model();
+
     public void initialize() {
         model = new Model();
         model.chatWindowString = FXCollections.observableArrayList();
-        model.shapeObservableList = FXCollections.observableArrayList();
+        model.shapeList = FXCollections.observableArrayList();
         chatWindow.setItems(model.chatWindowString);
 
     }
@@ -44,8 +43,6 @@ public class Controller {
     private void draw() {
 
     }
-
-    private Model model = new Model();
 
     public void connectServer(ActionEvent actionEvent) {
         System.out.println("Connecting to server......");
@@ -80,25 +77,39 @@ public class Controller {
     }
 
     public void canvasClicked(MouseEvent mouseEvent) {
+        GraphicsContext context = canvas.getGraphicsContext2D();
+
         model.setMouseX(mouseEvent.getX());
         model.setMouseY(mouseEvent.getY());
-        System.out.println(model.getMouseX());
-        System.out.println(model.getMouseY());
 
-        GraphicsContext context = canvas.getGraphicsContext2D();
-        if (drawCircleButton(circleButton) && !drawRectangleButton(rectangleButton)) {
-            Circle circle = createNewCircle();
-            circle.draw(context);
-//            context.setFill(colorPicker.getValue());
-//            context.fillOval(model.getMouseX()-25, model.getMouseY()-25, 50, 50);
-            System.out.println("Circle = " + drawCircleButton(circleButton));
-        }else if (drawRectangleButton(rectangleButton) && !drawCircleButton(circleButton)){
-            context.setFill(colorPicker.getValue());
-            context.fillRect(model.getMouseX()-50, model.getMouseY()-50, 100,100);
-            System.out.println("Rectangle = "+ drawRectangleButton(rectangleButton));
+        checkShapeAndDraw(context);
+
+    }
+
+    private void checkShapeAndDraw(GraphicsContext context) {
+        if (checkCircleButton()) {
+            model.shapeList.add(createNewCircle());
+            drawShapes(context);
+
+        }else if (checkRectangleButton()){
+            model.shapeList.add(createNewRectangle());
+            drawShapes(context);
 
         }
+    }
 
+    private void drawShapes(GraphicsContext context) {
+        for (var shape:model.shapeList) {
+            shape.draw(context);
+        }
+    }
+
+    private boolean checkRectangleButton() {
+        return drawRectangleButton(rectangleButton) && !drawCircleButton(circleButton);
+    }
+
+    private boolean checkCircleButton() {
+        return drawCircleButton(circleButton) && !drawRectangleButton(rectangleButton);
     }
 
     private Rectangle createNewRectangle() {

@@ -2,8 +2,7 @@ package se.iths.lab3oliversafstrom.shapes;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import se.iths.lab3oliversafstrom.Controller;
-import se.iths.lab3oliversafstrom.Model;
+
 
 import java.util.Objects;
 
@@ -42,33 +41,8 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
     }
 
 
-    public double getxPosition() {
-        return xPosition;
-    }
-
-    public void setxPosition(double xPosition) {
-        this.xPosition = xPosition;
-    }
-
-    public double getyPosition() {
-        return yPosition;
-    }
-
-    public void setyPosition(double yPosition) {
-        this.yPosition = yPosition;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     @Override
     public void draw(GraphicsContext context) {
-        System.out.println("testar draw Circle");
         context.setFill(color);
         context.fillOval(centerX(), centerY(), getRadius(), getRadius());
 

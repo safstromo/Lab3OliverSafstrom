@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class Circle extends javafx.scene.shape.Circle implements Shape {
 
+    int radius;
     double xPosition;
     double yPosition;
     Color color;

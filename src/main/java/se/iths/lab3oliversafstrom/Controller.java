@@ -12,6 +12,10 @@ import se.iths.lab3oliversafstrom.shapes.Rectangle;
 
 public class Controller {
     @FXML
+    public Spinner sizeSpinner;
+    @FXML
+    public Label chatLabel;
+    @FXML
     private Button sendButton;
     @FXML
     private TextField chatBoxInput;
@@ -57,7 +61,10 @@ public class Controller {
     }
 
     public void undo(ActionEvent actionEvent) {
-        System.out.println("Undo");
+        GraphicsContext context = canvas.getGraphicsContext2D();
+        model.shapeList.remove(model.shapeList.size()-1);
+        context.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
+        drawShapes(context);
     }
 
     public void redo(ActionEvent actionEvent) {
@@ -91,7 +98,7 @@ public class Controller {
             model.shapeList.add(createNewCircle());
             drawShapes(context);
 
-        }else if (checkRectangleButton()){
+        } else if (checkRectangleButton()) {
             model.shapeList.add(createNewRectangle());
             drawShapes(context);
 
@@ -99,7 +106,7 @@ public class Controller {
     }
 
     private void drawShapes(GraphicsContext context) {
-        for (var shape:model.shapeList) {
+        for (var shape : model.shapeList) {
             shape.draw(context);
         }
     }
@@ -113,11 +120,11 @@ public class Controller {
     }
 
     private Rectangle createNewRectangle() {
-        return new Rectangle(10, model.getMouseX(), model.getMouseY(), colorPicker.getValue());
+        return new Rectangle((Integer) sizeSpinner.getValue(), model.getMouseX(), model.getMouseY(), colorPicker.getValue());
     }
 
     private Circle createNewCircle() {
-        return new Circle(50, model.getMouseX(), model.getMouseY(), colorPicker.getValue());
+        return new Circle((Integer) sizeSpinner.getValue(), model.getMouseX(), model.getMouseY(), colorPicker.getValue());
     }
 
     public void sendMessage() {

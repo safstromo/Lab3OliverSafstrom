@@ -5,4 +5,7 @@ import se.iths.lab3oliversafstrom.Model;
 
 public interface Shape {
     void draw(GraphicsContext context);
+
+    void findPosition();
+
 }

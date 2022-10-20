@@ -50,6 +50,11 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
 
     }
 
+    @Override
+    public void findPosition() {
+
+    }
+
     private double centerX() {
         return xPosition - (getHeight() / 2);
     }

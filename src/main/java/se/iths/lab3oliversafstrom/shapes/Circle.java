@@ -41,12 +41,14 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
                 '}';
     }
 
+public void findPosition(){
 
+
+    }
     @Override
     public void draw(GraphicsContext context) {
         context.setFill(color);
         context.fillOval(centerX(), centerY(), getRadius(), getRadius());
-
     }
 
     private double centerY() {

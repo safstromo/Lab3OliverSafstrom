@@ -88,8 +88,8 @@ public class Controller {
 
         model.setMouseX(mouseEvent.getX());
         model.setMouseY(mouseEvent.getY());
-
         checkShapeAndDraw(context);
+
 
     }
 
@@ -101,7 +101,6 @@ public class Controller {
         } else if (checkRectangleButton()) {
             model.shapeList.add(createNewRectangle());
             drawShapes(context);
-
         }
     }
 

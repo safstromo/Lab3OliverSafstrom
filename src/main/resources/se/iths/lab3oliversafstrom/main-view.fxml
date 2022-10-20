@@ -10,6 +10,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: PAPAYAWHIP;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.lab3oliversafstrom.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: PAPAYAWHIP;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.lab3oliversafstrom.Controller">
    <top>
       <HBox prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -57,16 +58,16 @@
                   <InnerShadow />
                </effect>
             </ColorPicker>
-            <Button id="drawRectangleButton" fx:id="RectangleButton" mnemonicParsing="false" onAction="#drawRectangleButton" text="Draw Rectangle">
+            <ToggleButton fx:id="circleButton" mnemonicParsing="false" text="Draw Circle">
                <effect>
                   <InnerShadow />
                </effect>
-            </Button>
-            <Button id="drawCircleButton" fx:id="circleButton" mnemonicParsing="false" onAction="#drawCircleButton" text="Draw Circle">
+            </ToggleButton>
+            <ToggleButton fx:id="rectangleButton" mnemonicParsing="false" text="Draw Rectangle">
                <effect>
                   <InnerShadow />
                </effect>
-            </Button>
+            </ToggleButton>
             <Button fx:id="selectShape" mnemonicParsing="false" text="Select Shape">
                <effect>
                   <InnerShadow />
@@ -76,7 +77,7 @@
       </SplitPane>
    </bottom>
    <center>
-      <Canvas fx:id="canvas" height="343.0" onMouseClicked="#canvasClicked" width="328.0" BorderPane.alignment="CENTER" />
+      <Canvas fx:id="canvas" height="712.0" onMouseClicked="#canvasClicked" width="993.0" />
    </center>
    <left>
       <VBox alignment="CENTER" prefHeight="338.0" prefWidth="270.0" BorderPane.alignment="CENTER">
@@ -89,7 +90,7 @@
             <ListView fx:id="chatWindow" editable="true" prefHeight="270.0" prefWidth="227.0" VBox.vgrow="ALWAYS" />
             <HBox>
                <children>
-                  <TextField fx:id="chatBoxInput" onAction="#onEnter" prefHeight="49.0" prefWidth="226.0" promptText="Chat......"   />
+                  <TextField fx:id="chatBoxInput" onAction="#onEnter" prefHeight="49.0" prefWidth="226.0" promptText="Chat......" />
                   <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessage" prefHeight="50.0" prefWidth="44.0" text="Send">
                      <effect>
                         <InnerShadow />

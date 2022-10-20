@@ -1,14 +1,12 @@
 package se.iths.lab3oliversafstrom;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import se.iths.lab3oliversafstrom.shapes.Circle;
@@ -24,9 +22,9 @@ public class Controller {
     @FXML
     private Button selectShape;
     @FXML
-    private Button RectangleButton;
+    private ToggleButton rectangleButton;
     @FXML
-    private Button circleButton;
+    private ToggleButton circleButton;
     @FXML
     private Canvas canvas;
     @FXML
@@ -36,21 +34,13 @@ public class Controller {
 
     public void initialize() {
         model = new Model();
-        colorPicker = new ColorPicker();
         model.chatWindowString = FXCollections.observableArrayList();
         chatWindow.setItems(model.chatWindowString);
-canvas.pressedProperty().addListener(observable -> draw());
-
 
     }
 
     private void draw() {
-        GraphicsContext context = canvas.getGraphicsContext2D();
-        if (drawCircleButton()){
-            Circle c = createNewCircle();
-            context.fillOval(model.getMouseX(),model.getMouseY(),c.getRadius(),c.getRadius());
-           // c.draw(context,model);
-        }
+
     }
 
     private Model model = new Model();
@@ -79,20 +69,31 @@ canvas.pressedProperty().addListener(observable -> draw());
         System.out.println("Resize");
     }
 
-    public boolean drawRectangleButton() {
-        return true;
+    public boolean drawRectangleButton(ToggleButton rectangleButton) {
+        return rectangleButton.isSelected();
     }
 
-    public boolean drawCircleButton() {
-        return true;
+    public boolean drawCircleButton(ToggleButton circleButton) {
+        return circleButton.isSelected();
     }
 
     public void canvasClicked(MouseEvent mouseEvent) {
-        model.setMouseX(mouseEvent.getSceneX());
-        model.setMouseY(mouseEvent.getSceneY());
+        model.setMouseX(mouseEvent.getX());
+        model.setMouseY(mouseEvent.getY());
         System.out.println(model.getMouseX());
         System.out.println(model.getMouseY());
 
+        GraphicsContext context = canvas.getGraphicsContext2D();
+        if (drawCircleButton(circleButton) && !drawRectangleButton(rectangleButton)) {
+            context.setFill(colorPicker.getValue());
+            context.fillOval(model.getMouseX()-25, model.getMouseY()-25, 50, 50);
+            System.out.println("Circle = " + drawCircleButton(circleButton));
+        }else if (drawRectangleButton(rectangleButton) && !drawCircleButton(circleButton)){
+            context.setFill(colorPicker.getValue());
+            context.fillRect(model.getMouseX()-50, model.getMouseY()-50, 100,100);
+            System.out.println("Rectangle = "+ drawRectangleButton(rectangleButton));
+
+        }
 
     }
 

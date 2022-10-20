@@ -2,7 +2,6 @@ package se.iths.lab3oliversafstrom.shapes;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import se.iths.lab3oliversafstrom.Model;
 
 import java.util.Objects;
 
@@ -16,7 +15,7 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
         super.setWidth(size);
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        super.setFill(color);
+        this.color = color;
     }
 
     @Override
@@ -67,7 +66,19 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
     }
 
     @Override
-    public void draw(GraphicsContext context, Model model) {
-        System.out.println("testar rectangle");
+    public void draw(GraphicsContext context) {
+        System.out.println("testar draw rectangle");
+        context.setFill(color);
+        context.fillOval(centerX(), centerY(), getHeight(), getWidth());
+
+
+    }
+
+    private double centerX() {
+        return xPosition - (getHeight() / 2);
+    }
+
+    private double centerY() {
+        return yPosition - (getWidth() / 2);
     }
 }

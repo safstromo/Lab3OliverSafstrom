@@ -4,5 +4,5 @@ import javafx.scene.canvas.GraphicsContext;
 import se.iths.lab3oliversafstrom.Model;
 
 public interface Shape {
-    void draw(GraphicsContext context, Model model);
+    void draw(GraphicsContext context);
 }

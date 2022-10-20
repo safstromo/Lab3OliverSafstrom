@@ -11,13 +11,13 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
 
     double xPosition;
     double yPosition;
-    Color color = Color.BLACK;
+    Color color;
 
     public Circle(double radius, double xPosition, double yPosition, Color color) {
         super.setRadius(radius);
         this.yPosition = yPosition;
         this.xPosition = xPosition;
-        super.setFill(color);
+        this.color = color;
     }
 
     @Override
@@ -67,11 +67,19 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
     }
 
     @Override
-    public void draw(GraphicsContext context, Model model) {
-        System.out.println("testar Circle");
-        Circle c = new Circle(10, model.getMouseX(), model.getMouseY(), Color.BLACK);
-        context.fillOval(model.getMouseX(),model.getMouseY(),c.getRadius(),c.getRadius());
+    public void draw(GraphicsContext context) {
+        System.out.println("testar draw Circle");
+        context.setFill(color);
+        context.fillOval(centerX(), centerY(), getRadius(), getRadius());
 
+    }
+
+    private double centerY() {
+        return yPosition - (getRadius() / 2);
+    }
+
+    private double centerX() {
+        return xPosition - (getRadius() / 2);
     }
 }
 

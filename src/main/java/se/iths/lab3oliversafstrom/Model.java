@@ -3,6 +3,7 @@ package se.iths.lab3oliversafstrom;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ColorPicker;
+import se.iths.lab3oliversafstrom.shapes.Shape;
 
 
 public class Model {
@@ -20,7 +21,7 @@ public class Model {
         this.chatBoxInput = chatBoxInput;
     }
 
-
+public ObservableList<Shape> shapeObservableList;
     public ObservableList<String> chatWindowString;
     public double getMouseX() {
         return mouseX;

@@ -97,6 +97,7 @@ public class Controller {
     }
 
     public void undo(ActionEvent actionEvent) {
+        model.undoList.add(model.shapeList.get(model.shapeList.size()-1));
         model.shapeList.remove(model.shapeList.size() - 1);
         context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         drawShapes(context);
@@ -104,7 +105,13 @@ public class Controller {
 
     public void redo(ActionEvent actionEvent) {
         System.out.println("Redo");
+        model.shapeList.add(model.undoList.get(model.undoList.size()-1));
+        model.undoList.remove(model.undoList.size() - 1);
+        context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawShapes(context);
     } //TODO redo method
+
+
 
     public boolean drawRectangleButton(ToggleButton rectangleButton) {
         return rectangleButton.isSelected();
@@ -132,10 +139,12 @@ public class Controller {
     private void checkShapeAndDraw(GraphicsContext context) {
         if (drawCircleButton(circleButton)) {
             model.shapeList.add(createNewCircle());
+            model.undoList.add(createNewCircle());
             drawShapes(context);
 
         } else if (drawRectangleButton(rectangleButton)) {
             model.shapeList.add(createNewRectangle());
+            model.undoList.add(createNewRectangle());
             drawShapes(context);
         } else if (selectButton(selectButton)) {
             for (var shape : model.shapeList) {
@@ -147,6 +156,7 @@ public class Controller {
 
     private void ifFoundChangeValue(Shape shape) {
         if (shape.findPosition(model.getMouseX(), model.getMouseY())){
+            model.undoList.add(shape);
             shape.setColor(colorPicker.getValue());
             shape.setSize((Integer) sizeSpinner.getValue());
         }

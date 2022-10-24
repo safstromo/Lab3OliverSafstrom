@@ -16,14 +16,13 @@ public class Model {
     private String chatBoxInput;
     public ObservableList<Shape> shapeList;
     public ObservableList<String> chatWindowString;
-
-
-
+    public List<Shape> undoList = new LinkedList<>();
 
 
     public String getChatBoxInput() {
         return chatBoxInput;
     }
+
     public void setChatBoxInput(String chatBoxInput) {
         this.chatBoxInput = chatBoxInput;
     }

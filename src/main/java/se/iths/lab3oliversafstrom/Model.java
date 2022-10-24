@@ -40,13 +40,6 @@ public class Model {
         this.mouseY = mouseY;
     }
 
-
-    public Model(double mouseX, double mouseY) {
-        this.mouseX = mouseX;
-        this.mouseY = mouseY;
-
-    }
-
     public Model() {
     }
 }

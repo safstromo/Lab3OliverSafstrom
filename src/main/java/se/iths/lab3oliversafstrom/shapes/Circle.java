@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class Circle extends javafx.scene.shape.Circle implements Shape {
 
-    int radius;
     double xPosition;
     double yPosition;
     Color color;
@@ -47,7 +46,15 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
     }
 
     private boolean isWithinShape(double mouseX, double mouseY) {
-        return mouseX >= centerX() * 2 && mouseX <= centerX() * 2 && mouseY >= centerY() * 2 && mouseY <= centerY() * 2;
+        double distanceX = mouseX - xPosition;
+        double distanceY = mouseY - yPosition;
+        if (distanceY < 0)
+            distanceY = distanceY * -1;
+        if (distanceX <0)
+            distanceX= distanceX * -1;
+        boolean insideX = distanceX < getRadius()/2;
+        boolean insideY = distanceY < getRadius()/2;
+        return insideX && insideY;
     }
 
     @Override

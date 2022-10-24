@@ -33,6 +33,7 @@ public class Controller {
     private ColorPicker colorPicker;
     @FXML
     private String chatBoxMessage;
+    private GraphicsContext context;
 
     private Model model = new Model();
 
@@ -41,8 +42,20 @@ public class Controller {
         model.chatWindowString = FXCollections.observableArrayList();
         model.shapeList = FXCollections.observableArrayList();
         chatWindow.setItems(model.chatWindowString);
+        context = canvas.getGraphicsContext2D();
 
     }
+    //TODO G
+    //TODO Select shapes and change size/color find location Tips! Implementera en metod på dina shapes för att fråga om koordinaterna är inom shapens area.
+    //TODO Gör om undo till comand pattern.
+    //TODO Export to SVG file use file diaglog
+    // skriv 2 tester JUnit5
+
+    //TODO VG
+    //TODO TREADS for connection
+    //TODO connect to server, send paint commands SVG format
+    //TODO Chat
+
 
     private void draw() {
 
@@ -61,19 +74,18 @@ public class Controller {
     }
 
     public void undo(ActionEvent actionEvent) {
-        GraphicsContext context = canvas.getGraphicsContext2D();
-        model.shapeList.remove(model.shapeList.size()-1);
-        context.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
+        model.shapeList.remove(model.shapeList.size() - 1);
+        context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         drawShapes(context);
     }
 
     public void redo(ActionEvent actionEvent) {
         System.out.println("Redo");
-    }
+    } //TODO redo method
 
     public void resize(ActionEvent actionEvent) {
         System.out.println("Resize");
-    }
+    } //TODO
 
     public boolean drawRectangleButton(ToggleButton rectangleButton) {
         return rectangleButton.isSelected();
@@ -84,11 +96,11 @@ public class Controller {
     }
 
     public void canvasClicked(MouseEvent mouseEvent) {
-        GraphicsContext context = canvas.getGraphicsContext2D();
 
         model.setMouseX(mouseEvent.getX());
         model.setMouseY(mouseEvent.getY());
-
+        System.out.println(mouseEvent.getY());
+        System.out.println(mouseEvent.getX());
 
         checkShapeAndDraw(context);
 
@@ -102,10 +114,10 @@ public class Controller {
         } else if (checkRectangleButton()) {
             model.shapeList.add(createNewRectangle());
             drawShapes(context);
-        } else if (true) {
-            for(var shape : model.shapeList){
-                if (shape.findPosition(model.getMouseX(), model.getMouseY() ))
-                    System.out.println(shape);
+        } else {
+            for (var shape : model.shapeList) {
+                if (shape.findPosition(model.getMouseX(), model.getMouseY()))
+                    System.out.println("inshape "+ shape);
             }
         }
     }

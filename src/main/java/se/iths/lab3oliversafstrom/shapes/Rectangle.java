@@ -2,7 +2,7 @@ package se.iths.lab3oliversafstrom.shapes;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import se.iths.lab3oliversafstrom.Model;
+
 
 import java.util.Objects;
 
@@ -57,7 +57,7 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
 
     }
     private boolean isWithinShape(double mouseX, double mouseY) {
-        return mouseX >= centerX() * 2 && mouseX <= centerX() * 2 && mouseY >= centerY() * 2 && mouseY <= centerY() * 2;
+        return mouseX >= centerX() * 16 && mouseX <= centerX() * 16 && mouseY >= centerY() * 10 && mouseY <= centerY() * 10;
     }
 
 

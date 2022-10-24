@@ -42,7 +42,6 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
         return Objects.hash(xPosition, yPosition, color);
     }
 
-
     @Override
     public void draw(GraphicsContext context) {
         context.setFill(color);
@@ -63,11 +62,7 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
         boolean insideY = mouseY <= centerY() + getWidth() && mouseY >= centerY();
 
         return insideX && insideY;
-
-
-
     }
-
 
     private double centerX() {
         return xPosition - (getHeight() / 2);

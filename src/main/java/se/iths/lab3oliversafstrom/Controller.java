@@ -7,6 +7,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
 
@@ -22,7 +24,7 @@ public class Controller {
     @FXML
     private ListView<String> chatWindow;
     @FXML
-    private Button selectShape;
+    private ToggleButton selectButton;
     @FXML
     private ToggleButton rectangleButton;
     @FXML
@@ -43,7 +45,16 @@ public class Controller {
         model.shapeList = FXCollections.observableArrayList();
         chatWindow.setItems(model.chatWindowString);
         context = canvas.getGraphicsContext2D();
+        setToggleGroup();
 
+
+    }
+
+    private void setToggleGroup() {
+        ToggleGroup toggleGroup = new ToggleGroup();
+        selectButton.setToggleGroup(toggleGroup);
+        circleButton.setToggleGroup(toggleGroup);
+        rectangleButton.setToggleGroup(toggleGroup);
     }
     //TODO G
     //TODO Select shapes and change size/color find location Tips! Implementera en metod på dina shapes för att fråga om koordinaterna är inom shapens area.
@@ -67,6 +78,10 @@ public class Controller {
 
     public void saveToFile(ActionEvent actionEvent) {
         System.out.println("Saving to file.....");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Location to save file");
+        fileChooser.showOpenDialog(new Stage());
+
     }
 
     public void exitProgram() {
@@ -95,6 +110,10 @@ public class Controller {
         return circleButton.isSelected();
     }
 
+    public boolean selectButton(ToggleButton selectButton) {
+        return selectButton.isSelected();
+    }
+
     public void canvasClicked(MouseEvent mouseEvent) {
 
         model.setMouseX(mouseEvent.getX());
@@ -107,17 +126,17 @@ public class Controller {
     }
 
     private void checkShapeAndDraw(GraphicsContext context) {
-        if (checkCircleButton()) {
+        if (drawCircleButton(circleButton)) {
             model.shapeList.add(createNewCircle());
             drawShapes(context);
 
-        } else if (checkRectangleButton()) {
+        } else if (drawRectangleButton(rectangleButton)) {
             model.shapeList.add(createNewRectangle());
             drawShapes(context);
-        } else {
+        } else if (selectButton(selectButton)) {
             for (var shape : model.shapeList) {
                 if (shape.findPosition(model.getMouseX(), model.getMouseY()))
-                    System.out.println("inshape "+ shape);
+                    System.out.println("inshape " + shape);
             }
         }
     }
@@ -126,14 +145,6 @@ public class Controller {
         for (var shape : model.shapeList) {
             shape.draw(context);
         }
-    }
-
-    private boolean checkRectangleButton() {
-        return drawRectangleButton(rectangleButton) && !drawCircleButton(circleButton);
-    }
-
-    private boolean checkCircleButton() {
-        return drawCircleButton(circleButton) && !drawRectangleButton(rectangleButton);
     }
 
     private Rectangle createNewRectangle() {
@@ -154,9 +165,5 @@ public class Controller {
         model.setChatBoxInput(chatBoxInput.getText());
         model.chatWindowString.add("LocalUser: " + model.getChatBoxInput());
         chatBoxInput.setText("");
-    }
-
-    public boolean selectClicked(ActionEvent actionEvent) {
-        return actionEvent.isConsumed();
     }
 }

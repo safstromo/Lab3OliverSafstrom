@@ -7,6 +7,7 @@ public interface Shape {
     void draw(GraphicsContext context);
 
     boolean findPosition(double mouseX, double mouseY);
+    boolean isWithinShape(double mouseX, double mouseY);
 
 
 }

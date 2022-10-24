@@ -45,22 +45,17 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
 
     }
 
-    private boolean isWithinShape(double mouseX, double mouseY) {
+    public boolean isWithinShape(double mouseX, double mouseY) {
         double distanceX = mouseX - xPosition;
         double distanceY = mouseY - yPosition;
         if (distanceY < 0)
             distanceY = distanceY * -1;
-        if (distanceX <0)
-            distanceX= distanceX * -1;
-        boolean insideX = distanceX < getRadius()/2;
-        boolean insideY = distanceY < getRadius()/2;
-        return insideX && insideY;
-    }
+        else if (distanceX < 0)
+            distanceX = distanceX * -1;
 
-    @Override
-    public void draw(GraphicsContext context) {
-        context.setFill(color);
-        context.fillOval(centerX(), centerY(), getRadius(), getRadius());
+        boolean insideX = distanceX < getRadius() / 2;
+        boolean insideY = distanceY < getRadius() / 2;
+        return insideX && insideY;
     }
 
     private double centerY() {
@@ -69,6 +64,12 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
 
     private double centerX() {
         return xPosition - (getRadius() / 2);
+    }
+
+    @Override
+    public void draw(GraphicsContext context) {
+        context.setFill(color);
+        context.fillOval(centerX(), centerY(), getRadius(), getRadius());
     }
 }
 

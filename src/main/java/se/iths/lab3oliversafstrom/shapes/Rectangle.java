@@ -52,12 +52,20 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
     }
 
     @Override
-    public boolean findPosition(double mouseX,double mouseY) {
-        return isWithinShape(mouseX,mouseY);
+    public boolean findPosition(double mouseX, double mouseY) {
+        return isWithinShape(mouseX, mouseY);
 
     }
-    private boolean isWithinShape(double mouseX, double mouseY) {
-        return mouseX >= centerX() * 16 && mouseX <= centerX() * 16 && mouseY >= centerY() * 10 && mouseY <= centerY() * 10;
+
+    public boolean isWithinShape(double mouseX, double mouseY) {
+
+        boolean insideX = mouseX <= centerX() + getHeight() && mouseX >= centerX();
+        boolean insideY = mouseY <= centerY() + getWidth() && mouseY >= centerY();
+
+        return insideX && insideY;
+
+
+
     }
 
 

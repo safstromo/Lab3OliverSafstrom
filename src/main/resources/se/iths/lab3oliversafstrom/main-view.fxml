@@ -38,7 +38,6 @@
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#undo" text="Undo" />
                         <MenuItem mnemonicParsing="false" onAction="#redo" text="Redo" />
-                        <MenuItem mnemonicParsing="false" onAction="#resize" text="Resize" />
                   </items>
                 </Menu>
               </menus>

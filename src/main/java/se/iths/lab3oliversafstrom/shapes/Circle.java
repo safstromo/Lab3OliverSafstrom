@@ -19,6 +19,7 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
         this.color = color;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,10 +57,19 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
         boolean insideX = distanceX < getRadius() / 2;
         boolean insideY = distanceY < getRadius() / 2;
         return insideX && insideY;
+
     }
 
     private double centerY() {
         return yPosition - (getRadius() / 2);
+    }
+
+    public void setSize(double radius) {
+        super.setRadius(radius);
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     private double centerX() {

@@ -20,6 +20,14 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements Shape {
         this.yPosition = yPosition;
         this.color = color;
     }
+    public void setSize(double size) {
+        super.setWidth(size);
+        super.setHeight(size);
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
     @Override
     public String toString() {

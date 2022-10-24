@@ -3,6 +3,7 @@ package se.iths.lab3oliversafstrom;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -11,6 +12,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
+import se.iths.lab3oliversafstrom.shapes.Shape;
+
+import java.io.File;
+import java.nio.file.Path;
 
 public class Controller {
     @FXML
@@ -80,7 +85,10 @@ public class Controller {
         System.out.println("Saving to file.....");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Location to save file");
-        fileChooser.showOpenDialog(new Stage());
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".svg Files","*.svg"));
+
+        File savePath = fileChooser.showSaveDialog(new Stage());
+        System.out.println(savePath);
 
     }
 
@@ -97,10 +105,6 @@ public class Controller {
     public void redo(ActionEvent actionEvent) {
         System.out.println("Redo");
     } //TODO redo method
-
-    public void resize(ActionEvent actionEvent) {
-        System.out.println("Resize");
-    } //TODO
 
     public boolean drawRectangleButton(ToggleButton rectangleButton) {
         return rectangleButton.isSelected();
@@ -135,9 +139,16 @@ public class Controller {
             drawShapes(context);
         } else if (selectButton(selectButton)) {
             for (var shape : model.shapeList) {
-                if (shape.findPosition(model.getMouseX(), model.getMouseY()))
-                    System.out.println("inshape " + shape);
+                ifFoundChangeValue(shape);
+                drawShapes(context);
             }
+        }
+    }
+
+    private void ifFoundChangeValue(Shape shape) {
+        if (shape.findPosition(model.getMouseX(), model.getMouseY())){
+            shape.setColor(colorPicker.getValue());
+            shape.setSize((Integer) sizeSpinner.getValue());
         }
     }
 

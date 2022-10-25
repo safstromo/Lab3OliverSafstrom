@@ -3,7 +3,6 @@ package se.iths.lab3oliversafstrom;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -17,7 +16,6 @@ import se.iths.lab3oliversafstrom.stuff.Command;
 import se.iths.lab3oliversafstrom.stuff.ObjectCopy;
 
 import java.io.File;
-import java.nio.file.Path;
 
 public class Controller {
     @FXML
@@ -45,25 +43,11 @@ public class Controller {
     private GraphicsContext context;
 
     private Model model;
+    private Command command;
 
     public void initialize() {
         model = new Model();
-        Command command = new Command() {
-            @Override
-            public void execute() {
-
-            }
-
-            @Override
-            public void redo() {
-
-            }
-
-            @Override
-            public void undo() {
-
-            }
-        }
+        command = new Command();
         model.chatWindowString = FXCollections.observableArrayList();
         model.shapeList = FXCollections.observableArrayList();
         chatWindow.setItems(model.chatWindowString);
@@ -92,9 +76,7 @@ public class Controller {
     //TODO Chat
 
 
-    private void draw() {
 
-    }
 
     public void connectServer(ActionEvent actionEvent) {
         System.out.println("Connecting to server......");
@@ -116,19 +98,21 @@ public class Controller {
     }
 
     public void undo(ActionEvent actionEvent) {
-        model.undoList.add(model.shapeList.get(model.shapeList.size() - 1));
         model.shapeList.remove(model.shapeList.size() - 1);
+        model.shapeList.add(model.undoList.get( model.undoList.size() -1));
+        clearCanvasDrawShapes();
+    }
+
+    private void clearCanvasDrawShapes() {
         context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         drawShapes(context);
     }
 
     public void redo(ActionEvent actionEvent) {
-        System.out.println("Redo");
         model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
         model.undoList.remove(model.undoList.size() - 1);
-        context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawShapes(context);
-    } //TODO redo method
+        clearCanvasDrawShapes();
+    }
 
 
     public boolean drawRectangleButton(ToggleButton rectangleButton) {
@@ -154,13 +138,15 @@ public class Controller {
 
     private void checkShapeAndDraw(GraphicsContext context) {
         if (drawCircleButton(circleButton)) {
-            model.shapeList.add(createNewCircle());
-
+            Circle circle = createNewCircle();
+            model.shapeList.add(circle);
+            createCopyAddToToUndoList(circle);
             drawShapes(context);
 
         } else if (drawRectangleButton(rectangleButton)) {
-            model.shapeList.add(createNewRectangle());
-            model.undoList.add(createNewRectangle());
+            Rectangle rectangle = createNewRectangle();
+            model.shapeList.add(rectangle);
+            createCopyAddToToUndoList(rectangle);
             drawShapes(context);
         } else if (selectButton(selectButton)) {
             for (var shape : model.shapeList) {
@@ -172,10 +158,16 @@ public class Controller {
 
     private void ifFoundChangeValue(Shape shape) {
         if (shape.findPosition(model.getMouseX(), model.getMouseY())) {
-            model.undoList.add(shape);
+            createCopyAddToToUndoList(shape);
             shape.setColor(colorPicker.getValue());
             shape.setSize((Integer) sizeSpinner.getValue());
         }
+    }
+
+    private void createCopyAddToToUndoList(Shape shape) {
+        ObjectCopy objectCopy = new ObjectCopy();
+        objectCopy.setObjectCopy(shape);
+        model.undoList.add(objectCopy.getObjectCopy());
     }
 
     private void drawShapes(GraphicsContext context) {

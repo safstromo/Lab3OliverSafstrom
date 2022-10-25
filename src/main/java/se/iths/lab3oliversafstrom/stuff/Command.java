@@ -2,16 +2,22 @@ package se.iths.lab3oliversafstrom.stuff;
 
 import se.iths.lab3oliversafstrom.shapes.Shape;
 
-public abstract class Command {
+public class Command {
     Shape shape;
     ObjectCopy objectCopy;
 
 
-    public abstract void execute();
+    public void execute(Shape shapeToCopy) {
+        objectCopy.setObjectCopy(shapeToCopy);
+    }
 
-    public abstract void redo();
+    public void redo() {
 
-    public abstract void undo();
+    }
+
+    public void undo() {
+
+    }
 
 
 }

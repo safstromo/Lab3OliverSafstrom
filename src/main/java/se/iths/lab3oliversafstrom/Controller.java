@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
 import se.iths.lab3oliversafstrom.shapes.Shape;
+import se.iths.lab3oliversafstrom.stuff.Command;
+import se.iths.lab3oliversafstrom.stuff.ObjectCopy;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -42,15 +44,32 @@ public class Controller {
     private String chatBoxMessage;
     private GraphicsContext context;
 
-    private Model model = new Model();
+    private Model model;
 
     public void initialize() {
         model = new Model();
+        Command command = new Command() {
+            @Override
+            public void execute() {
+
+            }
+
+            @Override
+            public void redo() {
+
+            }
+
+            @Override
+            public void undo() {
+
+            }
+        }
         model.chatWindowString = FXCollections.observableArrayList();
         model.shapeList = FXCollections.observableArrayList();
         chatWindow.setItems(model.chatWindowString);
         context = canvas.getGraphicsContext2D();
         setToggleGroup();
+
 
 
     }
@@ -85,7 +104,7 @@ public class Controller {
         System.out.println("Saving to file.....");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Location to save file");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".svg Files","*.svg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".svg Files", "*.svg"));
 
         File savePath = fileChooser.showSaveDialog(new Stage());
         System.out.println(savePath);
@@ -97,7 +116,7 @@ public class Controller {
     }
 
     public void undo(ActionEvent actionEvent) {
-        model.undoList.add(model.shapeList.get(model.shapeList.size()-1));
+        model.undoList.add(model.shapeList.get(model.shapeList.size() - 1));
         model.shapeList.remove(model.shapeList.size() - 1);
         context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         drawShapes(context);
@@ -105,12 +124,11 @@ public class Controller {
 
     public void redo(ActionEvent actionEvent) {
         System.out.println("Redo");
-        model.shapeList.add(model.undoList.get(model.undoList.size()-1));
+        model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
         model.undoList.remove(model.undoList.size() - 1);
         context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         drawShapes(context);
     } //TODO redo method
-
 
 
     public boolean drawRectangleButton(ToggleButton rectangleButton) {
@@ -129,8 +147,6 @@ public class Controller {
 
         model.setMouseX(mouseEvent.getX());
         model.setMouseY(mouseEvent.getY());
-        System.out.println(mouseEvent.getY());
-        System.out.println(mouseEvent.getX());
 
         checkShapeAndDraw(context);
 
@@ -139,7 +155,7 @@ public class Controller {
     private void checkShapeAndDraw(GraphicsContext context) {
         if (drawCircleButton(circleButton)) {
             model.shapeList.add(createNewCircle());
-            model.undoList.add(createNewCircle());
+
             drawShapes(context);
 
         } else if (drawRectangleButton(rectangleButton)) {
@@ -155,7 +171,7 @@ public class Controller {
     }
 
     private void ifFoundChangeValue(Shape shape) {
-        if (shape.findPosition(model.getMouseX(), model.getMouseY())){
+        if (shape.findPosition(model.getMouseX(), model.getMouseY())) {
             model.undoList.add(shape);
             shape.setColor(colorPicker.getValue());
             shape.setSize((Integer) sizeSpinner.getValue());

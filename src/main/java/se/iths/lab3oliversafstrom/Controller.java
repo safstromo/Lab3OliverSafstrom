@@ -13,7 +13,8 @@ import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
 import se.iths.lab3oliversafstrom.shapes.Shape;
 import se.iths.lab3oliversafstrom.stuff.Command;
-import se.iths.lab3oliversafstrom.stuff.ObjectCopy;
+
+import se.iths.lab3oliversafstrom.stuff.ShapeCopy;
 
 import java.io.File;
 
@@ -165,9 +166,9 @@ public class Controller {
     }
 
     private void createCopyAddToToUndoList(Shape shape) {
-        ObjectCopy objectCopy = new ObjectCopy();
-        objectCopy.setObjectCopy(shape);
-        model.undoList.add(objectCopy.getObjectCopy());
+        ShapeCopy shapeCopy = new ShapeCopy();
+        shapeCopy.setObjectCopy(shape);
+        model.undoList.add(shapeCopy.getObjectCopy());
     }
 
     private void drawShapes(GraphicsContext context) {

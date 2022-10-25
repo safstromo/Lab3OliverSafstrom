@@ -17,6 +17,7 @@ public class Model {
     public ObservableList<Shape> shapeList;
     public ObservableList<String> chatWindowString;
     public List<Shape> undoList = new LinkedList<>();
+    public List<Shape> shapeListCopy;
 
 
     public String getChatBoxInput() {

@@ -2,7 +2,7 @@ package se.iths.lab3oliversafstrom.stuff;
 
 import se.iths.lab3oliversafstrom.shapes.Shape;
 
-public class ObjectCopy {
+public class ShapeCopy {
     Shape objectCopy;
 
     public Shape getObjectCopy(){

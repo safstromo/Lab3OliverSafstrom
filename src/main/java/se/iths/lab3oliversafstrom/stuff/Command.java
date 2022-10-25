@@ -4,11 +4,11 @@ import se.iths.lab3oliversafstrom.shapes.Shape;
 
 public class Command {
     Shape shape;
-    ObjectCopy objectCopy;
+    ShapeCopy shapeCopy;
 
 
     public void execute(Shape shapeToCopy) {
-        objectCopy.setObjectCopy(shapeToCopy);
+        shapeCopy.setObjectCopy(shapeToCopy);
     }
 
     public void redo() {

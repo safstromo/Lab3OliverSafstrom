@@ -13,6 +13,7 @@ public class Rectangle implements Shape {
 
     Color color;
 
+
     public Rectangle(int size, double xPosition, double yPosition, Color color) {
         this.size = size;
         this.xPosition = xPosition;
@@ -47,7 +48,8 @@ public class Rectangle implements Shape {
 
     @Override
     public String toSVG() {
-        return "<rect fill=" + color + " stroke=" + color + " x=" + xPosition + " y=" + yPosition + " width=" + size + " height=" + size + "/>";
+        String svgColorCode = "#" + getColor().toString().substring(2,10);
+        return "<rect fill=#" + color + " stroke=#" + svgColorCode + " x=" + xPosition + " y=" + yPosition + " width=" + size + " height=" + size + "/>";
 
     }
 

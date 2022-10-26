@@ -42,6 +42,8 @@ public class Circle implements Shape {
         return color;
     }
 
+
+
     public boolean findPosition(double mouseX, double mouseY) {
         return isWithinShape(mouseX, mouseY);
 
@@ -99,7 +101,8 @@ public class Circle implements Shape {
 
     @Override
     public String toSVG() {
-        return "<circle cx=" + xPosition + " cy=" + yPosition + " r=" + radius + " fill=" + color + " />";
+        String svgColorCode = "#" + getColor().toString().substring(2,10);
+        return "<circle cx=" + xPosition + " cy=" + yPosition + " r=" + radius + " fill=#" + svgColorCode + " />";
 
     }
 

@@ -85,7 +85,7 @@ public class Circle implements Shape {
 
     @Override
     public void setSize(int size) {
-    this.radius = size;
+        this.radius = size;
     }
 
     private double centerY() {
@@ -93,9 +93,14 @@ public class Circle implements Shape {
     }
 
 
-
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    @Override
+    public String toSVG() {
+        return "<circle cx=" + xPosition + " cy=" + yPosition + " r=" + radius + " fill=" + color + " />";
+
     }
 
     private double centerX() {

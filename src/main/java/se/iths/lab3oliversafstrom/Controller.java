@@ -1,19 +1,14 @@
 package se.iths.lab3oliversafstrom;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
 import se.iths.lab3oliversafstrom.shapes.Shape;
-
-import java.io.File;
 
 public class Controller {
     @FXML
@@ -41,6 +36,7 @@ public class Controller {
     private GraphicsContext context;
 
     Model model = new Model();
+    SvgFileWriter svgFileWriter = new SvgFileWriter();
 
 
     public void initialize() {
@@ -65,9 +61,9 @@ public class Controller {
     }
     //TODO G
     //TODO Select shapes and change size/color find location Tips! Implementera en metod på dina shapes för att fråga om koordinaterna är inom shapens area.
-    //TODO Gör om undo till comand pattern.
     //TODO Export to SVG file use file diaglog
     // skriv 2 tester JUnit5
+
 
     //TODO VG
     //TODO TREADS for connection
@@ -81,12 +77,8 @@ public class Controller {
 
     public void saveToFile(ActionEvent actionEvent) {
         System.out.println("Saving to file.....");
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Location to save file");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".svg Files", "*.svg"));
+        svgFileWriter.saveToFile(model);
 
-        File savePath = fileChooser.showSaveDialog(new Stage());
-        System.out.println(savePath);
 
     }
 
@@ -96,10 +88,10 @@ public class Controller {
 
     public void undo(ActionEvent actionEvent) {
         model.shapeList.remove(model.shapeList.size() - 1);
-        if (!model.undoList.isEmpty()) {
-            model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
-            model.undoList.remove(model.undoList.size() - 1);
-        }
+//        if (!model.undoList.isEmpty()) {
+        model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
+//            model.undoList.remove(model.undoList.size() - 1);
+//        }
         clearCanvasDrawShapes();
     }//TODO TA BORT GAMLA OBJEKTET.
     //TODO bara kopiera undolistan?
@@ -150,6 +142,7 @@ public class Controller {
                 ifFoundChangeValue(shape, i);
             }
         }
+
         clearCanvasDrawShapes();
 
     }
@@ -166,6 +159,7 @@ public class Controller {
     private void createShapeAndCopyToUndoList(Shape shape) {
         if (shape.getClass() == Circle.class) {
             Circle circle = copyCircle((Circle) shape);
+            //  if (!model.shapeList.isEmpty())
             model.undoList.add(circle);
             Circle newCircle = createNewCircleChanged((Circle) shape);
             model.shapeList.add(newCircle);

@@ -13,8 +13,8 @@ public interface Shape {
 
     void setSize(int size);
 
-
     void setColor(Color color);
 
+    String toSVG();
 
 }

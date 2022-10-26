@@ -45,6 +45,12 @@ public class Rectangle implements Shape {
         this.color = color;
     }
 
+    @Override
+    public String toSVG() {
+        return "<rect fill=" + color + " stroke=" + color + " x=" + xPosition + " y=" + yPosition + " width=" + size + " height=" + size + "/>";
+
+    }
+
     public int getSize() {
         return size;
     }

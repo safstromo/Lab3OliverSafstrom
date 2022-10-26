@@ -23,8 +23,7 @@ public class Model {
     public List<Shape> shapeList = new ArrayList<>();
     public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
     public List<Shape> undoList = new LinkedList<>();
-    public List<Shape> shapeListCopy;
-    public Shape shapeCopy;
+
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>();
 
     public StringProperty chatBoxInputProperty() {
@@ -54,4 +53,5 @@ public class Model {
     public void connectToServer(){
 
     }
+
 }

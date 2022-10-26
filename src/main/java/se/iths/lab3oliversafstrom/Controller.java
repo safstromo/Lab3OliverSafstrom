@@ -100,7 +100,6 @@ public class Controller {
     }
 
     public void undo(ActionEvent actionEvent) {
-        model.shapeList.remove(model.shapeList.size() - 1);
         model.shapeList.add(model.undoList.get( model.undoList.size() -1));
         clearCanvasDrawShapes();
     }

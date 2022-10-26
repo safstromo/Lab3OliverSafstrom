@@ -1,6 +1,5 @@
 package se.iths.lab3oliversafstrom;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,7 +7,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import se.iths.lab3oliversafstrom.shapes.Circle;
@@ -46,11 +44,10 @@ public class Controller {
 
 
     public void initialize() {
-
+        setToggleGroup();
         chatWindow.setItems(model.chatWindowString);
         context = canvas.getGraphicsContext2D();
-        setToggleGroup();
-
+//TODO CHATBOX chatboxinput property bindBidirectional med modell
 
     }
 

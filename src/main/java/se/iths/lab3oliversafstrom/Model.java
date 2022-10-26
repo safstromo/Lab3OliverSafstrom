@@ -1,6 +1,7 @@
 package se.iths.lab3oliversafstrom;
 
 
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ColorPicker;

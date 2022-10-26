@@ -49,6 +49,12 @@ public class Controller {
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
         context = canvas.getGraphicsContext2D();
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
+        colorPicker.valueProperty().bindBidirectional(model.colorPicker);
+
+
+        //TODO BINDA CHATT MED SERVER!
+        //TODO binda colorpicker. i modellen.
+        //TODO BINDA SPINNER I modellen
     }
 
     private void setToggleGroup() {

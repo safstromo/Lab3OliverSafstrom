@@ -1,11 +1,13 @@
 package se.iths.lab3oliversafstrom;
 
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ColorPicker;
+import javafx.scene.paint.Color;
 import se.iths.lab3oliversafstrom.shapes.Shape;
 
 import java.util.LinkedList;
@@ -14,14 +16,15 @@ import java.util.List;
 
 public class Model {
     private double mouseX;
-    private double mouseY; //TODO property?
-    private ColorPicker colorPicker;
+    private double mouseY;
+
     private StringProperty chatBoxInput = new SimpleStringProperty();
     public ObservableList<Shape> shapeList = FXCollections.observableArrayList();
     public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
     public List<Shape> undoList = new LinkedList<>();
     public List<Shape> shapeListCopy;
     public Shape shapeCopy;
+    public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>();
 
     public StringProperty chatBoxInputProperty() {
         return chatBoxInput;
@@ -45,5 +48,9 @@ public class Model {
 
     public String getChatBoxInput() {
         return chatBoxInput.get();
+    }
+
+    public void connectToServer(){
+
     }
 }

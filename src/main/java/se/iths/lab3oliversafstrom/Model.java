@@ -1,6 +1,7 @@
 package se.iths.lab3oliversafstrom;
 
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ColorPicker;
 import se.iths.lab3oliversafstrom.shapes.Shape;
@@ -11,11 +12,11 @@ import java.util.List;
 
 public class Model {
     private double mouseX;
-    private double mouseY;
+    private double mouseY; //TODO property?
     private ColorPicker colorPicker;
-    private String chatBoxInput;
-    public ObservableList<Shape> shapeList;
-    public ObservableList<String> chatWindowString;
+    private String chatBoxInput; //TODO Property
+    public ObservableList<Shape> shapeList = FXCollections.observableArrayList();
+    public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
     public List<Shape> undoList = new LinkedList<>();
     public List<Shape> shapeListCopy;
     public Shape shapeCopy;

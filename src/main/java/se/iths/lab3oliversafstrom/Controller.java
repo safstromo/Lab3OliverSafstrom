@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import se.iths.lab3oliversafstrom.shapes.Circle;
@@ -41,13 +42,11 @@ public class Controller {
     private String chatBoxMessage;
     private GraphicsContext context;
 
-    private Model model;
+    Model model = new Model();
 
 
     public void initialize() {
-        model = new Model();
-        model.chatWindowString = FXCollections.observableArrayList();
-        model.shapeList = FXCollections.observableArrayList();
+
         chatWindow.setItems(model.chatWindowString);
         context = canvas.getGraphicsContext2D();
         setToggleGroup();
@@ -93,10 +92,11 @@ public class Controller {
     }
 
     public void undo(ActionEvent actionEvent) {
-        model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
-        model.shapeList.remove(model.shapeList.size()-1);
+        //model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
+        model.shapeList.remove(model.shapeList.size() - 1);
         clearCanvasDrawShapes();
     }//TODO TA BORT GAMLA OBJEKTET.
+    //TODO bara kopiera undolistan?
 
     private void clearCanvasDrawShapes() {
         context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -149,14 +149,14 @@ public class Controller {
                 ifFoundChangeValue(shape, i);
             }
         }
-        drawShapes(context);
+        clearCanvasDrawShapes();
+
     }
 
     private void ifFoundChangeValue(Shape shape, int index) {
         if (shape.findPosition(model.getMouseX(), model.getMouseY())) {
             createCopyAddToToUndoList(shape);
-            shape.setColor(colorPicker.getValue());
-            shape.setSize((Integer) sizeSpinner.getValue());
+            model.shapeList.remove(index);
             model.shapeCopy = shape;
             clearCanvasDrawShapes();
         }
@@ -164,11 +164,16 @@ public class Controller {
 
     private void createCopyAddToToUndoList(Shape shape) {
         if (shape.getClass() == Circle.class) {
-            Circle circle = new Circle(((Circle) shape).getRadius(), ((Circle) shape).getxPosition(), ((Circle) shape).getyPosition(), ((Circle) shape).getColor());
+            Circle circle = new Circle((int) ((Circle) shape).getRadius(), ((Circle) shape).getxPosition(), ((Circle) shape).getyPosition(), ((Circle) shape).getColor());
             model.undoList.add(circle);
+            Circle newCircle = new Circle((Integer) sizeSpinner.getValue(), ((Circle) shape).getxPosition(), ((Circle) shape).getyPosition(), colorPicker.getValue());
+            model.shapeList.add(newCircle);
+
         } else if (shape.getClass() == Rectangle.class) {
             Rectangle rectangle = new Rectangle(((Rectangle) shape).getSize(), ((Rectangle) shape).getxPosition(), ((Rectangle) shape).getyPosition(), ((Rectangle) shape).getColor());
             model.undoList.add(rectangle);
+            Rectangle newRectangle = new Rectangle((Integer) sizeSpinner.getValue(), ((Rectangle) shape).getxPosition(), ((Rectangle) shape).getyPosition(), colorPicker.getValue());
+            model.shapeList.add(newRectangle);
         }
     }
 

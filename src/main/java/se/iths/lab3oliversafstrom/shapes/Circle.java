@@ -9,13 +9,13 @@ import java.util.Objects;
 public class Circle implements Shape {
 
     String type = "circle";
-    double radius;
+    int radius;
     double xPosition;
 
     double yPosition;
     Color color;
 
-    public Circle(double radius, double xPosition, double yPosition, Color color) {
+    public Circle(int radius, double xPosition, double yPosition, Color color) {
         this.radius = radius;
         this.yPosition = yPosition;
         this.xPosition = xPosition;

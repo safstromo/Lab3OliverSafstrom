@@ -9,10 +9,10 @@ class ModelTest {
     @Test
     void getChatBoxInput() {
         Model model = new Model();
-        model.setChatBoxInput("Test");
+        model.chatBoxInputProperty();
 
         var expectedString = "Test";
-        var actualString = model.getChatBoxInput();
+        var actualString = model.chatBoxInputProperty();
 
         assertEquals(expectedString, actualString);
     }

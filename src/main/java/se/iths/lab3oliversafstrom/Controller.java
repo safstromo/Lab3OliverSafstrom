@@ -46,9 +46,9 @@ public class Controller {
     public void initialize() {
         setToggleGroup();
         chatWindow.setItems(model.chatWindowString);
+        chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
         context = canvas.getGraphicsContext2D();
-//TODO CHATBOX chatboxinput property bindBidirectional med modell
-
+        sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
     }
 
     private void setToggleGroup() {
@@ -189,13 +189,11 @@ public class Controller {
     }
 
     public void sendMessage() {
-        model.setChatBoxInput(chatBoxInput.getText());
         model.chatWindowString.add("LocalUser: " + model.getChatBoxInput());
         chatBoxInput.setText("");
     }
 
     public void onEnter() {
-        model.setChatBoxInput(chatBoxInput.getText());
         model.chatWindowString.add("LocalUser: " + model.getChatBoxInput());
         chatBoxInput.setText("");
     }

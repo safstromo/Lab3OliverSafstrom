@@ -13,9 +13,6 @@ import javafx.stage.Stage;
 import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
 import se.iths.lab3oliversafstrom.shapes.Shape;
-import se.iths.lab3oliversafstrom.stuff.Command;
-
-import se.iths.lab3oliversafstrom.stuff.ShapeCopy;
 
 import java.io.File;
 
@@ -45,17 +42,15 @@ public class Controller {
     private GraphicsContext context;
 
     private Model model;
-    private Command command;
+
 
     public void initialize() {
         model = new Model();
-        command = new Command();
         model.chatWindowString = FXCollections.observableArrayList();
         model.shapeList = FXCollections.observableArrayList();
         chatWindow.setItems(model.chatWindowString);
         context = canvas.getGraphicsContext2D();
         setToggleGroup();
-
 
 
     }
@@ -78,8 +73,6 @@ public class Controller {
     //TODO Chat
 
 
-
-
     public void connectServer(ActionEvent actionEvent) {
         System.out.println("Connecting to server......");
     }
@@ -100,9 +93,10 @@ public class Controller {
     }
 
     public void undo(ActionEvent actionEvent) {
-        model.shapeList.add(model.undoList.get( model.undoList.size() -1));
+        model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
+        model.shapeList.remove(model.shapeList.size()-1);
         clearCanvasDrawShapes();
-    }
+    }//TODO TA BORT GAMLA OBJEKTET.
 
     private void clearCanvasDrawShapes() {
         context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -152,7 +146,7 @@ public class Controller {
             ObservableList<Shape> shapeList = model.shapeList;
             for (int i = 0; i < shapeList.size(); i++) {
                 Shape shape = shapeList.get(i);
-                ifFoundChangeValue(shape,i);
+                ifFoundChangeValue(shape, i);
             }
         }
         drawShapes(context);
@@ -163,22 +157,19 @@ public class Controller {
             createCopyAddToToUndoList(shape);
             shape.setColor(colorPicker.getValue());
             shape.setSize((Integer) sizeSpinner.getValue());
-
-
-
+            model.shapeCopy = shape;
+            clearCanvasDrawShapes();
         }
     }
 
     private void createCopyAddToToUndoList(Shape shape) {
         if (shape.getClass() == Circle.class) {
-            Circle circle = new Circle(((Circle) shape).getRadius(), ((Circle) shape).getxPosition(),((Circle) shape).getyPosition(),((Circle) shape).getColor());
+            Circle circle = new Circle(((Circle) shape).getRadius(), ((Circle) shape).getxPosition(), ((Circle) shape).getyPosition(), ((Circle) shape).getColor());
             model.undoList.add(circle);
-        } else if (shape.getClass()== Rectangle.class) {
-            Rectangle rectangle = new Rectangle(((Rectangle) shape).getSize(),((Rectangle) shape).getxPosition(),((Rectangle) shape).getyPosition(),((Rectangle) shape).getColor());
+        } else if (shape.getClass() == Rectangle.class) {
+            Rectangle rectangle = new Rectangle(((Rectangle) shape).getSize(), ((Rectangle) shape).getxPosition(), ((Rectangle) shape).getyPosition(), ((Rectangle) shape).getColor());
             model.undoList.add(rectangle);
         }
-//        ShapeCopy shapeCopy = new ShapeCopy();
-//        shapeCopy.setObjectCopy(shape);
     }
 
     private void drawShapes(GraphicsContext context) {

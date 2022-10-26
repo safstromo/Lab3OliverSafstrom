@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import se.iths.lab3oliversafstrom.shapes.Shape;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Model {
     private double mouseY;
 
     private StringProperty chatBoxInput = new SimpleStringProperty();
-    public ObservableList<Shape> shapeList = FXCollections.observableArrayList();
+    public List<Shape> shapeList = new ArrayList<>();
     public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
     public List<Shape> undoList = new LinkedList<>();
     public List<Shape> shapeListCopy;

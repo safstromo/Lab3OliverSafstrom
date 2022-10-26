@@ -49,12 +49,12 @@ public class Controller {
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
         context = canvas.getGraphicsContext2D();
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
-        colorPicker.valueProperty().bindBidirectional(model.colorPicker);
+        //colorPicker.valueProperty().bindBidirectional(model.colorPicker);
 
 
         //TODO BINDA CHATT MED SERVER!
-        //TODO binda colorpicker. i modellen.
-        //TODO BINDA SPINNER I modellen
+        //TODO binda colorpicker. i modellen. för att hämta färg på objekt.
+        //TODO BINDA SPINNER I modellen för att hämta strolek på objekt.
     }
 
     private void setToggleGroup() {
@@ -95,8 +95,11 @@ public class Controller {
     }
 
     public void undo(ActionEvent actionEvent) {
-        //model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
         model.shapeList.remove(model.shapeList.size() - 1);
+        if (!model.undoList.isEmpty()) {
+            model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
+            model.undoList.remove(model.undoList.size() - 1);
+        }
         clearCanvasDrawShapes();
     }//TODO TA BORT GAMLA OBJEKTET.
     //TODO bara kopiera undolistan?
@@ -107,7 +110,7 @@ public class Controller {
     }
 
     public void redo(ActionEvent actionEvent) {
-        model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
+        //   model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
         model.undoList.remove(model.undoList.size() - 1);
         clearCanvasDrawShapes();
     }
@@ -136,19 +139,14 @@ public class Controller {
 
     private void checkShapeAndDraw(GraphicsContext context) {
         if (drawCircleButton(circleButton)) {
-            Circle circle = createNewCircle();
-            model.shapeList.add(circle);
-            createCopyAddToToUndoList(circle);
+            createShapeAndCopyToUndoList();
 
         } else if (drawRectangleButton(rectangleButton)) {
-            Rectangle rectangle = createNewRectangle();
-            model.shapeList.add(rectangle);
-            createCopyAddToToUndoList(rectangle);
+            createShapeAndCopyToUndoList();
 
         } else if (selectButton(selectButton)) {
-            ObservableList<Shape> shapeList = model.shapeList;
-            for (int i = 0; i < shapeList.size(); i++) {
-                Shape shape = shapeList.get(i);
+            for (int i = 0; i < model.shapeList.size() - 1; i++) {
+                Shape shape = model.shapeList.get(i);
                 ifFoundChangeValue(shape, i);
             }
         }
@@ -158,24 +156,56 @@ public class Controller {
 
     private void ifFoundChangeValue(Shape shape, int index) {
         if (shape.findPosition(model.getMouseX(), model.getMouseY())) {
-            createCopyAddToToUndoList(shape);
+            createShapeAndCopyToUndoList(shape);
             model.shapeList.remove(index);
-            model.shapeCopy = shape;
             clearCanvasDrawShapes();
+
         }
     }
 
-    private void createCopyAddToToUndoList(Shape shape) {
+    private void createShapeAndCopyToUndoList(Shape shape) {
         if (shape.getClass() == Circle.class) {
-            Circle circle = new Circle((int) ((Circle) shape).getRadius(), ((Circle) shape).getxPosition(), ((Circle) shape).getyPosition(), ((Circle) shape).getColor());
+            Circle circle = copyCircle((Circle) shape);
             model.undoList.add(circle);
-            Circle newCircle = new Circle((Integer) sizeSpinner.getValue(), ((Circle) shape).getxPosition(), ((Circle) shape).getyPosition(), colorPicker.getValue());
+            Circle newCircle = createNewCircleChanged((Circle) shape);
             model.shapeList.add(newCircle);
 
         } else if (shape.getClass() == Rectangle.class) {
-            Rectangle rectangle = new Rectangle(((Rectangle) shape).getSize(), ((Rectangle) shape).getxPosition(), ((Rectangle) shape).getyPosition(), ((Rectangle) shape).getColor());
+            Rectangle rectangle = CopyRectangle((Rectangle) shape);
             model.undoList.add(rectangle);
-            Rectangle newRectangle = new Rectangle((Integer) sizeSpinner.getValue(), ((Rectangle) shape).getxPosition(), ((Rectangle) shape).getyPosition(), colorPicker.getValue());
+            Rectangle newRectangle = createNewRectangleChanged((Rectangle) shape);
+            model.shapeList.add(newRectangle);
+        }
+    }
+
+    private Rectangle createNewRectangleChanged(Rectangle shape) {
+        return new Rectangle((Integer) sizeSpinner.getValue(), shape.getxPosition(), shape.getyPosition(), colorPicker.getValue());
+    }
+
+    private static Rectangle CopyRectangle(Rectangle shape) {
+        return new Rectangle(shape.getSize(), shape.getxPosition(), shape.getyPosition(), shape.getColor());
+    }
+
+    private Circle createNewCircleChanged(Circle shape) {
+        return new Circle((Integer) sizeSpinner.getValue(), shape.getxPosition(), shape.getyPosition(), colorPicker.getValue());
+    }
+
+    private static Circle copyCircle(Circle shape) {
+        Circle circle = new Circle((int) shape.getRadius(), shape.getxPosition(), shape.getyPosition(), shape.getColor());
+        return circle;
+    }
+
+    private void createShapeAndCopyToUndoList() {
+        if (drawCircleButton(circleButton)) {
+            Circle circle = createNewCircle();
+            model.undoList.add(circle);
+            Circle newCircle = createNewCircle();
+            model.shapeList.add(newCircle);
+
+        } else if (drawRectangleButton(rectangleButton)) {
+            Rectangle rectangle = createNewRectangle();
+            model.undoList.add(rectangle);
+            Rectangle newRectangle = createNewRectangle();
             model.shapeList.add(newRectangle);
         }
     }

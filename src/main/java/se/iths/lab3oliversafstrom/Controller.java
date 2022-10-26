@@ -1,6 +1,7 @@
 package se.iths.lab3oliversafstrom;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -142,33 +143,43 @@ public class Controller {
             Circle circle = createNewCircle();
             model.shapeList.add(circle);
             createCopyAddToToUndoList(circle);
-            drawShapes(context);
 
         } else if (drawRectangleButton(rectangleButton)) {
             Rectangle rectangle = createNewRectangle();
             model.shapeList.add(rectangle);
             createCopyAddToToUndoList(rectangle);
-            drawShapes(context);
+
         } else if (selectButton(selectButton)) {
-            for (var shape : model.shapeList) {
-                ifFoundChangeValue(shape);
-                drawShapes(context);
+            ObservableList<Shape> shapeList = model.shapeList;
+            for (int i = 0; i < shapeList.size(); i++) {
+                Shape shape = shapeList.get(i);
+                ifFoundChangeValue(shape,i);
             }
         }
+        drawShapes(context);
     }
 
-    private void ifFoundChangeValue(Shape shape) {
+    private void ifFoundChangeValue(Shape shape, int index) {
         if (shape.findPosition(model.getMouseX(), model.getMouseY())) {
             createCopyAddToToUndoList(shape);
             shape.setColor(colorPicker.getValue());
             shape.setSize((Integer) sizeSpinner.getValue());
+
+
+
         }
     }
 
     private void createCopyAddToToUndoList(Shape shape) {
-        ShapeCopy shapeCopy = new ShapeCopy();
-        shapeCopy.setObjectCopy(shape);
-        model.undoList.add(shapeCopy.getObjectCopy());
+        if (shape.getClass() == Circle.class) {
+            Circle circle = new Circle(((Circle) shape).getRadius(), ((Circle) shape).getxPosition(),((Circle) shape).getyPosition(),((Circle) shape).getColor());
+            model.undoList.add(circle);
+        } else if (shape.getClass()== Rectangle.class) {
+            Rectangle rectangle = new Rectangle(((Rectangle) shape).getSize(),((Rectangle) shape).getxPosition(),((Rectangle) shape).getyPosition(),((Rectangle) shape).getColor());
+            model.undoList.add(rectangle);
+        }
+//        ShapeCopy shapeCopy = new ShapeCopy();
+//        shapeCopy.setObjectCopy(shape);
     }
 
     private void drawShapes(GraphicsContext context) {

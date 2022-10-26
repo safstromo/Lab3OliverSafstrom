@@ -6,44 +6,67 @@ import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
-public class Circle extends javafx.scene.shape.Circle implements Shape {
+public class Circle implements Shape {
 
+    String type = "circle";
+    double radius;
     double xPosition;
+
     double yPosition;
     Color color;
 
     public Circle(double radius, double xPosition, double yPosition, Color color) {
-        super.setRadius(radius);
+        this.radius = radius;
         this.yPosition = yPosition;
         this.xPosition = xPosition;
         this.color = color;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Circle circle)) return false;
-        return Double.compare(circle.xPosition, xPosition) == 0 && Double.compare(circle.yPosition, yPosition) == 0 && Objects.equals(color, circle.color);
+    public double getRadius() {
+        return radius;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(xPosition, yPosition, color);
+    public String getType() {
+        return type;
     }
 
-    @Override
-    public String toString() {
-        return "Circle{" +
-                "xPosition=" + xPosition +
-                ", yPosition=" + yPosition +
-                ", color=" + color +
-                '}';
+    public double getxPosition() {
+        return xPosition;
+    }
+
+    public double getyPosition() {
+        return yPosition;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public boolean findPosition(double mouseX, double mouseY) {
         return isWithinShape(mouseX, mouseY);
 
+    }
+
+    @Override
+    public String toString() {
+        return "Circle{" +
+                "type='" + type + '\'' +
+                ", xPosition=" + xPosition +
+                ", yPosition=" + yPosition +
+                ", color=" + color +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Circle circle)) return false;
+        return Double.compare(circle.xPosition, xPosition) == 0 && Double.compare(circle.yPosition, yPosition) == 0 && Objects.equals(type, circle.type) && Objects.equals(color, circle.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, xPosition, yPosition, color);
     }
 
     public boolean isWithinShape(double mouseX, double mouseY) {
@@ -60,13 +83,16 @@ public class Circle extends javafx.scene.shape.Circle implements Shape {
 
     }
 
+    @Override
+    public void setSize(int size) {
+    this.radius = size;
+    }
+
     private double centerY() {
         return yPosition - (getRadius() / 2);
     }
 
-    public void setSize(double radius) {
-        super.setRadius(radius);
-    }
+
 
     public void setColor(Color color) {
         this.color = color;

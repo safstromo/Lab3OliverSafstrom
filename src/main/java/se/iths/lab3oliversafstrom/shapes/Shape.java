@@ -11,7 +11,7 @@ public interface Shape {
 
     boolean isWithinShape(double mouseX, double mouseY);
 
-    void setSize(double size);
+    void setSize(int size);
 
 
     void setColor(Color color);

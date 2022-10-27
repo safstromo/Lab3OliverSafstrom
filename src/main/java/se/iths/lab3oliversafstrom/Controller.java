@@ -12,7 +12,7 @@ import se.iths.lab3oliversafstrom.shapes.Shape;
 
 public class Controller {
     @FXML
-    public Spinner sizeSpinner;
+    public Spinner<Integer> sizeSpinner;
     @FXML
     public Label chatLabel;
     @FXML
@@ -41,12 +41,12 @@ public class Controller {
 
     public void initialize() {
         setToggleGroup();
+        context = canvas.getGraphicsContext2D();
         chatWindow.setItems(model.chatWindowString);
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
-        context = canvas.getGraphicsContext2D();
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
-        //colorPicker.valueProperty().bindBidirectional(model.colorPicker);
-
+        colorPicker.valueProperty().bindBidirectional(model.colorPicker);
+        sizeSpinner.getValueFactory().valueProperty().bindBidirectional(model.sizeSpinnerProperty());
 
         //TODO BINDA CHATT MED SERVER!
         //TODO binda colorpicker. i modellen. för att hämta färg på objekt.
@@ -176,16 +176,16 @@ public class Controller {
     private void createShapeAndCopyToUndoList() {
         if (drawCircleButton(circleButton)) {
             if (!model.shapeList.isEmpty()) {
-                Circle circle = copyCircle((Circle) model.shapeList.get(model.shapeList.size()-1));
-                model.undoList.add(circle);
+//                Shape circle = copyCircle((Circle) model.shapeList.get(model.shapeList.size()-1));
+//                model.undoList.add(circle);
             }
             Circle newCircle = createNewCircle();
             model.shapeList.add(newCircle);
 
         } else if (drawRectangleButton(rectangleButton)) {
             if (!model.shapeList.isEmpty()) {
-                Rectangle rectangle = copyRectangle((Rectangle) model.shapeList.get(model.shapeList.size()-1));
-                model.undoList.add(rectangle);
+//                Shape rectangle = copyRectangle((Rectangle) model.shapeList.get(model.shapeList.size()-1));
+//                model.undoList.add(rectangle);
             }
             Rectangle newRectangle = createNewRectangle();
             model.shapeList.add(newRectangle);
@@ -193,7 +193,7 @@ public class Controller {
     }
 
     private Rectangle createNewRectangleChanged(Rectangle shape) {
-        return new Rectangle((Integer) sizeSpinner.getValue(), shape.getxPosition(), shape.getyPosition(), colorPicker.getValue());
+        return new Rectangle(model.getSizeSpinner(), shape.getxPosition(), shape.getyPosition(), model.getColorPicker());
     }
 
     private static Rectangle copyRectangle(Rectangle shape) {
@@ -201,12 +201,11 @@ public class Controller {
     }
 
     private Circle createNewCircleChanged(Circle shape) {
-        return new Circle((Integer) sizeSpinner.getValue(), shape.getxPosition(), shape.getyPosition(), colorPicker.getValue());
+        return new Circle(model.getSizeSpinner(), shape.getxPosition(), shape.getyPosition(), model.getColorPicker());
     }
 
     private static Circle copyCircle(Circle shape) {
-        Circle circle = new Circle((int) shape.getRadius(), shape.getxPosition(), shape.getyPosition(), shape.getColor());
-        return circle;
+        return new Circle((int) shape.getRadius(), shape.getxPosition(), shape.getyPosition(), shape.getColor());
     }
 
     private void drawShapes(GraphicsContext context) {
@@ -216,11 +215,11 @@ public class Controller {
     }
 
     private Rectangle createNewRectangle() {
-        return new Rectangle((Integer) sizeSpinner.getValue(), model.getMouseX(), model.getMouseY(), colorPicker.getValue());
+        return new Rectangle(model.getSizeSpinner(), model.getMouseX(), model.getMouseY(), model.getColorPicker());
     }
 
     private Circle createNewCircle() {
-        return new Circle((Integer) sizeSpinner.getValue(), model.getMouseX(), model.getMouseY(), colorPicker.getValue());
+        return new Circle(model.getSizeSpinner(), model.getMouseX(), model.getMouseY(), model.getColorPicker());
     }
 
     public void sendMessage() {

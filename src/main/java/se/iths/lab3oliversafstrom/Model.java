@@ -24,7 +24,8 @@ public class Model {
     public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
     public List<Shape> undoList = new LinkedList<>();
 
-    public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>();
+    public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
+    public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
 
     public StringProperty chatBoxInputProperty() {
         return chatBoxInput;
@@ -48,6 +49,22 @@ public class Model {
 
     public String getChatBoxInput() {
         return chatBoxInput.get();
+    }
+
+    public Integer getSizeSpinner() {
+        return sizeSpinner.get();
+    }
+
+    public ObjectProperty<Integer> sizeSpinnerProperty() {
+        return sizeSpinner;
+    }
+
+    public Color getColorPicker() {
+        return colorPicker.get();
+    }
+
+    public ObjectProperty<Color> colorPickerProperty() {
+        return colorPicker;
     }
 
     public void connectToServer(){

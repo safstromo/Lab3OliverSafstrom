@@ -20,19 +20,23 @@ public class Model {
     private double mouseY;
 
     private StringProperty chatBoxInput = new SimpleStringProperty();
+
     public List<Shape> shapeList = new ArrayList<>();
     public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
     public List<Shape> undoList = new LinkedList<>();
-
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
-    public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
 
+    public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
     public StringProperty chatBoxInputProperty() {
         return chatBoxInput;
     }
 
     public ObjectProperty<Color> colorPickerProperty() {
         return colorPicker;
+    }
+
+    public void setChatBoxInput(String chatBoxInput) {
+        this.chatBoxInput.set(chatBoxInput);
     }
 
     public double getMouseX() {

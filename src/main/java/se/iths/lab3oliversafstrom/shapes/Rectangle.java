@@ -49,7 +49,8 @@ public class Rectangle implements Shape {
     @Override
     public String toSVG() {
         String svgColorCode = "#" + getColor().toString().substring(2,10);
-        return "<rect fill=#" + color + " stroke=#" + svgColorCode + " x=" + xPosition + " y=" + yPosition + " width=" + size + " height=" + size + "/>";
+        return "<rect fill=\"" + svgColorCode + "\" stroke=\"" + svgColorCode + "\" x=\"" + xPosition +
+                "\" y=\"" + yPosition + "\" width=\"" + size + "\" height=\"" + size + "\"/>";
 
     }
 

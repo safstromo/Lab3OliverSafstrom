@@ -102,7 +102,7 @@ public class Circle implements Shape {
     @Override
     public String toSVG() {
         String svgColorCode = "#" + getColor().toString().substring(2,10);
-        return "<circle cx=" + xPosition + " cy=" + yPosition + " r=" + radius + " fill=#" + svgColorCode + " />";
+        return "<circle cx=\"" + xPosition + "\" cy=\"" + yPosition + "\" r=\"" + radius + "\" fill=\"" + svgColorCode + "\"/>";
 
     }
 

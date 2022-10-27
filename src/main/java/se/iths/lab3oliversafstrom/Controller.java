@@ -197,11 +197,11 @@ public class Controller {
     }
 
     private Circle createNewCircleChanged(Circle shape) {
-        return new Circle(model.getSizeSpinner(), shape.getxPosition(), shape.getyPosition(), model.getColorPicker());
+        return new Circle(model.getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), model.getColorPicker());
     }
 
     private static Circle copyCircle(Circle shape) {
-        return new Circle((int) shape.getRadius(), shape.getxPosition(), shape.getyPosition(), shape.getColor());
+        return new Circle((int) shape.getSize(), shape.getXPosition(), shape.getYPosition(), shape.getColor());
     }
 
     private void drawShapes(GraphicsContext context) {

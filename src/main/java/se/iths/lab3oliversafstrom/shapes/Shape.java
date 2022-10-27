@@ -4,17 +4,51 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 
-public interface Shape {
-    void draw(GraphicsContext context);
+public abstract class Shape {
+    private int size;
+    private double xPosition;
 
-    boolean findPosition(double mouseX, double mouseY);
+    private double yPosition;
+    private Color color;
 
-    boolean isWithinShape(double mouseX, double mouseY);
+    public int getSize() {
+        return size;
+    }
 
-    void setSize(int size);
+    public void setSize(int size) {
+        this.size = size;
+    }
 
-    void setColor(Color color);
+    public double getXPosition() {
+        return xPosition;
+    }
 
-    String toSVG();
+    public void setXPosition(double xPosition) {
+        this.xPosition = xPosition;
+    }
 
+    public double getYPosition() {
+        return yPosition;
+    }
+
+    public void setYPosition(double yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public abstract void draw(GraphicsContext context);
+
+    public abstract boolean findPosition(double mouseX, double mouseY);
+
+    public abstract boolean isWithinShape(double mouseX, double mouseY);
+
+
+    public abstract String toSVG();
 }

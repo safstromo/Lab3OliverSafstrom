@@ -45,12 +45,10 @@ public class Controller {
         chatWindow.setItems(model.chatWindowString);
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
-        colorPicker.valueProperty().bindBidirectional(model.colorPicker);
+        colorPicker.valueProperty().bindBidirectional(model.colorPickerProperty());
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(model.sizeSpinnerProperty());
 
         //TODO BINDA CHATT MED SERVER!
-        //TODO binda colorpicker. i modellen. för att hämta färg på objekt.
-        //TODO BINDA SPINNER I modellen för att hämta strolek på objekt.
     }
 
     private void setToggleGroup() {
@@ -60,8 +58,6 @@ public class Controller {
         rectangleButton.setToggleGroup(toggleGroup);
     }
     //TODO G
-    //TODO Select shapes and change size/color find location Tips! Implementera en metod på dina shapes för att fråga om koordinaterna är inom shapens area.
-    //TODO Export to SVG file use file diaglog
     // skriv 2 tester JUnit5
 
 

@@ -31,6 +31,10 @@ public class Model {
         return chatBoxInput;
     }
 
+    public ObjectProperty<Color> colorPickerProperty() {
+        return colorPicker;
+    }
+
     public double getMouseX() {
         return mouseX;
     }
@@ -61,10 +65,6 @@ public class Model {
 
     public Color getColorPicker() {
         return colorPicker.get();
-    }
-
-    public ObjectProperty<Color> colorPickerProperty() {
-        return colorPicker;
     }
 
     public void connectToServer(){

@@ -17,23 +17,10 @@ class ModelTest {
         assertEquals(expectedString, actualString);
     }
 
-    @Test
-    void setChatBoxInput() {
-    }
 
     @Test
-    void getMouseX() {
+    void shapeListGetsSmallerAfterUndo() {
+
     }
 
-    @Test
-    void setMouseX() {
-    }
-
-    @Test
-    void getMouseY() {
-    }
-
-    @Test
-    void setMouseY() {
-    }
 }

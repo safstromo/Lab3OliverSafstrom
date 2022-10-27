@@ -11,7 +11,6 @@ import java.util.List;
 
 public class SvgFileWriter {
 
-
     FileChooser fileChooser = new FileChooser();
 
     List<String> svgString = new ArrayList<>();
@@ -26,11 +25,9 @@ public class SvgFileWriter {
                 Files.write(savePath, svgString);
             else
                 Files.write(Path.of(savePath + ".svg"), svgString);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private void createFileChooser() {

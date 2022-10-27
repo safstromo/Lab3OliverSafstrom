@@ -88,10 +88,10 @@ public class Controller {
 
     public void undo(ActionEvent actionEvent) {
         model.shapeList.remove(model.shapeList.size() - 1);
-//        if (!model.undoList.isEmpty()) {
-        model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
-//            model.undoList.remove(model.undoList.size() - 1);
-//        }
+        if (!model.undoList.isEmpty()) {
+            model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
+            model.undoList.remove(model.undoList.size() - 1);
+        }
         clearCanvasDrawShapes();
     }//TODO TA BORT GAMLA OBJEKTET.
     //TODO bara kopiera undolistan?
@@ -159,15 +159,35 @@ public class Controller {
     private void createShapeAndCopyToUndoList(Shape shape) {
         if (shape.getClass() == Circle.class) {
             Circle circle = copyCircle((Circle) shape);
-            //  if (!model.shapeList.isEmpty())
-            model.undoList.add(circle);
+            if (!model.shapeList.isEmpty())
+                model.undoList.add(circle);
             Circle newCircle = createNewCircleChanged((Circle) shape);
             model.shapeList.add(newCircle);
 
         } else if (shape.getClass() == Rectangle.class) {
-            Rectangle rectangle = CopyRectangle((Rectangle) shape);
-            model.undoList.add(rectangle);
+            Rectangle rectangle = copyRectangle((Rectangle) shape);
+            if (!model.shapeList.isEmpty())
+                model.undoList.add(rectangle);
             Rectangle newRectangle = createNewRectangleChanged((Rectangle) shape);
+            model.shapeList.add(newRectangle);
+        }
+    }
+
+    private void createShapeAndCopyToUndoList() {
+        if (drawCircleButton(circleButton)) {
+            if (!model.shapeList.isEmpty()) {
+                Circle circle = copyCircle((Circle) model.shapeList.get(model.shapeList.size()-1));
+                model.undoList.add(circle);
+            }
+            Circle newCircle = createNewCircle();
+            model.shapeList.add(newCircle);
+
+        } else if (drawRectangleButton(rectangleButton)) {
+            if (!model.shapeList.isEmpty()) {
+                Rectangle rectangle = copyRectangle((Rectangle) model.shapeList.get(model.shapeList.size()-1));
+                model.undoList.add(rectangle);
+            }
+            Rectangle newRectangle = createNewRectangle();
             model.shapeList.add(newRectangle);
         }
     }
@@ -176,7 +196,7 @@ public class Controller {
         return new Rectangle((Integer) sizeSpinner.getValue(), shape.getxPosition(), shape.getyPosition(), colorPicker.getValue());
     }
 
-    private static Rectangle CopyRectangle(Rectangle shape) {
+    private static Rectangle copyRectangle(Rectangle shape) {
         return new Rectangle(shape.getSize(), shape.getxPosition(), shape.getyPosition(), shape.getColor());
     }
 
@@ -187,21 +207,6 @@ public class Controller {
     private static Circle copyCircle(Circle shape) {
         Circle circle = new Circle((int) shape.getRadius(), shape.getxPosition(), shape.getyPosition(), shape.getColor());
         return circle;
-    }
-
-    private void createShapeAndCopyToUndoList() {
-        if (drawCircleButton(circleButton)) {
-            Circle circle = createNewCircle();
-            model.undoList.add(circle);
-            Circle newCircle = createNewCircle();
-            model.shapeList.add(newCircle);
-
-        } else if (drawRectangleButton(rectangleButton)) {
-            Rectangle rectangle = createNewRectangle();
-            model.undoList.add(rectangle);
-            Rectangle newRectangle = createNewRectangle();
-            model.shapeList.add(newRectangle);
-        }
     }
 
     private void drawShapes(GraphicsContext context) {

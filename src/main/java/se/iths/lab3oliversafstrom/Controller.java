@@ -162,7 +162,7 @@ public class Controller {
                 Shape circle = copyCircle(model.shapeList.get(model.shapeList.size() - 1));
                 model.undoList.add(circle);
             }
-            Circle newCircle = createNewCircle();
+            Circle newCircle = model.createNewCircle();
             model.shapeList.add(newCircle);
 
         } else if (rectangleButton.isSelected()) {
@@ -170,17 +170,17 @@ public class Controller {
                 Shape rectangle = copyRectangle(model.shapeList.get(model.shapeList.size() - 1));
                 model.undoList.add(rectangle);
             }
-            Rectangle newRectangle = createNewRectangle();
+            Rectangle newRectangle = model.createNewRectangle();
             model.shapeList.add(newRectangle);
         }
     }
 
-    private Rectangle createNewRectangleChanged(Rectangle shape) {
-        return new Rectangle(model.getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), model.getColorPicker());
-    }
-
     private static Rectangle copyRectangle(Shape shape) {
         return new Rectangle(shape.getSize(), shape.getXPosition(), shape.getYPosition(), shape.getColor());
+    }
+
+    private Rectangle createNewRectangleChanged(Rectangle shape) {
+        return new Rectangle(model.getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), model.getColorPicker());
     }
 
     private Circle createNewCircleChanged(Circle shape) {
@@ -195,14 +195,6 @@ public class Controller {
         for (var shape : model.shapeList) {
             shape.draw(context);
         }
-    }
-
-    private Rectangle createNewRectangle() {
-        return new Rectangle(model.getSizeSpinner(), model.getMouseX(), model.getMouseY(), model.getColorPicker());
-    }
-
-    private Circle createNewCircle() {
-        return new Circle(model.getSizeSpinner(), model.getMouseX(), model.getMouseY(), model.getColorPicker());
     }
 
     public void sendMessage() {

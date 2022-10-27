@@ -5,6 +5,8 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
+import se.iths.lab3oliversafstrom.shapes.Circle;
+import se.iths.lab3oliversafstrom.shapes.Rectangle;
 import se.iths.lab3oliversafstrom.shapes.Shape;
 
 import java.util.ArrayList;
@@ -16,10 +18,10 @@ public class Model {
     private double mouseX;
     private double mouseY;
 
-    private StringProperty chatBoxInput = new SimpleStringProperty();
-    private BooleanProperty selectButton = new SimpleBooleanProperty();
-    private BooleanProperty circleButton = new SimpleBooleanProperty();
-    private BooleanProperty rectangleButton = new SimpleBooleanProperty();
+    public StringProperty chatBoxInput = new SimpleStringProperty();
+    public BooleanProperty selectButton = new SimpleBooleanProperty();
+    public BooleanProperty circleButton = new SimpleBooleanProperty();
+    public BooleanProperty rectangleButton = new SimpleBooleanProperty();
     public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
 
@@ -30,6 +32,21 @@ public class Model {
 
     public void setCircleButton(boolean circleButton) {
         this.circleButton.set(circleButton);
+    }
+
+
+
+
+
+
+
+
+    public Rectangle createNewRectangle() {
+        return new Rectangle(getSizeSpinner(), getMouseX(), getMouseY(), getColorPicker());
+    }
+
+    public Circle createNewCircle() {
+        return new Circle(getSizeSpinner(), getMouseX(), getMouseY(), getColorPicker());
     }
 
     public BooleanProperty circleButtonProperty() {

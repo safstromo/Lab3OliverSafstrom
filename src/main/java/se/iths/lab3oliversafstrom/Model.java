@@ -36,9 +36,13 @@ public class Model {
 
 
 
+    public Circle copyCircle(Shape shape) {
+        return new Circle(shape.getSize(), shape.getXPosition(), shape.getYPosition(), shape.getColor());
+    }
 
-
-
+    public Rectangle copyRectangle(Shape shape) {
+        return new Rectangle(shape.getSize(), shape.getXPosition(), shape.getYPosition(), shape.getColor());
+    }
 
 
     public Rectangle createNewRectangle() {

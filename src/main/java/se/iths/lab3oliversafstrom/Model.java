@@ -17,41 +17,48 @@ public class Model {
     private double mouseY;
 
     private StringProperty chatBoxInput = new SimpleStringProperty();
-
     private BooleanProperty selectButton = new SimpleBooleanProperty();
-    public List<Shape> shapeList = new ArrayList<>();
+    private BooleanProperty circleButton = new SimpleBooleanProperty();
+    private BooleanProperty rectangleButton = new SimpleBooleanProperty();
     public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
-    public List<Shape> undoList = new LinkedList<>();
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
 
     public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
+    public List<Shape> undoList = new LinkedList<>();
+    public List<Shape> shapeList = new ArrayList<>();
+
+
+    public void setCircleButton(boolean circleButton) {
+        this.circleButton.set(circleButton);
+    }
+
+    public BooleanProperty circleButtonProperty() {
+        return circleButton;
+    }
+    public BooleanProperty rectangleButtonProperty() {
+        return rectangleButton;
+    }
     public StringProperty chatBoxInputProperty() {
         return chatBoxInput;
     }
-
     public ObjectProperty<Color> colorPickerProperty() {
         return colorPicker;
     }
     public BooleanProperty selectButtonProperty() {
         return selectButton;
     }
-
     public double getMouseX() {
         return mouseX;
     }
-
     public void setMouseX(double mouseX) {
         this.mouseX = mouseX;
     }
-
     public double getMouseY() {
         return mouseY;
     }
-
     public void setMouseY(double mouseY) {
         this.mouseY = mouseY;
     }
-
     public String getChatBoxInput() {
         return chatBoxInput.get();
     }
@@ -61,11 +68,9 @@ public class Model {
     public ObjectProperty<Integer> sizeSpinnerProperty() {
         return sizeSpinner;
     }
-
     public Color getColorPicker() {
         return colorPicker.get();
     }
-
     public void connectToServer(){
 
     }

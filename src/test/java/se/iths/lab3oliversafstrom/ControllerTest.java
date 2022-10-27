@@ -60,8 +60,9 @@ class ControllerTest {
     }
     @Test
     void addShapeToShapeList() {
-//        controller.initialize();
-        controller.circleButton.setSelected(true);
+       controller.initialize();
+
+        controller.model.setCircleButton(true);
         controller.createShapeAndCopyToUndoList();
 
         var expected = 1;

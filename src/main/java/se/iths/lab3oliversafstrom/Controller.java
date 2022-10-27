@@ -44,11 +44,17 @@ public class Controller {
         context = canvas.getGraphicsContext2D();
         chatWindow.setItems(model.chatWindowString);
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
-        sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
+
         colorPicker.valueProperty().bindBidirectional(model.colorPickerProperty());
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(model.sizeSpinnerProperty());
-        selectButton.selectedProperty().bindBidirectional(model.selectButtonProperty());
+        bindButton();
+    }
 
+    private void bindButton() {
+        selectButton.selectedProperty().bindBidirectional(model.selectButtonProperty());
+        circleButton.selectedProperty().bindBidirectional(model.circleButtonProperty());
+        circleButton.selectedProperty().bindBidirectional(model.rectangleButtonProperty());
+        sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
     }
     //TODO G
     // skriv 2 tester JUnit5

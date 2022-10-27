@@ -189,11 +189,11 @@ public class Controller {
     }
 
     private Rectangle createNewRectangleChanged(Rectangle shape) {
-        return new Rectangle(model.getSizeSpinner(), shape.getxPosition(), shape.getyPosition(), model.getColorPicker());
+        return new Rectangle(model.getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), model.getColorPicker());
     }
 
     private static Rectangle copyRectangle(Rectangle shape) {
-        return new Rectangle(shape.getSize(), shape.getxPosition(), shape.getyPosition(), shape.getColor());
+        return new Rectangle(shape.getSize(), shape.getXPosition(), shape.getYPosition(), shape.getColor());
     }
 
     private Circle createNewCircleChanged(Circle shape) {

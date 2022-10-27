@@ -32,13 +32,6 @@ public class Circle extends Shape {
         return insideX && insideY;
 
     }
-    private double centerY() {
-        return getYPosition() - (getSize() / 2.0);
-    }
-
-    private double centerX() {
-        return getXPosition() - (getSize() / 2.0);
-    }
 
     @Override
     public String toSVG() {

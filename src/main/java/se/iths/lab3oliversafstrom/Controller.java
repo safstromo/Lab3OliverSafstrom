@@ -47,15 +47,8 @@ public class Controller {
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
         colorPicker.valueProperty().bindBidirectional(model.colorPickerProperty());
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(model.sizeSpinnerProperty());
+        selectButton.selectedProperty().bindBidirectional(model.selectButtonProperty());
 
-        //TODO BINDA CHATT MED SERVER!
-    }
-
-    private void setToggleGroup() {
-        ToggleGroup toggleGroup = new ToggleGroup();
-        selectButton.setToggleGroup(toggleGroup);
-        circleButton.setToggleGroup(toggleGroup);
-        rectangleButton.setToggleGroup(toggleGroup);
     }
     //TODO G
     // skriv 2 tester JUnit5
@@ -66,33 +59,36 @@ public class Controller {
     //TODO connect to server, send paint commands SVG format
     //TODO Chat
 
+    private void setToggleGroup() {
+        ToggleGroup toggleGroup = new ToggleGroup();
+        selectButton.setToggleGroup(toggleGroup);
+        circleButton.setToggleGroup(toggleGroup);
+        rectangleButton.setToggleGroup(toggleGroup);
+
+    }
 
     public void connectServer(ActionEvent actionEvent) {
         System.out.println("Connecting to server......");
     }
 
-    public void saveToFile(ActionEvent actionEvent) {
+    public void saveToFile() {
         System.out.println("Saving to file.....");
         svgFileWriter.saveToFile(model);
-
-
     }
 
     public void exitProgram() {
         System.exit(0);
     }
 
-    public void undo(ActionEvent actionEvent) {
+    public void undo() {
         model.shapeList.remove(model.shapeList.size() - 1);
         if (!model.undoList.isEmpty()) {
             model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
             model.undoList.remove(model.undoList.size() - 1);
         }
         clearCanvasDrawShapes();
-    }//TODO TA BORT GAMLA OBJEKTET.
-    //TODO bara kopiera undolistan?
-
-    public void redo(ActionEvent actionEvent) {
+    }
+    public void redo() {
         model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
         model.undoList.remove(model.undoList.size() - 1);
         clearCanvasDrawShapes();
@@ -103,44 +99,29 @@ public class Controller {
         drawShapes(context);
     }
 
-
-    public boolean drawRectangleButton(ToggleButton rectangleButton) {
-        return rectangleButton.isSelected();
-    }
-
-    public boolean drawCircleButton(ToggleButton circleButton) {
-        return circleButton.isSelected();
-    }
-
-    public boolean selectButton(ToggleButton selectButton) {
-        return selectButton.isSelected();
-    }
-
     public void canvasClicked(MouseEvent mouseEvent) {
 
         model.setMouseX(mouseEvent.getX());
         model.setMouseY(mouseEvent.getY());
 
-        checkShapeAndDraw(context);
+        checkShapeAndDraw();
 
     }
 
-    private void checkShapeAndDraw(GraphicsContext context) {
-        if (drawCircleButton(circleButton)) {
+    private void checkShapeAndDraw() {
+        if (circleButton.isSelected()) {
             createShapeAndCopyToUndoList();
 
-        } else if (drawRectangleButton(rectangleButton)) {
+        } else if (rectangleButton.isSelected()) {
             createShapeAndCopyToUndoList();
 
-        } else if (selectButton(selectButton)) {
+        } else if (selectButton.isSelected()) {
             for (int i = 0; i < model.shapeList.size() - 1; i++) {
                 Shape shape = model.shapeList.get(i);
                 ifFoundChangeValue(shape, i);
             }
         }
-
         clearCanvasDrawShapes();
-
     }
 
     private void ifFoundChangeValue(Shape shape, int index) {
@@ -154,14 +135,14 @@ public class Controller {
 
     private void createShapeAndCopyToUndoList(Shape shape) {
         if (shape.getClass() == Circle.class) {
-            Circle circle = copyCircle((Circle) shape);
+            Circle circle = copyCircle(shape);
             if (!model.shapeList.isEmpty())
                 model.undoList.add(circle);
             Circle newCircle = createNewCircleChanged((Circle) shape);
             model.shapeList.add(newCircle);
 
         } else if (shape.getClass() == Rectangle.class) {
-            Rectangle rectangle = copyRectangle((Rectangle) shape);
+            Rectangle rectangle = copyRectangle(shape);
             if (!model.shapeList.isEmpty())
                 model.undoList.add(rectangle);
             Rectangle newRectangle = createNewRectangleChanged((Rectangle) shape);
@@ -170,7 +151,7 @@ public class Controller {
     }
 
     public void createShapeAndCopyToUndoList() {
-        if (drawCircleButton(circleButton)) {
+        if (circleButton.isSelected()) {
             if (!model.shapeList.isEmpty()) {
                 Shape circle = copyCircle(model.shapeList.get(model.shapeList.size() - 1));
                 model.undoList.add(circle);
@@ -178,7 +159,7 @@ public class Controller {
             Circle newCircle = createNewCircle();
             model.shapeList.add(newCircle);
 
-        } else if (drawRectangleButton(rectangleButton)) {
+        } else if (rectangleButton.isSelected()) {
             if (!model.shapeList.isEmpty()) {
                 Shape rectangle = copyRectangle(model.shapeList.get(model.shapeList.size() - 1));
                 model.undoList.add(rectangle);
@@ -220,11 +201,11 @@ public class Controller {
 
     public void sendMessage() {
         model.chatWindowString.add("LocalUser: " + model.getChatBoxInput());
-        chatBoxInput.setText("");
+        model.chatBoxInputProperty().setValue("");
     }
 
     public void onEnter() {
         model.chatWindowString.add("LocalUser: " + model.getChatBoxInput());
-        chatBoxInput.setText("");
+        model.chatBoxInputProperty().setValue("");
     }
 }

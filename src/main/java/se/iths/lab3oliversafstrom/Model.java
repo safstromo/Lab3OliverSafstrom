@@ -1,10 +1,7 @@
 package se.iths.lab3oliversafstrom;
 
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
@@ -21,6 +18,7 @@ public class Model {
 
     private StringProperty chatBoxInput = new SimpleStringProperty();
 
+    private BooleanProperty selectButton = new SimpleBooleanProperty();
     public List<Shape> shapeList = new ArrayList<>();
     public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
     public List<Shape> undoList = new LinkedList<>();
@@ -34,9 +32,8 @@ public class Model {
     public ObjectProperty<Color> colorPickerProperty() {
         return colorPicker;
     }
-
-    public void setChatBoxInput(String chatBoxInput) {
-        this.chatBoxInput.set(chatBoxInput);
+    public BooleanProperty selectButtonProperty() {
+        return selectButton;
     }
 
     public double getMouseX() {
@@ -58,11 +55,9 @@ public class Model {
     public String getChatBoxInput() {
         return chatBoxInput.get();
     }
-
     public Integer getSizeSpinner() {
         return sizeSpinner.get();
     }
-
     public ObjectProperty<Integer> sizeSpinnerProperty() {
         return sizeSpinner;
     }

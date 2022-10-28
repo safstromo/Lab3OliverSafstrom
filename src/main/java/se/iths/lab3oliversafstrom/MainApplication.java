@@ -13,10 +13,14 @@ import java.io.IOException;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(new FXMLLoader(MainApplication.class.getResource("main-view.fxml")).getLocation());
-        Scene scene = new Scene(root, 1280, 800);
-        Image icon = new Image(new FileInputStream("src/icon.png"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
 
+        Image icon = new Image(new FileInputStream("src/icon.png"));
+        Controller controller = fxmlLoader.getController();
+        controller.setStage(stage);
+
+        //TODO 14:15 fredag importera controller. kolla javafx branch
 
 
         stage.setTitle("Banana Paint");

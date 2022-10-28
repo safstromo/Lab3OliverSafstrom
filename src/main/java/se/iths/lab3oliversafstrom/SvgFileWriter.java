@@ -3,6 +3,7 @@ package se.iths.lab3oliversafstrom;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,9 +16,13 @@ public class SvgFileWriter {
 
     List<String> svgString = new ArrayList<>();
 
-    public void saveToFile(Model model) {
+    public void saveToFile(Model model, Stage stage) {
         createFileChooser();
-        Path savePath = fileChooser.showSaveDialog(new Stage()).toPath();
+       // Path savePath = fileChooser.showSaveDialog(stage).toPath(); //todo ändra detta null vid cancel
+        Path savePath = null;//TODO FIxa
+        File filePath = fileChooser.showSaveDialog(stage);
+        if( filePath != null)
+            savePath = filePath.toPath();
 
         buildString(model);
         try {
@@ -32,6 +37,7 @@ public class SvgFileWriter {
 
     private void createFileChooser() {
         fileChooser.setTitle("Location to save file");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".svg Files", "*.svg"));
     }
 

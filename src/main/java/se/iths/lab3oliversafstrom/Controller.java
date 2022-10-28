@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
 import se.iths.lab3oliversafstrom.shapes.Shape;
@@ -34,6 +35,12 @@ public class Controller {
     @FXML
     private String chatBoxMessage;
     private GraphicsContext context;
+    public Stage stage;
+
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     Model model = new Model();
     SvgFileWriter svgFileWriter = new SvgFileWriter();
@@ -60,6 +67,9 @@ public class Controller {
     // skriv 2 tester JUnit5
 
 
+    //TODO fixa shapebuilder//factory!!!
+
+
     //TODO VG
     //TODO TREADS for connection
     //TODO connect to server, send paint commands SVG format
@@ -79,7 +89,7 @@ public class Controller {
 
     public void saveToFile() {
         System.out.println("Saving to file.....");
-        svgFileWriter.saveToFile(model);
+        svgFileWriter.saveToFile(model, stage);
     }
 
     public void exitProgram() {
@@ -183,10 +193,6 @@ public class Controller {
         return new Circle(model.getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), model.getColorPicker());
     }
 
-
-
-
-
     private void drawShapes(GraphicsContext context) {
         for (var shape : model.shapeList) {
             shape.draw(context);
@@ -194,12 +200,12 @@ public class Controller {
     }
 
     public void sendMessage() {
-        model.chatWindowString.add("LocalUser: " + model.getChatBoxInput());
+        model.chatWindowString.add("You: " + model.getChatBoxInput());
         model.chatBoxInputProperty().setValue("");
     }
 
     public void onEnter() {
-        model.chatWindowString.add("LocalUser: " + model.getChatBoxInput());
+        model.chatWindowString.add("You: " + model.getChatBoxInput());
         model.chatBoxInputProperty().setValue("");
     }
 }

@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
 
     Controller controller = new Controller();
+    Model model = new Model();
 
     Circle circle1 = new Circle(10, 20, 20, Color.BLACK);
     Circle circle2 = new Circle(10, 20, 20, Color.RED);
@@ -63,7 +64,7 @@ class ControllerTest {
        controller.initialize();
 
         controller.model.setCircleButton(true);
-        controller.createShapeAndCopyToUndoList();
+        model.createShapeAndCopyToUndoList();
 
         var expected = 1;
         var actual = controller.model.shapeList.size();

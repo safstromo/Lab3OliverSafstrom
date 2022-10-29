@@ -96,4 +96,47 @@ public class Model {
 
     }
 
+
+    public void createShapeAndCopyToUndoList() {
+        if (circleButton.get()) {
+            if (!shapeList.isEmpty()) {
+                Shape circle = copyCircle(shapeList.get(shapeList.size() - 1));
+                undoList.add(circle);
+            }
+            Circle newCircle = createNewCircle();
+            shapeList.add(newCircle);
+
+        } else if (rectangleButton.get()) {
+            if (!shapeList.isEmpty()) {
+                Shape rectangle = copyRectangle(shapeList.get(shapeList.size() - 1));
+                undoList.add(rectangle);
+            }
+            Rectangle newRectangle = createNewRectangle();
+            shapeList.add(newRectangle);
+        }
+    }
+
+    public void createShapeAndCopyToUndoList(Shape shape) {
+        if (shape.getClass() == Circle.class) {
+            Circle circle = copyCircle(shape);
+            if (!shapeList.isEmpty())
+                undoList.add(circle);
+            Circle newCircle = createNewCircleChanged((Circle) shape);
+            shapeList.add(newCircle);
+
+        } else if (shape.getClass() == Rectangle.class) {
+            Rectangle rectangle = copyRectangle(shape);
+            if (!shapeList.isEmpty())
+                undoList.add(rectangle);
+            Rectangle newRectangle = createNewRectangleChanged((Rectangle) shape);
+            shapeList.add(newRectangle);
+        }
+    }
+    private Rectangle createNewRectangleChanged(Rectangle shape) {
+        return new Rectangle(getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), getColorPicker());
+    }
+
+    private Circle createNewCircleChanged(Circle shape) {
+        return new Circle(getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), getColorPicker());
+    }
 }

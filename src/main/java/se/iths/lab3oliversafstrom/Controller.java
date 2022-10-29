@@ -126,10 +126,10 @@ public class Controller {
 
     private void checkShapeAndDraw() {
         if (circleButton.isSelected()) {
-            createShapeAndCopyToUndoList();
+            model.createShapeAndCopyToUndoList();
 
         } else if (rectangleButton.isSelected()) {
-            createShapeAndCopyToUndoList();
+            model.createShapeAndCopyToUndoList();
 
         } else if (selectButton.isSelected()) {
             for (int i = 0; i < model.shapeList.size() - 1; i++) {
@@ -142,56 +142,13 @@ public class Controller {
 
     private void ifFoundChangeValue(Shape shape, int index) {
         if (shape.findPosition(model.getMouseX(), model.getMouseY())) {
-            createShapeAndCopyToUndoList(shape);
+            model.createShapeAndCopyToUndoList(shape);
             model.shapeList.remove(index);
             clearCanvasDrawShapes();
 
         }
     }
 
-    private void createShapeAndCopyToUndoList(Shape shape) {
-        if (shape.getClass() == Circle.class) {
-            Circle circle = model.copyCircle(shape);
-            if (!model.shapeList.isEmpty())
-                model.undoList.add(circle);
-            Circle newCircle = createNewCircleChanged((Circle) shape);
-            model.shapeList.add(newCircle);
-
-        } else if (shape.getClass() == Rectangle.class) {
-            Rectangle rectangle = model.copyRectangle(shape);
-            if (!model.shapeList.isEmpty())
-                model.undoList.add(rectangle);
-            Rectangle newRectangle = createNewRectangleChanged((Rectangle) shape);
-            model.shapeList.add(newRectangle);
-        }
-    }
-
-    public void createShapeAndCopyToUndoList() {
-        if (circleButton.isSelected()) {
-            if (!model.shapeList.isEmpty()) {
-                Shape circle = model.copyCircle(model.shapeList.get(model.shapeList.size() - 1));
-                model.undoList.add(circle);
-            }
-            Circle newCircle = model.createNewCircle();
-            model.shapeList.add(newCircle);
-
-        } else if (rectangleButton.isSelected()) {
-            if (!model.shapeList.isEmpty()) {
-                Shape rectangle = model.copyRectangle(model.shapeList.get(model.shapeList.size() - 1));
-                model.undoList.add(rectangle);
-            }
-            Rectangle newRectangle = model.createNewRectangle();
-            model.shapeList.add(newRectangle);
-        }
-    }
-
-    private Rectangle createNewRectangleChanged(Rectangle shape) {
-        return new Rectangle(model.getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), model.getColorPicker());
-    }
-
-    private Circle createNewCircleChanged(Circle shape) {
-        return new Circle(model.getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), model.getColorPicker());
-    }
 
     private void drawShapes(GraphicsContext context) {
         for (var shape : model.shapeList) {

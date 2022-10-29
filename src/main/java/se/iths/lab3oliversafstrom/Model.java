@@ -15,25 +15,17 @@ import java.util.List;
 
 
 public class Model {
-    private double mouseX;
-    private double mouseY;
-
     public StringProperty chatBoxInput = new SimpleStringProperty();
     public BooleanProperty selectButton = new SimpleBooleanProperty();
     public BooleanProperty circleButton = new SimpleBooleanProperty();
     public BooleanProperty rectangleButton = new SimpleBooleanProperty();
     public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
-
     public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
     public List<Shape> undoList = new LinkedList<>();
     public List<Shape> shapeList = new ArrayList<>();
-
-
-    public void setCircleButton(boolean circleButton) {
-        this.circleButton.set(circleButton);
-    }
-
+    private double mouseX;
+    private double mouseY;
 
     public Circle copyCircle(Shape shape) {
         return new Circle(shape.getSize(), shape.getXPosition(), shape.getYPosition(), shape.getColor());
@@ -128,7 +120,7 @@ public class Model {
     public void ifFoundChangeValue(Shape shape, int index) {
         if (shape.findPosition(getMouseX(), getMouseY())) {
             createShapeAndCopyToUndoList(shape,index);
-     //       shapeList.remove(index);
+
         }
     }
 

@@ -16,18 +16,22 @@ public class SvgFileWriter {
     FileChooser fileChooser = new FileChooser();
 
     List<String> svgString = new ArrayList<>();
+    Path savePath;
 
     public void saveToFile(Model model, Stage stage) {
         createFileChooser();
-       // Path savePath = fileChooser.showSaveDialog(stage).toPath(); //todo ändra detta null vid cancel
-        Path savePath = null;//TODO FIxa
-        File filePath = fileChooser.showSaveDialog(stage);
-        if( filePath != null)
-            savePath = filePath.toPath();
 
-        buildString(model);
+        File filePath = fileChooser.showSaveDialog(stage);
+        if (filePath != null) {
+            savePath = filePath.toPath();
+            buildString(model);
+            saveFile();
+        }
+    }
+
+    private void saveFile() {
         try {
-            if (!savePath.endsWith(".svg"))
+            if (savePath.endsWith(".svg"))
                 Files.write(savePath, svgString);
             else
                 Files.write(Path.of(savePath + ".svg"), svgString);

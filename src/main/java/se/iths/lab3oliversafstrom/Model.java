@@ -188,4 +188,10 @@ public class Model {
     private Circle createNewCircleChanged(Circle shape) {
         return new Circle(getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), getColorPicker());
     }
+
+    public Shape importSvgString(String string){
+
+
+        return null;
+    }//TODO
 }

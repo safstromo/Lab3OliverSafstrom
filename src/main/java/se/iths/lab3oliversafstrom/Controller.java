@@ -72,6 +72,9 @@ public class Controller {
     //TODO VG
     //TODO TREADS for connection
     //TODO connect to server, send paint commands SVG format
+    //TODO Knapp för att skicka shapes
+    //Todo göra shapesList till observable så man kan ta emot shapes
+    //ToDO Label för att kolla om man är connected eller inte.
     //TODO Chat
 
     private void setToggleGroup() {

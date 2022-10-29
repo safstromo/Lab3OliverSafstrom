@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.Socket;
 
 
-//TODO LÄGG I MODELLEn
+
 public class Server {
 
     private Socket socket;
@@ -28,7 +28,9 @@ public class Server {
                 try {
                     while (true) {
                         String line = reader.readLine();
-                        Platform.runLater(()-> model.chatWindow.add(line));
+                        if (line.startsWith("<svg"))
+                            Platform.runLater(() -> model.shapeList.add(model.importSvgString(line)));//TODO SKAPA SHAPE
+                        Platform.runLater(() -> model.chatWindow.add(line));
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -43,9 +45,7 @@ public class Server {
     }
 
     public void sendMessage(String string) {
-        writer.println("You :" + string);
-        //getObservableList().add(getMessage());
-        //setMessage("");
+        writer.println("BananPaint :" + string);
     }
 }
 

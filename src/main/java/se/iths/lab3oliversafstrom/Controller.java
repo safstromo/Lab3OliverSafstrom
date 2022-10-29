@@ -29,12 +29,12 @@ public class Controller {
     @FXML
     public ToggleButton circleButton;
     @FXML
-    private Canvas canvas;
+    public Canvas canvas;
     @FXML
     private ColorPicker colorPicker;
     @FXML
     private String chatBoxMessage;
-    private GraphicsContext context;
+    public GraphicsContext context;
     public Stage stage;
 
 
@@ -104,6 +104,7 @@ public class Controller {
         }
         clearCanvasDrawShapes();
     }
+
     public void redo() {
         model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
         model.undoList.remove(model.undoList.size() - 1);
@@ -120,26 +121,9 @@ public class Controller {
         model.setMouseX(mouseEvent.getX());
         model.setMouseY(mouseEvent.getY());
 
-        checkShapeAndDraw();
-
-    }
-
-    private void checkShapeAndDraw() {
-        if (circleButton.isSelected()) {
-            model.createShapeAndCopyToUndoList();
-
-        } else if (rectangleButton.isSelected()) {
-            model.createShapeAndCopyToUndoList();
-
-        } else if (selectButton.isSelected()) {
-            for (int i = 0; i < model.shapeList.size() - 1; i++) {
-                Shape shape = model.shapeList.get(i);
-                model.ifFoundChangeValue(shape, i);
-            }
-        }
+        model.checkShapeAndDraw();
         clearCanvasDrawShapes();
     }
-
 
     public void drawShapes(GraphicsContext context) {
         for (var shape : model.shapeList) {

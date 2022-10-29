@@ -35,7 +35,6 @@ public class Model {
     }
 
 
-
     public Circle copyCircle(Shape shape) {
         return new Circle(shape.getSize(), shape.getXPosition(), shape.getYPosition(), shape.getColor());
     }
@@ -56,45 +55,82 @@ public class Model {
     public BooleanProperty circleButtonProperty() {
         return circleButton;
     }
+
     public BooleanProperty rectangleButtonProperty() {
         return rectangleButton;
     }
+
     public StringProperty chatBoxInputProperty() {
         return chatBoxInput;
     }
+
     public ObjectProperty<Color> colorPickerProperty() {
         return colorPicker;
     }
+
     public BooleanProperty selectButtonProperty() {
         return selectButton;
     }
+
     public double getMouseX() {
         return mouseX;
     }
+
     public void setMouseX(double mouseX) {
         this.mouseX = mouseX;
     }
+
     public double getMouseY() {
         return mouseY;
     }
+
     public void setMouseY(double mouseY) {
         this.mouseY = mouseY;
     }
+
     public String getChatBoxInput() {
         return chatBoxInput.get();
     }
+
     public Integer getSizeSpinner() {
         return sizeSpinner.get();
     }
+
     public ObjectProperty<Integer> sizeSpinnerProperty() {
         return sizeSpinner;
     }
+
     public Color getColorPicker() {
         return colorPicker.get();
     }
-    public void connectToServer(){
+
+    public void connectToServer() {
 
     }
+
+
+
+
+    public void checkShapeAndDraw() {
+        if (circleButtonProperty().getValue()) {
+            createShapeAndCopyToUndoList();
+
+        } else if (rectangleButtonProperty().getValue()) {
+            createShapeAndCopyToUndoList();
+
+        } else if (selectButtonProperty().getValue()) {
+            for (int i = 0; i < shapeList.size() - 1; i++) {
+                Shape shape = shapeList.get(i);
+                ifFoundChangeValue(shape, i);
+            }
+        }
+
+
+    }
+
+
+
+
     public void ifFoundChangeValue(Shape shape, int index) {
         if (shape.findPosition(getMouseX(), getMouseY())) {
             createShapeAndCopyToUndoList(shape);
@@ -138,6 +174,7 @@ public class Model {
             shapeList.add(newRectangle);
         }
     }
+
     private Rectangle createNewRectangleChanged(Rectangle shape) {
         return new Rectangle(getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), getColorPicker());
     }

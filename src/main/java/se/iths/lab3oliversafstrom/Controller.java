@@ -65,6 +65,7 @@ public class Controller {
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
     }
 
+
     //TODO fixa shapebuilder//factory!!!
 
 

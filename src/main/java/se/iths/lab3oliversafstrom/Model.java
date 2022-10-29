@@ -117,7 +117,7 @@ public class Model {
             createShapeAndCopyToUndoList();
 
         } else if (selectButtonProperty().getValue()) {
-            for (int i = 0; i < shapeList.size() - 1; i++) {
+            for (int i = 0; i <= shapeList.size() -1; i++) {
                 Shape shape = shapeList.get(i);
                 ifFoundChangeValue(shape, i);
             }
@@ -127,8 +127,8 @@ public class Model {
 
     public void ifFoundChangeValue(Shape shape, int index) {
         if (shape.findPosition(getMouseX(), getMouseY())) {
-            createShapeAndCopyToUndoList(shape);
-            shapeList.remove(index);
+            createShapeAndCopyToUndoList(shape,index);
+     //       shapeList.remove(index);
         }
     }
 
@@ -152,12 +152,13 @@ public class Model {
         }
     }
 
-    public void createShapeAndCopyToUndoList(Shape shape) {
+    public void createShapeAndCopyToUndoList(Shape shape, int index) {
         if (shape.getClass() == Circle.class) {
             Circle circle = copyCircle(shape);
             if (!shapeList.isEmpty())
                 undoList.add(circle);
             Circle newCircle = createNewCircleChanged((Circle) shape);
+            shapeList.remove(index);
             shapeList.add(newCircle);
 
         } else if (shape.getClass() == Rectangle.class) {
@@ -165,6 +166,7 @@ public class Model {
             if (!shapeList.isEmpty())
                 undoList.add(rectangle);
             Rectangle newRectangle = createNewRectangleChanged((Rectangle) shape);
+            shapeList.remove(index);
             shapeList.add(newRectangle);
         }
     }

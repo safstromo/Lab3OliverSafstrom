@@ -1,10 +1,7 @@
 package se.iths.lab3oliversafstrom.stuff;
 
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import se.iths.lab3oliversafstrom.Model;
 
 import java.io.*;
 import java.net.Socket;
@@ -12,16 +9,14 @@ import java.net.Socket;
 
 //TODO LÄGG I MODELLEn
 public class Server {
-    StringProperty message = new SimpleStringProperty();
-
-    ObservableList<String> observableList = FXCollections.observableArrayList();
 
     private Socket socket;
-    private final PrintWriter writer;
-    private final BufferedReader reader;
+    private PrintWriter writer;
+    private BufferedReader reader;
 
 
-    public Server() {
+    public void connect(Model model) {
+
         try {
             socket = new Socket("localhost", 8000);
             OutputStream output = socket.getOutputStream();
@@ -33,7 +28,7 @@ public class Server {
                 try {
                     while (true) {
                         String line = reader.readLine();
-                        Platform.runLater(()-> observableList.add(line));
+                        Platform.runLater(()-> model.chatWindow.add(line));
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -47,30 +42,10 @@ public class Server {
         }
     }
 
-    public String getMessage() {
-        return message.get();
-    }
-
-    public StringProperty messageProperty() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message.set(message);
-    }
-
-    public ObservableList<String> getObservableList() {
-        return observableList;
-    }
-
-    public void setObservableList(ObservableList<String> observableList) {
-        this.observableList = observableList;
-    }
-
-    public void sendMessage() {
-        writer.println(getMessage());
+    public void sendMessage(String string) {
+        writer.println("You :" + string);
         //getObservableList().add(getMessage());
-        setMessage("");
+        //setMessage("");
     }
 }
 

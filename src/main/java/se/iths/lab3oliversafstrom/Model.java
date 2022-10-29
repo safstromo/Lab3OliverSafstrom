@@ -8,12 +8,11 @@ import javafx.scene.paint.Color;
 import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
 import se.iths.lab3oliversafstrom.shapes.Shape;
+import se.iths.lab3oliversafstrom.stuff.Server;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 public class Model {
@@ -21,11 +20,12 @@ public class Model {
     public BooleanProperty selectButton = new SimpleBooleanProperty();
     public BooleanProperty circleButton = new SimpleBooleanProperty();
     public BooleanProperty rectangleButton = new SimpleBooleanProperty();
-    public ObservableList<String> chatWindowString = FXCollections.observableArrayList();
+    public ObservableList<String> chatWindow = FXCollections.observableArrayList();
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
     public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
     public List<Shape> undoList = new LinkedList<>();
     public List<Shape> shapeList = new ArrayList<>();
+    public Server server = new Server();
     private double mouseX;
     private double mouseY;
 

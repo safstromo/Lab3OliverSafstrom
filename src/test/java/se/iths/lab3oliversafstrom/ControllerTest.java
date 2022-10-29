@@ -25,11 +25,11 @@ class ControllerTest {
         controller.model.chatBoxInputProperty().setValue(test1);
         controller.model.chatBoxInputProperty().setValue(test2);
 
-        controller.model.chatWindowString.add("You: " + controller.model.getChatBoxInput());
+        controller.model.chatWindow.add("You: " + controller.model.getChatBoxInput());
         controller.onEnter();
 
         var expected = "You: test2";
-        var actual = controller.model.chatWindowString.get(1);
+        var actual = controller.model.chatWindow.get(1);
 
         assertEquals(expected, actual);
 
@@ -42,7 +42,7 @@ class ControllerTest {
         controller.sendMessage();
 
         var expected = "You: test2";
-        var actual = controller.model.chatWindowString.get(1);
+        var actual = controller.model.chatWindow.get(1);
 
         assertEquals(expected, actual);
 

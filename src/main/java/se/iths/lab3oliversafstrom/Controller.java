@@ -46,7 +46,7 @@ public class Controller {
     public void initialize() {
         setToggleGroup();
         context = canvas.getGraphicsContext2D();
-        chatWindow.setItems(model.chatWindowString);
+        chatWindow.setItems(model.chatWindow);
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
 
         bindTool();
@@ -66,7 +66,7 @@ public class Controller {
     }
 
 
-    //TODO fixa shapebuilder//factory!!!
+    //TODO fixa shapeBuilder//factory!!!
 
 
     //TODO VG
@@ -84,6 +84,7 @@ public class Controller {
 
     public void connectServer() {
         System.out.println("Connecting to server......");
+        model.server.connect(model);
     }
 
     public void saveToFile() {
@@ -133,12 +134,16 @@ public class Controller {
     }
 
     public void sendMessage() {
-        model.chatWindowString.add("You: " + model.getChatBoxInput());
-        model.chatBoxInputProperty().setValue("");
+        model.server.sendMessage(model.getChatBoxInput());
+
+//        model.chatWindow.add("You: " + model.getChatBoxInput());
+//        model.chatBoxInputProperty().setValue("");
     }
 
     public void onEnter() {
-        model.chatWindowString.add("You: " + model.getChatBoxInput());
-        model.chatBoxInputProperty().setValue("");
+        model.server.sendMessage(model.getChatBoxInput());
+
+//        model.chatWindow.add("You: " + model.getChatBoxInput());
+//        model.chatBoxInputProperty().setValue("");
     }
 }

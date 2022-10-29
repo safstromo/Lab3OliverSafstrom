@@ -95,10 +95,16 @@ public class Model {
     public void connectToServer(){
 
     }
+    public void ifFoundChangeValue(Shape shape, int index) {
+        if (shape.findPosition(getMouseX(), getMouseY())) {
+            createShapeAndCopyToUndoList(shape);
+            shapeList.remove(index);
+        }
+    }
 
 
     public void createShapeAndCopyToUndoList() {
-        if (circleButton.get()) {
+        if (circleButtonProperty().getValue()) {
             if (!shapeList.isEmpty()) {
                 Shape circle = copyCircle(shapeList.get(shapeList.size() - 1));
                 undoList.add(circle);
@@ -106,7 +112,7 @@ public class Model {
             Circle newCircle = createNewCircle();
             shapeList.add(newCircle);
 
-        } else if (rectangleButton.get()) {
+        } else if (rectangleButtonProperty().getValue()) {
             if (!shapeList.isEmpty()) {
                 Shape rectangle = copyRectangle(shapeList.get(shapeList.size() - 1));
                 undoList.add(rectangle);

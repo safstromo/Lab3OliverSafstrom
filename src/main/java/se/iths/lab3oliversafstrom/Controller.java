@@ -60,7 +60,7 @@ public class Controller {
     private void bindButton() {
         selectButton.selectedProperty().bindBidirectional(model.selectButtonProperty());
         circleButton.selectedProperty().bindBidirectional(model.circleButtonProperty());
-        circleButton.selectedProperty().bindBidirectional(model.rectangleButtonProperty());
+        rectangleButton.selectedProperty().bindBidirectional(model.rectangleButtonProperty());
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
     }
     //TODO G
@@ -110,7 +110,7 @@ public class Controller {
         clearCanvasDrawShapes();
     }
 
-    private void clearCanvasDrawShapes() {
+    public void clearCanvasDrawShapes() {
         context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         drawShapes(context);
     }
@@ -134,23 +134,14 @@ public class Controller {
         } else if (selectButton.isSelected()) {
             for (int i = 0; i < model.shapeList.size() - 1; i++) {
                 Shape shape = model.shapeList.get(i);
-                ifFoundChangeValue(shape, i);
+                model.ifFoundChangeValue(shape, i);
             }
         }
         clearCanvasDrawShapes();
     }
 
-    private void ifFoundChangeValue(Shape shape, int index) {
-        if (shape.findPosition(model.getMouseX(), model.getMouseY())) {
-            model.createShapeAndCopyToUndoList(shape);
-            model.shapeList.remove(index);
-            clearCanvasDrawShapes();
 
-        }
-    }
-
-
-    private void drawShapes(GraphicsContext context) {
+    public void drawShapes(GraphicsContext context) {
         for (var shape : model.shapeList) {
             shape.draw(context);
         }

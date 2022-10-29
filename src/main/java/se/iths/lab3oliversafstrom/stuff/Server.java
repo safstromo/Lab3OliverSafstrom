@@ -1,4 +1,4 @@
-package se.iths.lab3oliversafstrom;
+package se.iths.lab3oliversafstrom.stuff;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;

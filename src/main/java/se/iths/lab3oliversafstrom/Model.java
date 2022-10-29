@@ -109,8 +109,6 @@ public class Model {
     }
 
 
-
-
     public void checkShapeAndDraw() {
         if (circleButtonProperty().getValue()) {
             createShapeAndCopyToUndoList();
@@ -124,11 +122,7 @@ public class Model {
                 ifFoundChangeValue(shape, i);
             }
         }
-
-
     }
-
-
 
 
     public void ifFoundChangeValue(Shape shape, int index) {

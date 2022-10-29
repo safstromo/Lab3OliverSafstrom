@@ -1,15 +1,13 @@
 package se.iths.lab3oliversafstrom;
 
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import se.iths.lab3oliversafstrom.shapes.Circle;
-import se.iths.lab3oliversafstrom.shapes.Rectangle;
-import se.iths.lab3oliversafstrom.shapes.Shape;
+import se.iths.lab3oliversafstrom.stuff.SvgFileWriter;
 
 public class Controller {
     @FXML
@@ -32,8 +30,7 @@ public class Controller {
     public Canvas canvas;
     @FXML
     private ColorPicker colorPicker;
-    @FXML
-    private String chatBoxMessage;
+
     public GraphicsContext context;
     public Stage stage;
 
@@ -52,9 +49,13 @@ public class Controller {
         chatWindow.setItems(model.chatWindowString);
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
 
+        bindTool();
+        bindButton();
+    }
+
+    private void bindTool() {
         colorPicker.valueProperty().bindBidirectional(model.colorPickerProperty());
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(model.sizeSpinnerProperty());
-        bindButton();
     }
 
     private void bindButton() {
@@ -63,9 +64,6 @@ public class Controller {
         rectangleButton.selectedProperty().bindBidirectional(model.rectangleButtonProperty());
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
     }
-    //TODO G
-    // skriv 2 tester JUnit5
-
 
     //TODO fixa shapebuilder//factory!!!
 
@@ -83,7 +81,7 @@ public class Controller {
 
     }
 
-    public void connectServer(ActionEvent actionEvent) {
+    public void connectServer() {
         System.out.println("Connecting to server......");
     }
 
@@ -98,17 +96,19 @@ public class Controller {
 
     public void undo() {
         model.shapeList.remove(model.shapeList.size() - 1);
-        if (!model.undoList.isEmpty()) {
-            model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
-            model.undoList.remove(model.undoList.size() - 1);
-        }
+        if (!model.undoList.isEmpty())
+            modeLastShapeFromUndoToShapeList();
         clearCanvasDrawShapes();
     }
 
-    public void redo() {
+    public void redo() { //TODO Implement
+        modeLastShapeFromUndoToShapeList();
+        clearCanvasDrawShapes();
+    }
+
+    private void modeLastShapeFromUndoToShapeList() {
         model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
         model.undoList.remove(model.undoList.size() - 1);
-        clearCanvasDrawShapes();
     }
 
     public void clearCanvasDrawShapes() {

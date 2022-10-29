@@ -1,7 +1,8 @@
-package se.iths.lab3oliversafstrom;
+package se.iths.lab3oliversafstrom.stuff;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import se.iths.lab3oliversafstrom.Model;
 
 import java.io.File;
 import java.io.IOException;

@@ -12,6 +12,8 @@ import se.iths.lab3oliversafstrom.shapes.Shape;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 public class Model {
@@ -109,57 +111,73 @@ public class Model {
             createShapeAndCopyToUndoList();
 
         } else if (selectButtonProperty().getValue()) {
-            for (int i = 0; i <= shapeList.size() -1; i++) {
-                Shape shape = shapeList.get(i);
-                ifFoundChangeValue(shape, i);
+            try {
+                createShapeAndCopyToUndoList(findShape());
+            } catch (Exception ignored) {
             }
+
         }
     }
 
-
-    public void ifFoundChangeValue(Shape shape, int index) {
-        if (shape.findPosition(getMouseX(), getMouseY())) {
-            createShapeAndCopyToUndoList(shape,index);
-
-        }
+    private Shape findShape() {
+        return shapeList.stream()
+                .filter(shape -> shape.findPosition(getMouseX(), getMouseY())).findAny().orElseThrow();
     }
 
 
     public void createShapeAndCopyToUndoList() {
         if (circleButtonProperty().getValue()) {
-            if (!shapeList.isEmpty()) {
-                Shape circle = copyCircle(shapeList.get(shapeList.size() - 1));
-                undoList.add(circle);
-            }
+            copyCircleAddToUndoList();
             Circle newCircle = createNewCircle();
             shapeList.add(newCircle);
 
         } else if (rectangleButtonProperty().getValue()) {
-            if (!shapeList.isEmpty()) {
-                Shape rectangle = copyRectangle(shapeList.get(shapeList.size() - 1));
-                undoList.add(rectangle);
-            }
+            copyRectangleAddTOUndoList();
             Rectangle newRectangle = createNewRectangle();
             shapeList.add(newRectangle);
         }
     }
 
-    public void createShapeAndCopyToUndoList(Shape shape, int index) {
+    private void copyCircleAddToUndoList() {
+        if (!shapeList.isEmpty()) {
+            Shape circle = copyCircle(shapeList.get(shapeList.size() - 1));
+            undoList.add(circle);
+        }
+    }
+
+    private void copyRectangleAddTOUndoList() {
+        if (!shapeList.isEmpty()) {
+            Shape rectangle = copyRectangle(shapeList.get(shapeList.size() - 1));
+            undoList.add(rectangle);
+        }
+    }
+
+    public void createShapeAndCopyToUndoList(Shape shape) {
         if (shape.getClass() == Circle.class) {
-            Circle circle = copyCircle(shape);
-            if (!shapeList.isEmpty())
-                undoList.add(circle);
+            copyCircleAddToUndoList(shape);
             Circle newCircle = createNewCircleChanged((Circle) shape);
-            shapeList.remove(index);
+            shapeList.remove(shape);
             shapeList.add(newCircle);
 
         } else if (shape.getClass() == Rectangle.class) {
-            Rectangle rectangle = copyRectangle(shape);
-            if (!shapeList.isEmpty())
-                undoList.add(rectangle);
+            copyRectangleAddToUndoList(shape);
             Rectangle newRectangle = createNewRectangleChanged((Rectangle) shape);
-            shapeList.remove(index);
+            shapeList.remove(shape);
             shapeList.add(newRectangle);
+        }
+    }
+
+    private void copyRectangleAddToUndoList(Shape shape) {
+        if (!shapeList.isEmpty()) {
+            Rectangle rectangle = copyRectangle(shape);
+            undoList.add(rectangle);
+        }
+    }
+
+    private void copyCircleAddToUndoList(Shape shape) {
+        if (!shapeList.isEmpty()) {
+            Circle circle = copyCircle(shape);
+            undoList.add(circle);
         }
     }
 

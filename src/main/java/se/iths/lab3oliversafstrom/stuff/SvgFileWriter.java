@@ -18,7 +18,7 @@ public class SvgFileWriter {
     List<String> svgString = new ArrayList<>();
     Path savePath;
 
-    public void saveToFile(Model model, Stage stage) {
+    public void saveToFile(Model model, Stage stage)  {
         createFileChooser();
 
         File filePath = fileChooser.showSaveDialog(stage);

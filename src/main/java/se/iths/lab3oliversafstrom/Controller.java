@@ -66,7 +66,7 @@ public class Controller {
     }
 
 
-    //TODO fixa shapeBuilder//factory!!!
+    //TODO Ändra så jag får en shapefactory klass?
 
 
     //TODO VG

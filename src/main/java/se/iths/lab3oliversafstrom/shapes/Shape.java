@@ -27,6 +27,11 @@ public abstract class Shape {
         this.color = shape.color;
     }
 
+    public Shape(int size, Color color) {
+        this.size = size;
+        this.color = color;
+    }
+
 
     public int getSize() {
         return size;

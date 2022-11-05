@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static se.iths.lab3oliversafstrom.shapes.ShapeFactory.*;
+
 
 public class Model {
     public StringProperty chatBoxInput = new SimpleStringProperty();
@@ -29,22 +31,6 @@ public class Model {
     private double mouseX;
     private double mouseY;
 
-    public Circle copyCircle(Shape shape) {
-        return new Circle(shape.getSize(), shape.getXPosition(), shape.getYPosition(), shape.getColor());
-    }
-
-    public Rectangle copyRectangle(Shape shape) {
-        return new Rectangle(shape.getSize(), shape.getXPosition(), shape.getYPosition(), shape.getColor());
-    }
-
-
-    public Rectangle createNewRectangle() {
-        return new Rectangle(getSizeSpinner(), getMouseX(), getMouseY(), getColorPicker());
-    }
-
-    public Circle createNewCircle() {
-        return new Circle(getSizeSpinner(), getMouseX(), getMouseY(), getColorPicker());
-    }
 
     public BooleanProperty circleButtonProperty() {
         return circleButton;
@@ -115,7 +101,6 @@ public class Model {
                 createShapeAndCopyToUndoList(findShape());
             } catch (Exception ignored) {
             }
-
         }
     }
 
@@ -127,69 +112,48 @@ public class Model {
 
     public void createShapeAndCopyToUndoList() {
         if (circleButtonProperty().getValue()) {
-            copyCircleAddToUndoList();
-            Circle newCircle = createNewCircle();
-            shapeList.add(newCircle);
+            copyLastShapeInShapeListAddToUndoList();
+            shapeList.add(createShape("circle", this));
 
         } else if (rectangleButtonProperty().getValue()) {
-            copyRectangleAddTOUndoList();
-            Rectangle newRectangle = createNewRectangle();
-            shapeList.add(newRectangle);
+            copyLastShapeInShapeListAddToUndoList();
+            shapeList.add(createShape("rectangle", this));
         }
     }
 
-    private void copyCircleAddToUndoList() {
-        if (!shapeList.isEmpty()) {
-            Shape circle = copyCircle(shapeList.get(shapeList.size() - 1));
-            undoList.add(circle);
-        }
-    }
-
-    private void copyRectangleAddTOUndoList() {
-        if (!shapeList.isEmpty()) {
-            Shape rectangle = copyRectangle(shapeList.get(shapeList.size() - 1));
-            undoList.add(rectangle);
-        }
+    private Shape lastShapeInShapeList() {
+        return shapeList.get(shapeList.size() - 1);
     }
 
     public void createShapeAndCopyToUndoList(Shape shape) {
         if (shape.getClass() == Circle.class) {
-            copyCircleAddToUndoList(shape);
-            Circle newCircle = createNewCircleChanged((Circle) shape);
+            copyShapeAddToUndoList(shape);
+            Circle newCircle = createNewCircleChanged(shape, this);
             shapeList.remove(shape);
             shapeList.add(newCircle);
 
         } else if (shape.getClass() == Rectangle.class) {
-            copyRectangleAddToUndoList(shape);
-            Rectangle newRectangle = createNewRectangleChanged((Rectangle) shape);
+            copyShapeAddToUndoList(shape);
+            Rectangle newRectangle = createNewRectangleChanged(shape, this);
             shapeList.remove(shape);
             shapeList.add(newRectangle);
         }
     }
 
-    private void copyRectangleAddToUndoList(Shape shape) {
+
+    private void copyLastShapeInShapeListAddToUndoList() {
+        if (!shapeList.isEmpty())
+            copyShapeAddToList(lastShapeInShapeList(), undoList);
+    }
+
+    private void copyShapeAddToUndoList(Shape shape) {
         if (!shapeList.isEmpty()) {
-            Rectangle rectangle = copyRectangle(shape);
-            undoList.add(rectangle);
+            copyShapeAddToList(shape, undoList);
+
         }
     }
 
-    private void copyCircleAddToUndoList(Shape shape) {
-        if (!shapeList.isEmpty()) {
-            Circle circle = copyCircle(shape);
-            undoList.add(circle);
-        }
-    }
-
-    private Rectangle createNewRectangleChanged(Rectangle shape) {
-        return new Rectangle(getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), getColorPicker());
-    }
-
-    private Circle createNewCircleChanged(Circle shape) {
-        return new Circle(getSizeSpinner(), shape.getXPosition(), shape.getYPosition(), getColorPicker());
-    }
-
-    public Shape importSvgString(String string){
+    public Shape importSvgString(String string) {
 
 
         return null;

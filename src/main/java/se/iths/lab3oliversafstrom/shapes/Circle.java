@@ -14,10 +14,6 @@ public class Circle extends Shape {
         super(shape);
     }
 
-    public Shape copyOf() {
-        return new Circle(this);
-
-    }
 
     public boolean findPosition(double mouseX, double mouseY) {
         return isWithinShape(mouseX, mouseY);

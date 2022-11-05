@@ -14,11 +14,6 @@ public class Rectangle extends Shape {
         super(shape);
     }
 
-    public Shape copyOf() {
-        return new Rectangle(this);
-
-    }
-
     @Override
     public boolean findPosition(double mouseX, double mouseY) {
         return isWithinShape(mouseX, mouseY);

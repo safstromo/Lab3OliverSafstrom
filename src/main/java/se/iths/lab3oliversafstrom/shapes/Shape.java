@@ -13,6 +13,21 @@ public abstract class Shape {
     private double yPosition;
     private Color color;
 
+    public Shape(int size, double xPosition, double yPosition, Color color) {
+        this.size = size;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+        this.color = color;
+    }
+
+    public Shape(Shape shape) {
+        this.size = shape.size;
+        this.xPosition = shape.xPosition;
+        this.yPosition = shape.yPosition;
+        this.color = shape.color;
+    }
+
+
     public int getSize() {
         return size;
     }

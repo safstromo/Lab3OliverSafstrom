@@ -7,12 +7,17 @@ public class Circle extends Shape {
 
 
     public Circle(int size, double xPosition, double yPosition, Color color) {
-        super.setSize(size);
-        super.setYPosition(yPosition);
-        super.setXPosition(xPosition);
-        super.setColor(color);
+        super(size, xPosition, yPosition, color);
     }
 
+    public Circle(Shape shape) {
+        super(shape);
+    }
+
+    public Shape copyOf() {
+        return new Circle(this);
+
+    }
 
     public boolean findPosition(double mouseX, double mouseY) {
         return isWithinShape(mouseX, mouseY);
@@ -35,7 +40,7 @@ public class Circle extends Shape {
 
     @Override
     public String toSVG() {
-        String svgColorCode = "#" + getColor().toString().substring(2,10);
+        String svgColorCode = "#" + getColor().toString().substring(2, 10);
         return "<circle cx=\"" + getXPosition() + "\" cy=\"" + getYPosition() + "\" r=\"" + getSize() + "\" fill=\"" + svgColorCode + "\"/>";
 
     }

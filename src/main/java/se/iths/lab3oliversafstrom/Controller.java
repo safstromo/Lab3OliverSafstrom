@@ -102,16 +102,16 @@ public class Controller {
     public void undo() {
         model.shapeList.remove(model.shapeList.size() - 1);
         if (!model.undoList.isEmpty())
-            modeLastShapeFromUndoToShapeList();
+            moveLastShapeFromUndoToShapeList();
         clearCanvasDrawShapes();
     }
 
     public void redo() { //TODO Implement
-        modeLastShapeFromUndoToShapeList();
+        moveLastShapeFromUndoToShapeList();
         clearCanvasDrawShapes();
     }
 
-    private void modeLastShapeFromUndoToShapeList() {
+    private void moveLastShapeFromUndoToShapeList() {
         model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
         model.undoList.remove(model.undoList.size() - 1);
     }

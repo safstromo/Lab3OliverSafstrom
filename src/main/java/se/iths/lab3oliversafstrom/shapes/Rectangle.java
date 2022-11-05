@@ -7,10 +7,16 @@ public class Rectangle extends Shape {
 
 
     public Rectangle(int size, double xPosition, double yPosition, Color color) {
-        super.setSize(size);
-        super.setYPosition(yPosition);
-        super.setXPosition(xPosition);
-        super.setColor(color);
+        super(size, xPosition, yPosition, color);
+    }
+
+    public Rectangle(Shape shape) {
+        super(shape);
+    }
+
+    public Shape copyOf() {
+        return new Rectangle(this);
+
     }
 
     @Override
@@ -28,7 +34,7 @@ public class Rectangle extends Shape {
 
     @Override
     public String toSVG() {
-        String svgColorCode = "#" + getColor().toString().substring(2,10);
+        String svgColorCode = "#" + getColor().toString().substring(2, 10);
         return "<rect fill=\"" + svgColorCode + "\" stroke=\"" + svgColorCode + "\" x=\"" + getXPosition() +
                 "\" y=\"" + getYPosition() + "\" width=\"" + getSize() + "\" height=\"" + getSize() + "\"/>";
 

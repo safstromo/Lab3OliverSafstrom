@@ -45,7 +45,7 @@ public class Server {
     }
 
     public void sendMessage(String string) {
-        writer.println("BananPaint :" + string);
+        writer.println(string);
     }
 }
 

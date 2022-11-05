@@ -1,6 +1,7 @@
 package se.iths.lab3oliversafstrom;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -14,6 +15,10 @@ public class Controller {
     public Spinner<Integer> sizeSpinner;
     @FXML
     public Label chatLabel;
+    @FXML
+    public Button sendShape;
+    @FXML
+    public Label serverConnected;
     @FXML
     private Button sendButton;
     @FXML
@@ -63,19 +68,15 @@ public class Controller {
         circleButton.selectedProperty().bindBidirectional(model.circleButtonProperty());
         rectangleButton.selectedProperty().bindBidirectional(model.rectangleButtonProperty());
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
+        serverConnected.disableProperty().bind(model.serverConnectedProperty());
     }
-
-
-    //TODO Ändra så jag får en shapefactory klass?
 
 
     //TODO VG
     //TODO TREADS for connection
     //TODO connect to server, send paint commands SVG format
-    //TODO Knapp för att skicka shapes
     //Todo göra shapesList till observable så man kan ta emot shapes
     //ToDO Label för att kolla om man är connected eller inte.
-    //TODO Chat
 
     private void setToggleGroup() {
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -100,7 +101,7 @@ public class Controller {
     }
 
     public void undo() {
-        model.shapeList.remove(model.shapeList.size() - 1);
+        model.shapeList.remove(model.lastShapeInList(model.shapeList));
         if (!model.undoList.isEmpty())
             moveLastShapeFromUndoToShapeList();
         clearCanvasDrawShapes();
@@ -148,5 +149,9 @@ public class Controller {
 
 //        model.chatWindow.add("You: " + model.getChatBoxInput());
 //        model.chatBoxInputProperty().setValue("");
+    }
+
+    public void sendShape() {
+        model.server.sendMessage(model.lastShapeInList(model.shapeList).toSVG());
     }
 }

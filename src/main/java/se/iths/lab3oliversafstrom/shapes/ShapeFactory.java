@@ -12,7 +12,7 @@ public class ShapeFactory {
     static Pattern regexColor = Pattern.compile("fill=.{10}");
     static Pattern regexX = Pattern.compile("x=.\\d+");
     static Pattern regexY = Pattern.compile("y=.\\d+");
-    static Pattern regexRadius = Pattern.compile("r=.fi \\d+");
+    static Pattern regexRadius = Pattern.compile("r=.\\d+");
     static Pattern regexSize = Pattern.compile("width=.\\d+");
 
 

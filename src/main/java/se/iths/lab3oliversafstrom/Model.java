@@ -12,11 +12,8 @@ import se.iths.lab3oliversafstrom.shapes.ShapeFactory;
 import se.iths.lab3oliversafstrom.stuff.Server;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static se.iths.lab3oliversafstrom.shapes.ShapeFactory.*;
 
@@ -169,49 +166,8 @@ public class Model {
     }
 
     public void importSvgString(String string) {
-
-        ShapeFactory.
-        Pattern rect = Pattern.compile("rect");
-        Pattern circle = Pattern.compile("circle");
-        Pattern color = Pattern.compile("fill=\\d+");
-        Pattern x = Pattern.compile("x=.\\d+");
-        Pattern y = Pattern.compile("y=.\\d+");
-        Pattern radius = Pattern.compile("r=\\d+");
-        Pattern size = Pattern.compile("width=.\\d+");
-        Matcher matchedShape = rect.matcher("rect");
-
-        String test = "<svg width=\"400\" height=\"110\"> " +
-                "<rect cy=\"34\" width=\"300\" height=\"100\" \"fill=123456\" /> " +
-                "</svg>";
-
-        String test2 = " bajs fill=123456";
-
-        Matcher matchedColor = color.matcher(test);
-        Matcher matchedColor2 = color.matcher(test2);
-        findSVGValue(test,color);
-        findSVGValue(test,size);
-        findSVGValue(test,y);
-        System.out.println(test.contains(rect));
-//        if (matchedColor.find())
-//            System.out.println(matchedColor.group(0).substring(5));
-//
-//        else System.out.println("test not found");
-//
-//        if (matchedColor2.find())
-//            System.out.println(matchedColor2.group(0).substring(5));
-//        else System.out.println("test2 not found");
+        shapeList.add(ShapeFactory.createShape(string));
 
     }
-
-//    public String findSVGValue(String string, Pattern pattern) {
-//        Matcher matcher = pattern.matcher(string);
-//        if (matcher.find()) {
-//            String found = matcher.group(0);
-//            List<String> foundStrings = Arrays.stream(found.split("=\"?")).toList();
-//            return foundStrings.get(1);
-//        }
-//        return "";
-//    }
-
 }//TODO REGEX
 

@@ -17,7 +17,7 @@ public class Server {
     public void connect(Model model) {
 
         try {
-            socket = new Socket("localhost", 8000);
+            socket = new Socket("192.168.2.113", 8000);
             OutputStream output = socket.getOutputStream();
             writer = new PrintWriter(output, true);
             InputStream input = socket.getInputStream();
@@ -27,9 +27,10 @@ public class Server {
                 try {
                     while (true) {
                         String line = reader.readLine();
-//                        if (line.startsWith("<svg"))
-//                            Platform.runLater(() -> model.shapeList.add(model.importSvgString(line)));//TODO SKAPA SHAPE
-                        Platform.runLater(() -> model.chatWindow.add(line));
+                        if (line.endsWith("/>"))
+                            Platform.runLater(() -> model.importSvgString(line));
+                        else
+                            Platform.runLater(() -> model.chatWindow.add(line));
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);

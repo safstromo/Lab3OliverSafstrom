@@ -9,17 +9,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ShapeFactory {
-    static Pattern color = Pattern.compile("fill=\\d+");
-    static Pattern x = Pattern.compile("x=.\\d+");
-    static Pattern y = Pattern.compile("y=.\\d+");
-    static Pattern radius = Pattern.compile("r=\\d+");
-    Pattern size = Pattern.compile("width=.\\d+");
+    static Pattern regexColor = Pattern.compile("fill=\\d+");
+    static Pattern regexX = Pattern.compile("x=.\\d+");
+    static Pattern regexY = Pattern.compile("y=.\\d+");
+    static Pattern regexRadius = Pattern.compile("r=\\d+");
+    static Pattern regexSize = Pattern.compile("width=.\\d+");
 
 
     public static Shape createShape(String shape, Model model) {
-        if (shape.equals("circle"))
+        if (shape.contains("circle"))
             return createNewCircle(model);
-        else if (shape.equals("rectangle")) {
+        else if (shape.contains("rectangle")) {
             return createNewRectangle(model);
         }
         return null;
@@ -27,11 +27,19 @@ public class ShapeFactory {
 
     public static Shape createShape(String SVGString) {
         if (SVGString.contains("circle"))
-            return new Circle(findSVGValue(SVGString, radius), findSVGValue(findSVGValue(SVGString, x), findSVGValue(SVGString, y), findSVGValue(SVGString, color)));
+            return createCircleFromSVG(SVGString);
         else if (SVGString.contains("rect")) {
-            return new Rectangle(findSVGValue(SVGString, radius), findSVGValue(findSVGValue(SVGString, x), findSVGValue(SVGString, y), findSVGValue(SVGString, color)));
+            return createRectangleFromSVG(SVGString);
         }
         return null;
+    }
+
+    private static Rectangle createRectangleFromSVG(String SVGString) {
+        return new Rectangle(Integer.parseInt(findSVGValue(SVGString, regexSize)), Double.parseDouble(findSVGValue(SVGString, regexX)), Double.parseDouble(findSVGValue(SVGString, regexY)), Color.BLACK);
+    }
+
+    private static Circle createCircleFromSVG(String SVGString) {
+        return new Circle(Integer.parseInt(findSVGValue(SVGString, regexRadius)), Double.parseDouble(findSVGValue(SVGString, regexX)), Double.parseDouble(findSVGValue(SVGString, regexY)), Color.valueOf(findSVGValue(SVGString, regexColor)));
     }
 
     public static void copyShapeAddToList(Shape shape, List<Shape> list) {
@@ -50,10 +58,6 @@ public class ShapeFactory {
 
     public static Rectangle createNewRectangle(Model model) {
         return new Rectangle(model.getSizeSpinner(), model.getMouseX(), model.getMouseY(), model.getColorPicker());
-    }
-
-    public static Rectangle createNewRectangle(int size, double x, double y, Color color) {
-        return new Rectangle(size, x, y, color);
     }
 
     public static Rectangle createNewRectangleChanged(Shape shape, Model model) {

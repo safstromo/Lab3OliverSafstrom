@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import se.iths.lab3oliversafstrom.shapes.ShapeFactory;
 import se.iths.lab3oliversafstrom.stuff.SvgFileWriter;
 
 public class Controller {
@@ -53,7 +54,7 @@ public class Controller {
         context = canvas.getGraphicsContext2D();
         chatWindow.setItems(model.chatWindow);
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
-model.importSvgString("set");
+
         bindTool();
         bindButton();
     }
@@ -153,5 +154,11 @@ model.importSvgString("set");
 
     public void sendShape() {
         model.server.sendMessage(model.lastShapeInList(model.shapeList).toSVG());
+    }
+
+    public void importSvgString(String string) {
+       model.shapeList.add(ShapeFactory.createShape(string));
+       clearCanvasDrawShapes();
+
     }
 }

@@ -2,6 +2,7 @@ package se.iths.lab3oliversafstrom.stuff;
 
 import javafx.application.Platform;
 import se.iths.lab3oliversafstrom.Model;
+import se.iths.lab3oliversafstrom.shapes.ShapeFactory;
 
 import java.io.*;
 import java.net.Socket;
@@ -17,7 +18,7 @@ public class Server {
     public void connect(Model model) {
 
         try {
-            socket = new Socket("192.168.2.113", 8000);
+            socket = new Socket("localhost", 8000);
             OutputStream output = socket.getOutputStream();
             writer = new PrintWriter(output, true);
             InputStream input = socket.getInputStream();

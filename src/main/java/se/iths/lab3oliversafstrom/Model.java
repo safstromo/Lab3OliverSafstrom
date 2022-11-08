@@ -37,7 +37,7 @@ public class Model {
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
     public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
     public List<Shape> undoList = new LinkedList<>();
-    public List<Shape> shapeList = new ArrayList<>();
+    public ObservableList<Shape> shapeList = FXCollections.observableArrayList();
     public Server server = new Server();
     private double mouseX;
     private double mouseY;
@@ -166,8 +166,11 @@ public class Model {
     }
 
     public void importSvgString(String string) {
-        shapeList.add(ShapeFactory.createShape(string));
+        try {
+            shapeList.add(ShapeFactory.createShape(string));
+        } catch (Exception ignored) {
+        }
 
     }
-}//TODO REGEX
+}
 

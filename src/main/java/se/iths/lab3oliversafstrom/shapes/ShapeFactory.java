@@ -26,6 +26,7 @@ public class ShapeFactory {
     }
 
     public static Shape createShape(String SVGString) {
+
         if (SVGString.contains("circle"))
             return createCircleFromSVG(SVGString);
         else if (SVGString.contains("rect")) {

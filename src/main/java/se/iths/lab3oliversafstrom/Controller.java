@@ -1,6 +1,7 @@
 package se.iths.lab3oliversafstrom;
 
 
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -8,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import se.iths.lab3oliversafstrom.shapes.Shape;
 import se.iths.lab3oliversafstrom.shapes.ShapeFactory;
 import se.iths.lab3oliversafstrom.stuff.SvgFileWriter;
 
@@ -54,7 +56,7 @@ public class Controller {
         context = canvas.getGraphicsContext2D();
         chatWindow.setItems(model.chatWindow);
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
-
+        model.shapeList.addListener((ListChangeListener<Shape>) onChange -> drawShapes(context));
         bindTool();
         bindButton();
     }
@@ -70,6 +72,7 @@ public class Controller {
         rectangleButton.selectedProperty().bindBidirectional(model.rectangleButtonProperty());
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
         serverConnected.disableProperty().bind(model.serverConnectedProperty());
+
     }
 
 

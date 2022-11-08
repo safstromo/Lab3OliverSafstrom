@@ -168,28 +168,34 @@ public class Model {
 
     public void importSvgString(String string) {
 
-        String test = "<svg width=\"400\" height=\"110\">\n" +
-                "  <rect width=\"300\" height=\"100\" style=\"fill=123456\" />\n" +
-                "</svg>";
 
         Pattern rect = Pattern.compile("rect");
         Pattern circle = Pattern.compile("circle");
-        Pattern color = Pattern.compile("\\bfill=\\d{6}");
         Pattern x = Pattern.compile("x=\\d+");
         Pattern y = Pattern.compile("y=\\d+");
         Pattern radius = Pattern.compile("r=\\d+");
         Pattern size = Pattern.compile("width=\\d+");
+        Matcher matchedShape = rect.matcher("rect");
+
+        String test = "<svg width=\"400\" height=\"110\"> " +
+                "<rect width=\"300\" height=\"100\" \"fill=123456\" /> " +
+                "</svg>";
+
+        String test2 = " bajs fill=123456";
+
+        Pattern color = Pattern.compile("(fill=\\d+)");
         Matcher matchedColor = color.matcher(test);
-        Matcher machedShape = rect.matcher("rect");
+        Matcher matchedColor2 = color.matcher(test2);
 
-       if (matchedColor.matches())
-           System.out.println(matchedColor.group(0));
+        if (matchedColor.find())
+            System.out.println(matchedColor.group(0).substring(5));
 
-       }
+        else System.out.println("test not found");
 
+        if (matchedColor2.find())
+            System.out.println(matchedColor2.group(0).substring(5));
+        else System.out.println("test2 not found");
 
-
-
-
-    }//TODO REGEX
+    }
+}//TODO REGEX
 

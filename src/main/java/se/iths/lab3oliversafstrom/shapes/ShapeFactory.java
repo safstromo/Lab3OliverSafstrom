@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ShapeFactory {
-    static Pattern regexColor = Pattern.compile("fill=\\d+");
+    static Pattern regexColor = Pattern.compile("fill=.{10}");
     static Pattern regexX = Pattern.compile("x=.\\d+");
     static Pattern regexY = Pattern.compile("y=.\\d+");
     static Pattern regexRadius = Pattern.compile("r=\\d+");
@@ -72,7 +72,7 @@ public class ShapeFactory {
         Matcher matcher = pattern.matcher(string);
         if (matcher.find()) {
             String found = matcher.group(0);
-            List<String> foundStrings = Arrays.stream(found.split("=\"?")).toList();
+            List<String> foundStrings = Arrays.stream(found.split("=\"#?")).toList();
             return foundStrings.get(1);
         }
         return "";

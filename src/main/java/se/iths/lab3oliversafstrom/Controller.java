@@ -140,16 +140,10 @@ public class Controller {
 
     public void sendMessage() {
         model.server.sendMessage(model.getChatBoxInput());
-
-//        model.chatWindow.add("You: " + model.getChatBoxInput());
-//        model.chatBoxInputProperty().setValue("");
     }
 
     public void onEnter() {
         model.server.sendMessage(model.getChatBoxInput());
-
-//        model.chatWindow.add("You: " + model.getChatBoxInput());
-//        model.chatBoxInputProperty().setValue("");
     }
 
     public void sendShape() {

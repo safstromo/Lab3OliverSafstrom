@@ -8,9 +8,11 @@ import javafx.scene.paint.Color;
 import se.iths.lab3oliversafstrom.shapes.Circle;
 import se.iths.lab3oliversafstrom.shapes.Rectangle;
 import se.iths.lab3oliversafstrom.shapes.Shape;
+import se.iths.lab3oliversafstrom.shapes.ShapeFactory;
 import se.iths.lab3oliversafstrom.stuff.Server;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -168,34 +170,48 @@ public class Model {
 
     public void importSvgString(String string) {
 
-
+        ShapeFactory.
         Pattern rect = Pattern.compile("rect");
         Pattern circle = Pattern.compile("circle");
-        Pattern x = Pattern.compile("x=\\d+");
-        Pattern y = Pattern.compile("y=\\d+");
+        Pattern color = Pattern.compile("fill=\\d+");
+        Pattern x = Pattern.compile("x=.\\d+");
+        Pattern y = Pattern.compile("y=.\\d+");
         Pattern radius = Pattern.compile("r=\\d+");
-        Pattern size = Pattern.compile("width=\\d+");
+        Pattern size = Pattern.compile("width=.\\d+");
         Matcher matchedShape = rect.matcher("rect");
 
         String test = "<svg width=\"400\" height=\"110\"> " +
-                "<rect width=\"300\" height=\"100\" \"fill=123456\" /> " +
+                "<rect cy=\"34\" width=\"300\" height=\"100\" \"fill=123456\" /> " +
                 "</svg>";
 
         String test2 = " bajs fill=123456";
 
-        Pattern color = Pattern.compile("(fill=\\d+)");
         Matcher matchedColor = color.matcher(test);
         Matcher matchedColor2 = color.matcher(test2);
-
-        if (matchedColor.find())
-            System.out.println(matchedColor.group(0).substring(5));
-
-        else System.out.println("test not found");
-
-        if (matchedColor2.find())
-            System.out.println(matchedColor2.group(0).substring(5));
-        else System.out.println("test2 not found");
+        findSVGValue(test,color);
+        findSVGValue(test,size);
+        findSVGValue(test,y);
+        System.out.println(test.contains(rect));
+//        if (matchedColor.find())
+//            System.out.println(matchedColor.group(0).substring(5));
+//
+//        else System.out.println("test not found");
+//
+//        if (matchedColor2.find())
+//            System.out.println(matchedColor2.group(0).substring(5));
+//        else System.out.println("test2 not found");
 
     }
+
+//    public String findSVGValue(String string, Pattern pattern) {
+//        Matcher matcher = pattern.matcher(string);
+//        if (matcher.find()) {
+//            String found = matcher.group(0);
+//            List<String> foundStrings = Arrays.stream(found.split("=\"?")).toList();
+//            return foundStrings.get(1);
+//        }
+//        return "";
+//    }
+
 }//TODO REGEX
 

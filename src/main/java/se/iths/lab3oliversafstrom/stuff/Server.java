@@ -28,8 +28,8 @@ public class Server {
                 try {
                     while (true) {
                         String line = reader.readLine();
-                        if (line.startsWith("<svg"))
-                            Platform.runLater(() -> model.shapeList.add(model.importSvgString(line)));//TODO SKAPA SHAPE
+                   //     if (line.startsWith("<svg"))
+                     //       Platform.runLater(() -> model.shapeList.add(model.importSvgString(line)));//TODO SKAPA SHAPE
                         Platform.runLater(() -> model.chatWindow.add(line));
                     }
                 } catch (IOException e) {

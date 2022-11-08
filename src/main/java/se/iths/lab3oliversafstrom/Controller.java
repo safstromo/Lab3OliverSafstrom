@@ -53,7 +53,7 @@ public class Controller {
         context = canvas.getGraphicsContext2D();
         chatWindow.setItems(model.chatWindow);
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
-
+model.importSvgString("set");
         bindTool();
         bindButton();
     }

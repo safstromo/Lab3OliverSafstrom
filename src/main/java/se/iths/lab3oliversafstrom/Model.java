@@ -166,22 +166,30 @@ public class Model {
         }
     }
 
-    public Shape importSvgString(String string) {
+    public void importSvgString(String string) {
+
+        String test = "<svg width=\"400\" height=\"110\">\n" +
+                "  <rect width=\"300\" height=\"100\" style=\"fill=123456\" />\n" +
+                "</svg>";
+
         Pattern rect = Pattern.compile("rect");
         Pattern circle = Pattern.compile("circle");
-        Pattern color = Pattern.compile("\"fill=\"\\d{6}");
-        Pattern x = Pattern.compile("x=\"\\d{1,}");
-        Pattern y = Pattern.compile("y=\"\\d{1,}");
-        Pattern radius = Pattern.compile("r=\"\\d{1,}");
-        Pattern size = Pattern.compile("width=\"\\d{1,}");
-        Matcher matchedColor = color.matcher(string);
-        Matcher matchedX = x.matcher(string);
+        Pattern color = Pattern.compile("\\bfill=\\d{6}");
+        Pattern x = Pattern.compile("x=\\d+");
+        Pattern y = Pattern.compile("y=\\d+");
+        Pattern radius = Pattern.compile("r=\\d+");
+        Pattern size = Pattern.compile("width=\\d+");
+        Matcher matchedColor = color.matcher(test);
+        Matcher machedShape = rect.matcher("rect");
 
-        if (string.matches(String.valueOf(rect)))
-           // new Circle((int)matchedX.toString(),matchedColor,,)
+       if (matchedColor.matches())
+           System.out.println(matchedColor.group(0));
+
+       }
 
 
-        return null;
-        return null;
+
+
+
     }//TODO REGEX
-}
+

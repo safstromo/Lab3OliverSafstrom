@@ -13,6 +13,8 @@ import se.iths.lab3oliversafstrom.stuff.Server;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static se.iths.lab3oliversafstrom.shapes.ShapeFactory.*;
 
@@ -22,6 +24,16 @@ public class Model {
     public BooleanProperty selectButton = new SimpleBooleanProperty();
     public BooleanProperty circleButton = new SimpleBooleanProperty();
     public BooleanProperty rectangleButton = new SimpleBooleanProperty();
+    public BooleanProperty ServerConnected = new SimpleBooleanProperty();
+
+    public boolean isServerConnected() {
+        return ServerConnected.get();
+    }
+
+    public BooleanProperty serverConnectedProperty() {
+        return ServerConnected;
+    }
+
     public ObservableList<String> chatWindow = FXCollections.observableArrayList();
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
     public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
@@ -121,8 +133,9 @@ public class Model {
         }
     }
 
-    private Shape lastShapeInShapeList() {
-        return shapeList.get(shapeList.size() - 1);
+    public Shape lastShapeInList(List<Shape> list) {
+        return list.get(list.size() - 1);
+
     }
 
     public void createShapeAndCopyToUndoList(Shape shape) {
@@ -143,7 +156,7 @@ public class Model {
 
     private void copyLastShapeInShapeListAddToUndoList() {
         if (!shapeList.isEmpty())
-            copyShapeAddToList(lastShapeInShapeList(), undoList);
+            copyShapeAddToList(lastShapeInList(shapeList), undoList);
     }
 
     private void copyShapeAddToUndoList(Shape shape) {
@@ -154,8 +167,21 @@ public class Model {
     }
 
     public Shape importSvgString(String string) {
+        Pattern rect = Pattern.compile("rect");
+        Pattern circle = Pattern.compile("circle");
+        Pattern color = Pattern.compile("\"fill=\"\\d{6}");
+        Pattern x = Pattern.compile("x=\"\\d{1,}");
+        Pattern y = Pattern.compile("y=\"\\d{1,}");
+        Pattern radius = Pattern.compile("r=\"\\d{1,}");
+        Pattern size = Pattern.compile("width=\"\\d{1,}");
+        Matcher matchedColor = color.matcher(string);
+        Matcher matchedX = x.matcher(string);
+
+        if (string.matches(String.valueOf(rect)))
+           // new Circle((int)matchedX.toString(),matchedColor,,)
 
 
         return null;
-    }//TODO
+        return null;
+    }//TODO REGEX
 }

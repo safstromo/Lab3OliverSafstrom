@@ -2,7 +2,6 @@ package se.iths.lab3oliversafstrom.stuff;
 
 import javafx.application.Platform;
 import se.iths.lab3oliversafstrom.Model;
-import se.iths.lab3oliversafstrom.shapes.ShapeFactory;
 
 import java.io.*;
 import java.net.Socket;

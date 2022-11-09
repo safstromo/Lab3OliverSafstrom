@@ -2,7 +2,6 @@ package se.iths.lab3oliversafstrom;
 
 
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -10,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import se.iths.lab3oliversafstrom.shapes.Shape;
-import se.iths.lab3oliversafstrom.shapes.ShapeFactory;
 import se.iths.lab3oliversafstrom.stuff.SvgFileWriter;
 
 public class Controller {
@@ -56,7 +54,7 @@ public class Controller {
         context = canvas.getGraphicsContext2D();
         chatWindow.setItems(model.chatWindow);
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
-        model.shapeList.addListener((ListChangeListener<Shape>) onChange -> drawShapes(context));
+        model.shapeList.addListener((ListChangeListener<Shape>) onChange -> clearCanvasDrawShapes());
         serverConnected.disableProperty().bind(model.serverConnectedProperty());
         model.serverConnectedProperty().setValue(true);
         bindTool();
@@ -76,8 +74,6 @@ public class Controller {
 
     }
 
-    //ToDO Label för att kolla om man är connected eller inte.
-
     private void setToggleGroup() {
         ToggleGroup toggleGroup = new ToggleGroup();
         selectButton.setToggleGroup(toggleGroup);
@@ -87,12 +83,10 @@ public class Controller {
     }
 
     public void connectServer() {
-        System.out.println("Connecting to server......");
         model.server.connect(model);
     }
 
     public void saveToFile() {
-        System.out.println("Saving to file.....");
         svgFileWriter.saveToFile(model, stage);
     }
 

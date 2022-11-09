@@ -19,9 +19,6 @@ public class MainApplication extends Application {
         Controller controller = fxmlLoader.getController();
         controller.setStage(stage);
 
-        //TODO 14:15 fredag importera controller. kolla javafx branch
-
-
         stage.setTitle("Banana Paint");
         stage.getIcons().add(icon);
         stage.setScene(scene);

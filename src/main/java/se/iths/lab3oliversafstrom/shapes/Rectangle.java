@@ -23,7 +23,6 @@ public class Rectangle extends Shape {
 
         boolean insideX = mouseX <= centerX() + getSize() && mouseX >= centerX();
         boolean insideY = mouseY <= centerY() + getSize() && mouseY >= centerY();
-
         return insideX && insideY;
     }
 

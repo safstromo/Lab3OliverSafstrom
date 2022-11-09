@@ -36,7 +36,8 @@ public class Model {
     public ObservableList<String> chatWindow = FXCollections.observableArrayList();
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
     public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
-    public List<Shape> undoList = new LinkedList<>();
+    public List<Shape> undoList = new ArrayList<>();
+    public List<Shape> redoList = new ArrayList<>();
     public ObservableList<Shape> shapeList = FXCollections.observableArrayList();
     public Server server = new Server();
     private double mouseX;

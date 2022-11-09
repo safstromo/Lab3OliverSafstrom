@@ -36,7 +36,7 @@ public class ShapeFactory {
     }
 
     private static Rectangle createRectangleFromSVG(String SVGString) {
-        return new Rectangle(Integer.parseInt(findSVGValue(SVGString, regexSize)), Double.parseDouble(findSVGValue(SVGString, regexX)), Double.parseDouble(findSVGValue(SVGString, regexY)), Color.BLACK);
+        return new Rectangle(Integer.parseInt(findSVGValue(SVGString, regexSize)), Double.parseDouble(findSVGValue(SVGString, regexX)), Double.parseDouble(findSVGValue(SVGString, regexY)), Color.valueOf(findSVGValue(SVGString, regexColor)));
     }
 
     private static Circle createCircleFromSVG(String SVGString) {
@@ -73,7 +73,8 @@ public class ShapeFactory {
         Matcher matcher = pattern.matcher(string);
         if (matcher.find()) {
             String found = matcher.group(0);
-            List<String> foundStrings = Arrays.stream(found.split("=\"#?")).toList();
+            List<String> foundStrings = Arrays.stream(found.split("=\"")).toList();
+            System.out.println(foundStrings.get(1));
             return foundStrings.get(1);
         }
         return "";

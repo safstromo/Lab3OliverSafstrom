@@ -30,7 +30,7 @@ public class Server {
                         String line = reader.readLine();
                         if (line.endsWith("/>"))
                             Platform.runLater(() -> model.importSvgString(line));
-                        //else
+                        else
                             Platform.runLater(() -> model.chatWindow.add(line));
                     }
                 } catch (IOException e) {

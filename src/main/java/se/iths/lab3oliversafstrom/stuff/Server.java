@@ -27,6 +27,7 @@ public class Server {
             var thread = new Thread(() -> {
                 try {
                     while (true) {
+                        model.serverConnectedProperty().setValue(false);
                         String line = reader.readLine();
                         if (line.endsWith("/>"))
                             Platform.runLater(() -> model.importSvgString(line));

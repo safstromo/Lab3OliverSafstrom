@@ -74,7 +74,6 @@ public class ShapeFactory {
         if (matcher.find()) {
             String found = matcher.group(0);
             List<String> foundStrings = Arrays.stream(found.split("=\"")).toList();
-            System.out.println(foundStrings.get(1));
             return foundStrings.get(1);
         }
         return "";

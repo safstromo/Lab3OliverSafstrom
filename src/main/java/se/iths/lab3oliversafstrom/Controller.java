@@ -57,6 +57,8 @@ public class Controller {
         chatWindow.setItems(model.chatWindow);
         chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
         model.shapeList.addListener((ListChangeListener<Shape>) onChange -> drawShapes(context));
+        serverConnected.disableProperty().bind(model.serverConnectedProperty());
+        model.serverConnectedProperty().setValue(true);
         bindTool();
         bindButton();
     }
@@ -71,15 +73,9 @@ public class Controller {
         circleButton.selectedProperty().bindBidirectional(model.circleButtonProperty());
         rectangleButton.selectedProperty().bindBidirectional(model.rectangleButtonProperty());
         sendButton.disableProperty().bind(model.chatBoxInputProperty().isEmpty());
-        serverConnected.disableProperty().bind(model.serverConnectedProperty());
 
     }
 
-
-    //TODO VG
-    //TODO TREADS for connection
-    //TODO connect to server, send paint commands SVG format
-    //Todo göra shapesList till observable så man kan ta emot shapes
     //ToDO Label för att kolla om man är connected eller inte.
 
     private void setToggleGroup() {

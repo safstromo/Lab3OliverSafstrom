@@ -148,17 +148,17 @@ public class Controller {
     }
 
     public void sendMessage() {
-        model.server.sendMessage(model.getChatBoxInput());
+        model.server.sendMessage(model.getChatBoxInput(),model);
         chatBoxInput.clear();
     }
 
     public void onEnter() {
-        model.server.sendMessage(model.getChatBoxInput());
+        model.server.sendMessage(model.getChatBoxInput(),model);
         chatBoxInput.clear();
     }
 
     public void sendShape() {
-        model.server.sendMessage(model.lastShapeInList(model.shapeList).toSVG());
+        model.server.sendMessage(model.lastShapeInList(model.shapeList).toSVG(),model);
     }
 
 }

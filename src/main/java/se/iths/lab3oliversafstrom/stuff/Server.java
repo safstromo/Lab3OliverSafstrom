@@ -45,8 +45,13 @@ public class Server {
         }
     }
 
-    public void sendMessage(String string) {
-        writer.println(string);
+    public void sendMessage(String string, Model model) {
+        try {
+            writer.println(string);
+        } catch (Exception e) {
+            model.chatWindow.add(string);
+        }
+
     }
 }
 

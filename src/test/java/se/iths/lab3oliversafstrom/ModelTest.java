@@ -57,9 +57,8 @@ class ModelTest {
         assertEquals(10,model.shapeList.get(0).getSize());
         assertEquals(Color.BLUE, model.shapeList.get(0).getColor());
 
-        assertEquals(1, model.undoList.get(0).getSize());
-        assertEquals(Color.BLACK, model.undoList.get(0).getColor());
-
+        assertEquals(1, model.undoList.getFirst().getSize());
+        assertEquals(Color.BLACK, model.undoList.getFirst().getColor());
 
     }
 }

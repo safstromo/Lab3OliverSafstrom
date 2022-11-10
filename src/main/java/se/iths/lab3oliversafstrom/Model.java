@@ -11,8 +11,8 @@ import se.iths.lab3oliversafstrom.shapes.Shape;
 import se.iths.lab3oliversafstrom.shapes.ShapeFactory;
 import se.iths.lab3oliversafstrom.stuff.Server;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import static se.iths.lab3oliversafstrom.shapes.ShapeFactory.*;
@@ -25,10 +25,6 @@ public class Model {
     public BooleanProperty rectangleButton = new SimpleBooleanProperty();
     public BooleanProperty ServerConnected = new SimpleBooleanProperty();
 
-    public boolean isServerConnected() {
-        return ServerConnected.get();
-    }
-
     public BooleanProperty serverConnectedProperty() {
         return ServerConnected;
     }
@@ -36,8 +32,8 @@ public class Model {
     public ObservableList<String> chatWindow = FXCollections.observableArrayList();
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
     public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
-    public List<Shape> undoList = new ArrayList<>();
-    public List<Shape> redoList = new ArrayList<>();
+    public Deque<Shape> undoList = new ArrayDeque<>();
+    public Deque<Shape> redoList = new ArrayDeque<>();
     public ObservableList<Shape> shapeList = FXCollections.observableArrayList();
     public Server server = new Server();
     private double mouseX;
@@ -96,24 +92,27 @@ public class Model {
         return colorPicker.get();
     }
 
-    public void connectToServer() {
-
-    }
-
 
     public void checkShapeAndDraw() {
+        redoList.clear();
+
         if (circleButtonProperty().getValue()) {
-            createShapeAndCopyToUndoList();
+            undoList.addAll(copyShapeListToDeque());
+            createShapeAddToList();
 
         } else if (rectangleButtonProperty().getValue()) {
-            createShapeAndCopyToUndoList();
+            undoList.addAll(copyShapeListToDeque());
+            createShapeAddToList();
 
         } else if (selectButtonProperty().getValue()) {
-            try {
-                createShapeAndCopyToUndoList(findShape());
-            } catch (Exception ignored) {
-            }
+            undoList.addAll(copyShapeListToDeque());
+
+                ShapeFactory.updateShape(findShape(), this);
+                newUpdatedShapeList();
+
+
         }
+
     }
 
     private Shape findShape() {
@@ -121,17 +120,37 @@ public class Model {
                 .filter(shape -> shape.findPosition(getMouseX(), getMouseY())).findAny().orElseThrow();
     }
 
+    public void newUpdatedShapeList() {
+        ObservableList<Shape> tempList = getTempList();
+        shapeList.clear();
+        shapeList.addAll(tempList);
+    }
 
-    public void createShapeAndCopyToUndoList() {
+    public ObservableList<Shape> getTempList() {
+        ObservableList<Shape> tempList = FXCollections.observableArrayList();
+        for (Shape shape : shapeList)
+            tempList.add(ShapeFactory.copyShape(shape));
+        return tempList;
+    }
+
+    public void createShapeAddToList() {
         if (circleButtonProperty().getValue()) {
-            copyLastShapeInShapeListAddToUndoList();
             shapeList.add(createShape("circle", this));
 
         } else if (rectangleButtonProperty().getValue()) {
-            copyLastShapeInShapeListAddToUndoList();
             shapeList.add(createShape("rectangle", this));
         }
     }
+//    public void createShapeAddToList() {
+//        if (circleButtonProperty().getValue()) {
+//            copyLastShapeInShapeListAddToUndoList();
+//            shapeList.add(createShape("circle", this));
+//
+//        } else if (rectangleButtonProperty().getValue()) {
+//            copyLastShapeInShapeListAddToUndoList();
+//            shapeList.add(createShape("rectangle", this));
+//        }
+//    }
 
     public Shape lastShapeInList(List<Shape> list) {
         return list.get(list.size() - 1);
@@ -141,10 +160,11 @@ public class Model {
     public void createShapeAndCopyToUndoList(Shape shape) {
         if (shape.getClass() == Circle.class) {
             copyShapeAddToUndoList(shape);
+
             Circle newCircle = createNewCircleChanged(shape, this);
             shapeList.remove(shape);
             shapeList.add(newCircle);
-
+//            undoList.addLast(newCircle);
         } else if (shape.getClass() == Rectangle.class) {
             copyShapeAddToUndoList(shape);
             Rectangle newRectangle = createNewRectangleChanged(shape, this);
@@ -153,16 +173,23 @@ public class Model {
         }
     }
 
+    public Deque<Shape> copyShapeListToDeque() {
+        Deque<Shape> tempDeque = new ArrayDeque<>();
+        for (Shape shape : shapeList)
+            tempDeque.add(ShapeFactory.copyShape(shape));
+        return tempDeque;
+    }
 
     private void copyLastShapeInShapeListAddToUndoList() {
-        if (!shapeList.isEmpty())
+        if (!shapeList.isEmpty()) {
             copyShapeAddToList(lastShapeInList(shapeList), undoList);
+        }
     }
 
     private void copyShapeAddToUndoList(Shape shape) {
         if (!shapeList.isEmpty()) {
+            undoList.removeLast();
             copyShapeAddToList(shape, undoList);
-
         }
     }
 

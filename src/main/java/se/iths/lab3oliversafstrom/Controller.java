@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import se.iths.lab3oliversafstrom.shapes.Shape;
+import se.iths.lab3oliversafstrom.shapes.ShapeFactory;
 import se.iths.lab3oliversafstrom.stuff.SvgFileWriter;
 
 public class Controller {
@@ -94,21 +95,44 @@ public class Controller {
         System.exit(0);
     }
 
+
+//    public void undo() {
+//        model.redoList.addFirst(model.lastShapeInList(model.shapeList));
+//
+//
+//        model.shapeList.remove(model.lastShapeInList(model.shapeList));
+//        if (!model.undoList.isEmpty())
+//           copyLastShapeFromUndoToShapeList();
+//        clearCanvasDrawShapes();
+//    }
     public void undo() {
-        model.shapeList.remove(model.lastShapeInList(model.shapeList));
-        if (!model.undoList.isEmpty())
-            moveLastShapeFromUndoToShapeList();
+        if (model.undoList.isEmpty())
+            return;
+
+        model.redoList.addAll(model.copyShapeListToDeque());
+        model.shapeList.clear();
+
+            model.shapeList.addAll(model.undoList);
+            model.undoList.removeLast();
+
+         clearCanvasDrawShapes();
+    }
+
+
+    public void redo() {
+        if (model.redoList.isEmpty())
+            return;
+        moveLastShapeFromRedoToShapeList();
         clearCanvasDrawShapes();
     }
 
-    public void redo() { //TODO Implement
-        moveLastShapeFromUndoToShapeList();
-        clearCanvasDrawShapes();
+    private void copyLastShapeFromUndoToShapeList() {
+        ShapeFactory.copyShapeAddToList(model.undoList.getLast(),model.shapeList);
+        model.undoList.removeLast();
     }
-
-    private void moveLastShapeFromUndoToShapeList() {
-        model.shapeList.add(model.undoList.get(model.undoList.size() - 1));
-        model.undoList.remove(model.undoList.size() - 1);
+    private void moveLastShapeFromRedoToShapeList(){
+        model.shapeList.add(model.redoList.getLast());
+        model.redoList.removeLast();
     }
 
     public void clearCanvasDrawShapes() {

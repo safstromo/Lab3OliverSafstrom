@@ -30,8 +30,8 @@ public class Model {
     public ObservableList<String> chatWindow = FXCollections.observableArrayList();
     public ObjectProperty<Color> colorPicker = new SimpleObjectProperty<>(Color.BLACK);
     public ObjectProperty<Integer> sizeSpinner = new SimpleObjectProperty<>(30);
-    public Deque<Shape> undoList = new ArrayDeque<>();
-    public Deque<Shape> redoList = new ArrayDeque<>();
+    public Deque<Deque<Shape>> undoList = new ArrayDeque<>();
+    public Deque<Deque<Shape>> redoList = new ArrayDeque<>();
     public ObservableList<Shape> shapeList = FXCollections.observableArrayList();
     public Server server = new Server();
     private double mouseX;
@@ -93,25 +93,22 @@ public class Model {
 
     public void checkShapeAndDraw() {
         redoList.clear();
-//        undoList.clear();
+        updateUndoList();
 
         if (circleButtonProperty().getValue()) {
-            updateUndoList();
             createShapeAddToList();
 
         } else if (rectangleButtonProperty().getValue()) {
-            updateUndoList();
             createShapeAddToList();
 
         } else if (selectButtonProperty().getValue()) {
-            updateUndoList();
             replaceShape();
             replaceShapeList();
         }
     }
 
     private void updateUndoList() {
-        undoList.addAll(copyShapeListToDeque());
+        undoList.add(copyShapeListToDeque());
     }
 
     private void replaceShape() {
@@ -135,10 +132,6 @@ public class Model {
     public void updateShapeList(ObservableList<Shape> tempList) {
         shapeList.clear();
         shapeList.addAll(tempList);
-    }
-    public void updateShapeList(Deque<Shape> List) {
-        shapeList.clear();
-        shapeList.addAll(List);
     }
 
     public void createShapeAddToList() {

@@ -71,6 +71,16 @@ public abstract class Shape {
     public abstract String toSVG();
 
     @Override
+    public String toString() {
+        return "Shape{" +
+                "size=" + size +
+                ", xPosition=" + xPosition +
+                ", yPosition=" + yPosition +
+                ", color=" + color +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Shape shape)) return false;
@@ -80,15 +90,5 @@ public abstract class Shape {
     @Override
     public int hashCode() {
         return Objects.hash(size, xPosition, yPosition, color);
-    }
-
-    @Override
-    public String toString() {
-        return "Shape{" +
-                "size=" + size +
-                ", xPosition=" + xPosition +
-                ", yPosition=" + yPosition +
-                ", color=" + color +
-                '}';
     }
 }

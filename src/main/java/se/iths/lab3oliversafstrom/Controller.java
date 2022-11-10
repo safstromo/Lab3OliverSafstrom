@@ -108,9 +108,9 @@ public class Controller {
             model.shapeList.clear();
             return;
         }
-        model.redoList.addAll(model.copyShapeListToDeque());
-        model.updateShapeList(model.undoList);
-        model.undoList.removeLast();
+        model.redoList.addLast(model.copyShapeListToDeque());
+        model.shapeList.clear();
+        model.shapeList.addAll(model.undoList.removeLast());
 
         clearCanvasDrawShapes();
     }
@@ -119,9 +119,9 @@ public class Controller {
         if (model.redoList.isEmpty())
             return;
 
-        model.undoList.addAll(model.copyShapeListToDeque());
-        model.updateShapeList(model.redoList);
-        model.redoList.removeLast();
+        model.undoList.addLast(model.copyShapeListToDeque());
+        model.shapeList.clear();
+        model.shapeList.addAll(model.redoList.removeLast());
 
         clearCanvasDrawShapes();
     }

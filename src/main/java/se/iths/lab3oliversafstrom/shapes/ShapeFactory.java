@@ -4,7 +4,6 @@ import javafx.scene.paint.Color;
 import se.iths.lab3oliversafstrom.Model;
 
 import java.util.Arrays;
-import java.util.Deque;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,22 +43,7 @@ public class ShapeFactory {
         return new Circle(Integer.parseInt(findSVGValue(SVGString, regexRadius)), Double.parseDouble(findSVGValue(SVGString, regexX)), Double.parseDouble(findSVGValue(SVGString, regexY)), Color.valueOf(findSVGValue(SVGString, regexColor)));
     }
 
-    public static void copyShapeAddToList(Shape shape, Deque<Shape> list) {
-        if (shape.getClass() == Circle.class)
-            list.addLast(new Circle(shape));
 
-        else if (shape.getClass() == Rectangle.class) {
-            list.addLast(new Rectangle(shape));
-        }
-    }
-    public static void copyShapeAddToList(Shape shape, List<Shape> list) {
-        if (shape.getClass() == Circle.class)
-            list.add(new Circle(shape));
-
-        else if (shape.getClass() == Rectangle.class) {
-            list.add(new Rectangle(shape));
-        }
-    }
     public static Shape copyShape(Shape shape) {
         if (shape.getClass() == Circle.class)
            return new Circle(shape);
@@ -70,10 +54,16 @@ public class ShapeFactory {
         else return null;
     }
 
-public static void updateShape (Shape shape, Model model){
-        shape.setSize(model.getSizeSpinner());
-        shape.setColor(model.getColorPicker());
-}
+    public static Shape copyShapeUpdated(Shape shape, Model model) {
+        if (shape.getClass() == Circle.class)
+            return createNewCircleChanged(shape,model);
+
+        else if (shape.getClass() == Rectangle.class) {
+            return createNewRectangleChanged(shape,model);
+        }
+        else return null;
+    }
+
     public static Circle createNewCircle(Model model) {
         return new Circle(model.getSizeSpinner(), model.getMouseX(), model.getMouseY(), model.getColorPicker());
     }

@@ -7,11 +7,11 @@ import java.util.Objects;
 
 
 public abstract class Shape {
-    private int size;
+    private final int size;
     private double xPosition;
 
     private double yPosition;
-    private Color color;
+    private final Color color;
 
     public Shape(int size, double xPosition, double yPosition, Color color) {
         this.size = size;
@@ -37,33 +37,23 @@ public abstract class Shape {
         return size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
+
 
     public double getXPosition() {
         return xPosition;
     }
 
-    public void setXPosition(double xPosition) {
-        this.xPosition = xPosition;
-    }
+
 
     public double getYPosition() {
         return yPosition;
     }
 
-    public void setYPosition(double yPosition) {
-        this.yPosition = yPosition;
-    }
 
     public Color getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
 
     public double centerY() {
         return getYPosition() - (getSize() / 2.0);

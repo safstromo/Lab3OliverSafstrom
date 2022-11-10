@@ -111,7 +111,7 @@ public class Model {
     }
 
     private void replaceShape() {
-        Shape tempShape = ShapeFactory.copyShapeUpdated(findShape(),this);
+        Shape tempShape = ShapeFactory.copyShapeUpdated(findShape(), this);
         shapeList.remove(findShape());
         shapeList.add(tempShape);
     }

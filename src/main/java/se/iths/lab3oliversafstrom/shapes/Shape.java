@@ -38,11 +38,9 @@ public abstract class Shape {
     }
 
 
-
     public double getXPosition() {
         return xPosition;
     }
-
 
 
     public double getYPosition() {

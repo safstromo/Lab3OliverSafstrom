@@ -96,9 +96,10 @@ public class Controller {
 
 
     public void undo() {
-        if (model.undoList.isEmpty()){
+        if (model.undoList.isEmpty()) {
             model.shapeList.clear();
-            return;}
+            return;
+        }
 
         model.redoList.addAll(model.copyShapeListToDeque());
         model.shapeList.clear();
@@ -108,6 +109,7 @@ public class Controller {
 
         clearCanvasDrawShapes();
     }
+
     public void redo() {
         if (model.redoList.isEmpty())
             return;

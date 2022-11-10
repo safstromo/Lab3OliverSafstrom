@@ -46,22 +46,20 @@ public class ShapeFactory {
 
     public static Shape copyShape(Shape shape) {
         if (shape.getClass() == Circle.class)
-           return new Circle(shape);
+            return new Circle(shape);
 
         else if (shape.getClass() == Rectangle.class) {
             return new Rectangle(shape);
-        }
-        else return null;
+        } else return null;
     }
 
     public static Shape copyShapeUpdated(Shape shape, Model model) {
         if (shape.getClass() == Circle.class)
-            return createNewCircleChanged(shape,model);
+            return createNewCircleChanged(shape, model);
 
         else if (shape.getClass() == Rectangle.class) {
-            return createNewRectangleChanged(shape,model);
-        }
-        else return null;
+            return createNewRectangleChanged(shape, model);
+        } else return null;
     }
 
     public static Circle createNewCircle(Model model) {

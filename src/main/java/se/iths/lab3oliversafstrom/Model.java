@@ -93,21 +93,25 @@ public class Model {
 
     public void checkShapeAndDraw() {
         redoList.clear();
-        undoList.clear();
+//        undoList.clear();
 
         if (circleButtonProperty().getValue()) {
-            undoList.addAll(copyShapeListToDeque());
+            updateUndoList();
             createShapeAddToList();
 
         } else if (rectangleButtonProperty().getValue()) {
-            undoList.addAll(copyShapeListToDeque());
+            updateUndoList();
             createShapeAddToList();
 
         } else if (selectButtonProperty().getValue()) {
-            undoList.addAll(copyShapeListToDeque());
+            updateUndoList();
             replaceShape();
             replaceShapeList();
         }
+    }
+
+    private void updateUndoList() {
+        undoList.addAll(copyShapeListToDeque());
     }
 
     private void replaceShape() {
@@ -125,8 +129,16 @@ public class Model {
         ObservableList<Shape> tempList = FXCollections.observableArrayList();
         for (Shape shape : shapeList)
             tempList.add(ShapeFactory.copyShape(shape));
+        updateShapeList(tempList);
+    }
+
+    public void updateShapeList(ObservableList<Shape> tempList) {
         shapeList.clear();
         shapeList.addAll(tempList);
+    }
+    public void updateShapeList(Deque<Shape> List) {
+        shapeList.clear();
+        shapeList.addAll(List);
     }
 
     public void createShapeAddToList() {

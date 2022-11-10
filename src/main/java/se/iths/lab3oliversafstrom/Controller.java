@@ -52,13 +52,21 @@ public class Controller {
     public void initialize() {
         setToggleGroup();
         context = canvas.getGraphicsContext2D();
-        chatWindow.setItems(model.chatWindow);
-        chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
         model.shapeList.addListener((ListChangeListener<Shape>) onChange -> clearCanvasDrawShapes());
-        serverConnected.disableProperty().bind(model.serverConnectedProperty());
-        model.serverConnectedProperty().setValue(true);
+        setupChat();
+        setupServerLabel();
         bindTool();
         bindButton();
+    }
+
+    private void setupServerLabel() {
+        serverConnected.disableProperty().bind(model.serverConnectedProperty());
+        model.serverConnectedProperty().setValue(true);
+    }
+
+    private void setupChat() {
+        chatWindow.setItems(model.chatWindow);
+        chatBoxInput.textProperty().bindBidirectional(model.chatBoxInputProperty());
     }
 
     private void bindTool() {
@@ -100,11 +108,8 @@ public class Controller {
             model.shapeList.clear();
             return;
         }
-
         model.redoList.addAll(model.copyShapeListToDeque());
-        model.shapeList.clear();
-
-        model.shapeList.addAll(model.undoList);
+        model.updateShapeList(model.undoList);
         model.undoList.removeLast();
 
         clearCanvasDrawShapes();
@@ -115,9 +120,7 @@ public class Controller {
             return;
 
         model.undoList.addAll(model.copyShapeListToDeque());
-        model.shapeList.clear();
-
-        model.shapeList.addAll(model.redoList);
+        model.updateShapeList(model.redoList);
         model.redoList.removeLast();
 
         clearCanvasDrawShapes();

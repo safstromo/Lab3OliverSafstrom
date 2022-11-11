@@ -11,7 +11,7 @@ class ModelTest {
     Model model = new Model();
 
     @Test
-    void createCircleAddToShapeListCheckType() {
+    void createCircleAddToShapeListCheckSizeCheckType() {
         model.sizeSpinnerProperty().setValue(10);
         model.colorPickerProperty().setValue(Color.BLACK);
         model.setMouseY(10);
@@ -29,7 +29,7 @@ class ModelTest {
         assertEquals(expectedType,actualType);
     }
     @Test
-    void createRectangleAddToShapeListCheckType() {
+    void createRectangleAddToShapeListCheckSizeCheckType() {
         model.sizeSpinnerProperty().setValue(10);
         model.colorPickerProperty().setValue(Color.BLACK);
         model.setMouseY(10);

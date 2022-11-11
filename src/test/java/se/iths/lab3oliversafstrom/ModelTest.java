@@ -3,6 +3,7 @@ package se.iths.lab3oliversafstrom;
 import javafx.scene.paint.Color;
 import org.junit.jupiter.api.Test;
 import se.iths.lab3oliversafstrom.shapes.Circle;
+import se.iths.lab3oliversafstrom.shapes.Rectangle;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +11,7 @@ class ModelTest {
     Model model = new Model();
 
     @Test
-    void createCircleAddToShapeList() {
+    void createCircleAddToShapeListCheckType() {
         model.sizeSpinnerProperty().setValue(10);
         model.colorPickerProperty().setValue(Color.BLACK);
         model.setMouseY(10);
@@ -21,12 +22,14 @@ class ModelTest {
 
         var expected = 1;
         var actual = model.shapeList.size();
+        var expectedType = Circle.class;
+        var actualType = model.shapeList.get(0).getClass();
 
         assertEquals(expected,actual);
-
+        assertEquals(expectedType,actualType);
     }
     @Test
-    void createRectangleAddToShapeList() {
+    void createRectangleAddToShapeListCheckType() {
         model.sizeSpinnerProperty().setValue(10);
         model.colorPickerProperty().setValue(Color.BLACK);
         model.setMouseY(10);
@@ -37,8 +40,11 @@ class ModelTest {
 
         var expected = 1;
         var actual = model.shapeList.size();
+        var expectedType = Rectangle.class;
+        var actualType = model.shapeList.get(0).getClass();
 
         assertEquals(expected,actual);
+        assertEquals(expectedType,actualType);
 
     }
 
@@ -61,4 +67,6 @@ class ModelTest {
         assertEquals(Color.BLACK, model.undoList.getFirst().getFirst().getColor());
 
     }
+
+
 }
